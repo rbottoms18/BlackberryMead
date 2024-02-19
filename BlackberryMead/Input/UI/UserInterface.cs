@@ -110,7 +110,13 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Whether the borders of all the UIElements are drawn.
         /// </summary>
-        public bool ShowBorders { get; set; }
+        public bool ShowBorders { get => showBorders; set
+            {
+                showBorders = value;
+                foreach (UIComponent child in Children.Values)
+                    child.ShowBorder = value;
+            }
+        }
 
         /// <summary>
         /// Maximum level to which the UI can be zoomed out
@@ -177,6 +183,11 @@ namespace BlackberryMead.Input.UI
         /// </summary>
         private ContentManager content;
 
+        /// <summary>
+        /// Instance variable for property <see cref="ShowBorders"/>
+        /// </summary>
+        private bool showBorders;
+
 
         /// <summary>
         /// Creates a new UserInterface from a list of UIComponents.
@@ -218,12 +229,6 @@ namespace BlackberryMead.Input.UI
             // Get list of IRenderables
             renderableChildren = Children.Values.OfType<IRenderable>().ToList();
             Initialize(graphicsDevice);
-
-            if (ShowBorders)
-            {
-                foreach (UIComponent child in Children.Values)
-                    child.ShowBorder = true;
-            }
 
             // Set children content
             foreach (UIComponent component in Children.Values)

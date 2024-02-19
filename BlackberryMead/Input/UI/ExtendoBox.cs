@@ -17,57 +17,72 @@ namespace BlackberryMead.Input.UI
         /// List of components in this.
         /// </summary>
         [JsonInclude]
-        public Dictionary<string, PaddedComponent> Components { get; protected set; }
+        public Dictionary<string, UIComponent> Components { get; protected set; }
 
         /// <summary>
-        /// Class that defines a Component and blank space padding on its top and bottom for
-        /// use in Json deserialization.
+        /// Class that defines padding for each child of this.
         /// </summary>
-        internal class PaddedComponent
+        internal class Pad
         {
-            public UIComponent Component { get; set; }
-            public int PadTop { get; set; }
-            public int PadBottom { get; set; }
+            public int Top;
+            public int Bottom;
 
-            [JsonConstructor]
-            public PaddedComponent(UIComponent Component, int PadTop, int PadBottom)
+            public Pad(int Top, int Bottom)
             {
-                this.Component = Component;
-                this.PadTop = PadTop;
-                this.PadBottom = PadBottom;
+                this.Top = Top;
+                this.Bottom = Bottom;
             }
         }
+
+        /// <summary>
+        /// Padding of each child of this. Keys are Component names as in <see cref="Components"/>,
+        /// values are objects with a "Top" padding and a "Bottom" padding in pixels.
+        /// </summary>
+        [JsonInclude]
+        public Dictionary<string, Pad> Padding { get; protected set; }
 
 
         /// <summary>
         /// Create a new ExtendoBox
         /// </summary>
-        /// <param name="Components">Components and the padding between them. All components added to this
+        /// <param name="Components">Sub-components of thsi. All components added to this
         /// will have VerticalAlign and HorizontalAlign set to Alignment.None.</param>
+        /// <param name="Padding">Dictionary of top and bottom padding per component indexed by names
+        /// from <see cref="Components"/>.</param>
         /// <inheritdoc cref="UIComponent(Size, Alignment, Alignment, int, int, int)"/>
         [JsonConstructor]
-        public ExtendoBox(Dictionary<string, PaddedComponent> Components, Size Dimensions,
-            Alignment VerticalAlign, Alignment HorizontalAlign,
+        public ExtendoBox(Dictionary<string, UIComponent> Components, Dictionary<string, Pad> Padding,
+            Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
             int Scale, int VerticalOffset, int HorizontalOffset) :
             base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
         {
             this.Components = Components;
+            this.Padding = Padding;
 
             // Align padded components
             int yOffset = 0;
             int maxX = 0;
-            foreach (PaddedComponent c in Components.Values)
+            foreach ((string name, UIComponent component) in Components)
             {
+                int topPad = 0;
+                int bottomPad = 0;
+                // Try and get padding for this component
+                if (Padding.TryGetValue(name, out Pad padding))
+                {
+                    topPad = padding.Top;
+                    bottomPad = padding.Bottom;
+                }
+
                 // Set Alignment to None to keep order
-                c.Component.VerticalAlign = Alignment.None;
-                c.Component.HorizontalAlign = Alignment.None;
+                component.VerticalAlign = Alignment.None;
+                component.HorizontalAlign = Alignment.None;
 
                 // Apply padding to offsets
-                c.Component.VerticalOffset = yOffset + c.PadTop;
-                yOffset += c.Component.Dimensions.Height + c.PadBottom;
+                component.VerticalOffset = yOffset + topPad;
+                yOffset += component.Dimensions.Height + bottomPad;
 
                 // Compare maxX
-                int componentX = c.Component.Dimensions.Width + c.Component.HorizontalOffset;
+                int componentX = component.Dimensions.Width + component.HorizontalOffset;
                 if (componentX > maxX)
                     maxX = componentX;
             }
@@ -79,18 +94,18 @@ namespace BlackberryMead.Input.UI
 
         public override void Update(InputState input)
         {
-            foreach (PaddedComponent c in Components.Values)
+            foreach (UIComponent component in Components.Values)
             {
-                c.Component.Update(input);
+                component.Update(input);
             }
         }
 
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            foreach (PaddedComponent c in Components.Values)
+            foreach (UIComponent component in Components.Values)
             {
-                c.Component.Draw(spriteBatch);
+                component.Draw(spriteBatch);
             }
             base.Draw(spriteBatch);
         }
@@ -100,9 +115,9 @@ namespace BlackberryMead.Input.UI
         {
             base.Realign(boundingRect);
 
-            foreach (PaddedComponent component in Components.Values)
+            foreach (UIComponent component in Components.Values)
             {
-                component.Component.Realign(Rect);
+                component.Realign(Rect);
             }
         }
 
@@ -113,9 +128,9 @@ namespace BlackberryMead.Input.UI
             for (int i = 0; i < Components.Count; i++)
             {
                 // Add the element at index i
-                children.Add(Components.Keys.ElementAt(i), Components[Components.Keys.ElementAt(i)].Component);
+                children.Add(Components.Keys.ElementAt(i), Components[Components.Keys.ElementAt(i)]);
                 // Add all of that element's children
-                children = children.Concat(Components.Values.ElementAt(i).Component.GetChildren()).ToDictionary(
+                children = children.Concat(Components.Values.ElementAt(i).GetChildren()).ToDictionary(
                     kvp => kvp.Key, kvp => kvp.Value);
             }
             return children;

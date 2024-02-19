@@ -14,7 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Framework\IGameApplicationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\State.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\StateMachine.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Game1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GridPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputState.cs" />
