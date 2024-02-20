@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -224,10 +225,10 @@ namespace BlackberryMead.Input.UI
             // Draw tab rectangles
             foreach (Rectangle r in tabRects)
             {
-                spriteBatch.Draw(UserInterface.SpriteSheet, r, TabSourceRect, Color.White);
+                spriteBatch.Draw(Spritesheet, r, TabSourceRect, Color.White);
             }
             // Draw the selected tab sprite
-            spriteBatch.Draw(UserInterface.SpriteSheet, tabRects[selectedTabIndex], SelectedTabSourceRect, Color.White);
+            spriteBatch.Draw(Spritesheet, tabRects[selectedTabIndex], SelectedTabSourceRect, Color.White);
 
             //if (hoverTabIndex != -1)
             //    spriteBatch.FillRectangle(tabRects[hoverTabIndex], Color.Blue, 0);

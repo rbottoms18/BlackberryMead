@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization.Metadata;
 
-namespace BlackberryMead.Serialization
+namespace BlackberryMead.Utility.Serialization
 {
     /// <summary>
     /// Provides useful extensions to Json serialization.

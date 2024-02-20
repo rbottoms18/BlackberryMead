@@ -14,7 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Framework\IGameApplicationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\State.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\StateMachine.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GridPoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\GridPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\Keybind.cs" />
@@ -49,13 +49,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Maps\Layer2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\Map2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\MapDrawContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Serialization\Json.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Serialization\JsonExclude.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Serialization\JsonExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Size.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\Json.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonExclude.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\ArrayHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\ASCIIArt.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\DeserializeDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\DeserializeDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\DirectedGraph.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\DoubleDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\FileHelper.cs" />

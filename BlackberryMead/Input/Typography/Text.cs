@@ -104,7 +104,9 @@ namespace BlackberryMead.Input.Typography
             {"Pink", Color.Pink},
             {"Purple", Color.Purple},
             {"Yellow", Color.Yellow},
-            {"Orange", Color.Orange}
+            {"Orange", Color.MonoGameOrange},
+            {"Azure", Color.Azure},
+            {"BlueViolet", Color.BlueViolet}
         };
 
         /// <summary>
@@ -294,9 +296,10 @@ namespace BlackberryMead.Input.Typography
             {
                 Char c = chars[k];
                 Point p = new(x, 0);
+                p += c.Offset;
 
                 // Increase the x-dim start for the next character
-                x += (int)(c.Size.Width + (font.LetterSpacing * font.FontSize));
+                x += c.Size.Width + ((font.LetterSpacing + c.Offset.X) * font.FontSize);
 
                 _.Add(p);
             }

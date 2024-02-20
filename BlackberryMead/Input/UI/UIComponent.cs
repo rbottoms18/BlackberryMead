@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using BlackberryMead.Framework;
 using BlackberryMead.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -28,7 +29,14 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Spritesheet of the UIComponent
         /// </summary>
-        public static Texture2D? SpriteSheet;
+        public Texture2D? Spritesheet { get; set; }
+
+        /// <summary>
+        /// Name of the Spritesheet of this. If left empty,
+        /// the containing <see cref="UserInterface.Spritesheet"/> will be used instead.
+        /// </summary>
+        [JsonInclude]
+        public string SpritesheetName { get; set; } = "";
 
         /// <summary>
         /// Rectangle that the UIComponent is encapsulated in and drawn to
@@ -65,39 +73,39 @@ namespace BlackberryMead.Input.UI
         public int Scale { get; protected set; } = 1;
 
         /// <summary>
-        /// Dimensions of the UIComponent
+        /// Dimensions of the UIComponent.
         /// </summary>
         [JsonInclude]
         public Size Dimensions { get; set; }
 
         /// <summary>
-        /// Vertical offset of the UIElement from its Origin
+        /// Vertical offset of the UIElement from its Origin.
         /// </summary>
         [JsonInclude]
         public int VerticalOffset { get; set; }
 
         /// <summary>
-        /// Horizontal offset of the UIElement from its Origin
+        /// Horizontal offset of the UIElement from its Origin.
         /// </summary>
         [JsonInclude]
         public int HorizontalOffset { get; set; }
 
         /// <summary>
-        /// Vertical allignment of the UIElement against its Origin
+        /// Vertical allignment of the UIElement against its Origin.
         /// </summary>
         [JsonInclude]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Alignment VerticalAlign { get; set; }
 
         /// <summary>
-        /// Horizontal allignment of the UIElement against its Origin
+        /// Horizontal allignment of the UIElement against its Origin.
         /// </summary>
         [JsonInclude]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Alignment HorizontalAlign { get; set; }
 
         /// <summary>
-        /// Whether the bounding rect of this is drawn.
+        /// Enables the drawing of the bounding box.
         /// </summary>
         public bool ShowBorder { get; set; }
 
@@ -106,6 +114,9 @@ namespace BlackberryMead.Input.UI
         /// </summary>
         public virtual List<string> Actions { get => new(); }
 
+        /// <summary>
+        /// Border width of the lines drawn by <see cref="ShowBorder"/>.
+        /// </summary>
         protected static int borderWidth = 3;
 
 
@@ -273,7 +284,16 @@ namespace BlackberryMead.Input.UI
         /// </summary>
         /// <param name="content"></param>
         public virtual void LoadContent(ContentManager content)
-        { }
+        {
+            if (SpritesheetName != "")
+            {
+                try
+                {
+                    Spritesheet = content.Load<Texture2D>(SpritesheetName);
+                }
+                catch { }
+            }
+        }
     }
 
 

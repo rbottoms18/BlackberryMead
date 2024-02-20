@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using BlackberryMead.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -73,7 +74,7 @@ namespace BlackberryMead.Input.UI
 
             // Draw background rect
             if (!BackgroundSourceRect.IsEmpty)
-                spriteBatch.Draw(UserInterface.SpriteSheet, Rect, BackgroundSourceRect, Color.White);
+                spriteBatch.Draw(Spritesheet, Rect, BackgroundSourceRect, Color.White);
 
             base.Draw(spriteBatch);
         }

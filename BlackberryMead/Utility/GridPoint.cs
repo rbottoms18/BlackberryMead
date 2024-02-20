@@ -4,7 +4,7 @@ using System;
 using System.Text.Json.Serialization;
 using Point = Microsoft.Xna.Framework.Point;
 
-namespace BlackberryMead
+namespace BlackberryMead.Utility
 {
     /// <summary>
     /// A point struct that represents a position in a grid.

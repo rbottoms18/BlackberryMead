@@ -1,7 +1,7 @@
-﻿using BlackberryMead.Maps;
+﻿using BlackberryMead.Utility;
 using Microsoft.Xna.Framework;
 
-namespace BlackberryMead;
+namespace BlackberryMead.Maps;
 
 /// <summary>
 /// Marks the object as needing to be updated every in-game tick.

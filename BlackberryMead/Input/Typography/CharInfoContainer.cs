@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Text.Json.Serialization;
 
 namespace BlackberryMead.Input.Typography
 {
@@ -18,16 +19,23 @@ namespace BlackberryMead.Input.Typography
         /// </summary>
         public Rectangle BorderRect;
 
+        /// <summary>
+        /// Offset of the Char from its perscribed position in the Text.
+        /// </summary>
+        public Point Offset;
+
 
         /// <summary>
         /// Create a new CharInfoContainer
         /// </summary>
-        /// <param name="characterRect"></param>
-        /// <param name="borderRect"></param>
-        public CharInfoContainer(Rectangle characterRect, Rectangle borderRect)
+        /// <param name="CharacterRect"></param>
+        /// <param name="BorderRect"></param>
+        [JsonConstructor]
+        public CharInfoContainer(Rectangle CharacterRect, Rectangle BorderRect, Point Offset)
         {
-            CharacterRect = characterRect;
-            BorderRect = borderRect;
+            this.CharacterRect = CharacterRect;
+            this.BorderRect = BorderRect;
+            this.Offset = Offset;
         }
     }
 }

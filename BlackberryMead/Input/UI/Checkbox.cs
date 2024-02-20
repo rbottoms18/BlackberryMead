@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Text.Json.Serialization;
@@ -75,9 +76,9 @@ namespace BlackberryMead.Input.UI
             base.Draw(spriteBatch);
 
             if (IsChecked)
-                spriteBatch.Draw(SpriteSheet, Rect, CheckedSpriteSourceRect, Color.White * Opacity);
+                spriteBatch.Draw(Spritesheet, Rect, CheckedSpriteSourceRect, Color.White * Opacity);
             else
-                spriteBatch.Draw(SpriteSheet, Rect, UncheckedSpriteSourceRect, Color.White * Opacity);
+                spriteBatch.Draw(Spritesheet, Rect, UncheckedSpriteSourceRect, Color.White * Opacity);
         }
 
     }

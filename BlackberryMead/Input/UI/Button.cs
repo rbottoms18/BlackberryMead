@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 using System.Text.Json.Serialization;
+using Size = BlackberryMead.Utility.Size;
 
 namespace BlackberryMead.Input.UI
 {
@@ -92,10 +93,10 @@ namespace BlackberryMead.Input.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (isBeingClicked)
-                //spriteBatch.Draw(UserInterface.SpriteSheet, Rect, clickedSourceRect, Color.White);
+                //spriteBatch.Draw(Spritesheet, Rect, clickedSourceRect, Color.White);
                 spriteBatch.FillRectangle(Rect, Color.Red * Opacity, 0);
             else
-                //spriteBatch.Draw(UserInterface.SpriteSheet, Rect, sourceRect, Color.White);
+                //spriteBatch.Draw(Spritesheet, Rect, sourceRect, Color.White);
                 spriteBatch.FillRectangle(Rect, Color.White * Opacity, 0);
 
             base.Draw(spriteBatch);

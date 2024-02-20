@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlackberryMead.Serialization
+namespace BlackberryMead.Utility.Serialization
 {
     /// <summary>
     /// Attribute to mark a property to be excluded from serialization, but not ignored.

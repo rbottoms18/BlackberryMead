@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -122,7 +123,8 @@ namespace BlackberryMead.Input.Typography
                     Size size = new Size(charInfo.CharacterRect.Size);
                     return new Char(c, charInfo, Texture, size * FontSize);
                 }
-                return new Char(c, new CharInfoContainer(Rectangle.Empty, Rectangle.Empty), Texture, Size.Empty);
+                return new Char(c, new CharInfoContainer(Rectangle.Empty, Rectangle.Empty, Point.Zero), 
+                    Texture, Size.Empty);
             }
         }
 

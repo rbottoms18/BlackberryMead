@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Size = BlackberryMead.Utility.Size;
 
 namespace BlackberryMead.Input.UI
 {
@@ -41,9 +42,11 @@ namespace BlackberryMead.Input.UI
         };
 
         /// <summary>
-        /// SpriteSheet of UserInterface graphical components.
+        /// Default SpriteSheet of this UserInterface's graphical components.
+        /// If a UIComponent does not specify a SpriteSheet name, this will be used as it's
+        /// SpriteSheet.
         /// </summary>
-        public static Texture2D? SpriteSheet;
+        public Texture2D? Spritesheet { get; set; }
 
         /// <summary>
         /// UIComponents that constitute this <see cref="UserInterface"/>. 
@@ -86,16 +89,7 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Scale at which this is drawn.
         /// </summary>
-        public float RenderScale
-        {
-            get => renderScale;
-            protected set
-            {
-                renderScale = value;
-            }
-        }
-        private float renderScale;
-
+        public float RenderScale { get; protected set; }
 
         /// <summary>
         /// All <see cref="UIComponent"/> children contained in this.
@@ -110,7 +104,9 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Whether the borders of all the UIElements are drawn.
         /// </summary>
-        public bool ShowBorders { get => showBorders; set
+        public bool ShowBorders
+        {
+            get => showBorders; set
             {
                 showBorders = value;
                 foreach (UIComponent child in Children.Values)
@@ -126,7 +122,7 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Event thrown when all required content is loaded.
         /// </summary>
-        public event EventHandler OnContentLoaded;
+        public event EventHandler? OnContentLoaded;
 
         /// <summary>
         /// Camera of the UserInterface.
@@ -179,11 +175,6 @@ namespace BlackberryMead.Input.UI
         private List<IRenderable> renderableChildren = new();
 
         /// <summary>
-        /// ContentManager for calling <see cref="UIComponent.LoadContent(ContentManager)"/>.
-        /// </summary>
-        private ContentManager content;
-
-        /// <summary>
         /// Instance variable for property <see cref="ShowBorders"/>
         /// </summary>
         private bool showBorders;
@@ -195,12 +186,11 @@ namespace BlackberryMead.Input.UI
         /// <param name="graphicsDevice">GraphicsDevice for drawing</param>
         /// <param name="windows">Dictionary of UIWindows in this. Keys are window names, values UIWindows</param>
         /// <param name="ScreenDim">Size of the screen. </param>
-        public UserInterface(GraphicsDevice graphicsDevice, ContentManager content, Dictionary<string, Window> windows, Size ScreenDim,
-            float maxZoomOutLevel)
+        public UserInterface(GraphicsDevice graphicsDevice, ContentManager content, Dictionary<string, Window> windows, 
+            string SpritesheetPath, Size ScreenDim, float maxZoomOutLevel)
         {
             Windows = windows;
             this.graphicsDevice = graphicsDevice;
-            this.content = content;
             mainWindow = EmptyWindow;
             MainWindowName = "";
             defaultWindow = EmptyWindow;
@@ -230,9 +220,11 @@ namespace BlackberryMead.Input.UI
             renderableChildren = Children.Values.OfType<IRenderable>().ToList();
             Initialize(graphicsDevice);
 
-            // Set children content
+            // Load content
+            Spritesheet = content.Load<Texture2D>(SpritesheetPath);
             foreach (UIComponent component in Children.Values)
             {
+                component.Spritesheet = Spritesheet;
                 component.LoadContent(content);
             }
             OnContentLoadedEvent(new EventArgs());

@@ -1,10 +1,9 @@
-﻿using BlackberryMead.Serialization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.Json;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Utility.Serialization
 {
     /// <summary>
     /// A <see cref="Dictionary{TKey, TValue}"/> that stores key-value pairs of

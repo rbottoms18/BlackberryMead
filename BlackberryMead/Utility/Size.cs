@@ -2,11 +2,11 @@
 using System.Drawing;
 using System.Text.Json.Serialization;
 
-namespace BlackberryMead
+namespace BlackberryMead.Utility
 {
-    // I got tired of having to write custom methods to scale MonoGame.Extended.Size by floats
-    // so I wrote my own implementation.
-    // -R
+    /// <summary>
+    /// Class that represents a two dimensional size with a Width and Height.
+    /// </summary>
     public struct Size : IEquatable<Size>
     {
         /// <summary>

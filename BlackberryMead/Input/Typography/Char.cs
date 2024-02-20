@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -108,6 +109,7 @@ namespace BlackberryMead.Input.Typography
             // Process info container
             SourceRect = source.CharacterRect;
             BorderRect = source.BorderRect;
+            Offset = source.Offset;
         }
 
 

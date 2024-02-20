@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace BlackberryMead.Serialization
+namespace BlackberryMead.Utility.Serialization
 {
     /// <summary>
     /// Provides methods for working with Json strings and objects.
