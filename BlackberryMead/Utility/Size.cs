@@ -12,7 +12,7 @@ namespace BlackberryMead.Utility
         /// <summary>
         /// A Size with <see cref="Width"/> and <see cref="Height"/> 0.
         /// </summary>
-        public static Size Empty => new Size(0, 0);
+        public static Size Zero => new Size(0, 0);
 
         [JsonInclude]
         public int Width { get; set; }

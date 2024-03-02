@@ -38,6 +38,30 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
+        /// Gets the tuple of both values if the the given key exists.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public (S, S) this[T key]
+        {
+            get 
+            {
+                S value1 = default;
+                S value2 = default;
+                if (dict1.TryGetValue(key, out S s1))
+                {
+                    value1 = s1;
+                }
+                if (dict2.TryGetValue(key, out S s2))
+                {
+                    value2 = s2;
+                }
+                return (value1, value2);
+            }
+        }
+
+
+        /// <summary>
         /// Creates a new DoubleDictionary from an existing DoubleDictionary
         /// </summary>
         /// <param name="doubleDict"></param>

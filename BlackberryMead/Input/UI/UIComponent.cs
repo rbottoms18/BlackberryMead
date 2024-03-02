@@ -134,7 +134,7 @@ namespace BlackberryMead.Input.UI
             int Scale, int VerticalOffset, int HorizontalOffset)
         {
             this.Scale = Scale > 0 ? Scale : 1;
-            if (Dimensions != Size.Empty)
+            if (Dimensions != Size.Zero)
                 this.Dimensions = Dimensions * this.Scale;
             this.VerticalAlign = VerticalAlign;
             this.HorizontalAlign = HorizontalAlign;
@@ -305,7 +305,7 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Create a new NullUIElement
         /// </summary>
-        public NullUIElement() : base(Size.Empty, Alignment.Top, Alignment.Left, 1, 0, 0)
+        public NullUIElement() : base(Size.Zero, Alignment.Top, Alignment.Left, 1, 0, 0)
         { }
 
 

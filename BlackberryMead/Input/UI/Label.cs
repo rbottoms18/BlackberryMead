@@ -49,35 +49,43 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Create a new TextBox. The <paramref name="Dimensions"/> of this will be set to the dimensions of
-        /// the <see cref="Text"/> it displays.
+        /// Create a new TextBox.
         /// </summary>
         /// <inheritdoc/>
         /// <param name="Text">Text string to be displayed in this.</param>
-        /// <param name="FontSize">Size of the font used to write the text.</param>
         /// <param name="FontName">Name of the font used to write the text.</param>
-        public Label(string Text, string FontName, Size Dimensions, int LineWidth, Color Color,
-            Alignment VerticalAlign, Alignment HorizontalAlign, int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+        /// <param name="Color">Color of the text.</param>
+        /// <param name="LineWidth">Maximum linewidth of the Text.</param>
+        public Label(string Text, Font Font, Color Color, int LineWidth = 0,
+            Alignment VerticalAlign = Alignment.Top, Alignment HorizontalAlign = Alignment.Top,
+            int Scale = 1, int VerticalOffset = 0, int HorizontalOffset = 0) :
+            base(Size.Zero, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
         {
             this.Text = Text;
-            this.FontName = FontName;
+            this.Font = Font;
             this.LineWidth = LineWidth;
             if (Color.A == 0)
                 Color.A = 255;
             this.Color = Color;
-
-            FontName ??= "Iris3";
-            this.Font = Font.GetFontByName(FontName);
-
-            if (this.Font == null)
-            {
-                this.Font = Font.GetFontByName(FontName);
-            }
+            if (Font is null)
+                this.Font = Font.GetFontByName("Iris3");
 
             text = new Text(Text, Font, this.Color, LineWidth);
-            this.Dimensions = text.Size;
+            Dimensions = text.Size;
         }
+
+
+        /// <summary>
+        /// Create a new TextBox.
+        /// </summary>
+        /// <inheritdoc cref="Label.Label(string, Font, Color, int, Alignment, Alignment, int, int, int)"/>
+        /// <param name="FontName">Name of the font to be used.</param>
+        [JsonConstructor]
+        public Label(string Text, string FontName, Color Color, int LineWidth = 0,
+            Alignment VerticalAlign = Alignment.Top, Alignment HorizontalAlign = Alignment.Top, 
+            int Scale = 1, int VerticalOffset = 0, int HorizontalOffset = 0) :
+            this(Text, Font.GetFontByName(FontName), Color, LineWidth, VerticalAlign, HorizontalAlign,
+                Scale, VerticalOffset, HorizontalOffset) {}
 
 
         public override void Update(InputState input)

@@ -141,7 +141,7 @@ namespace BlackberryMead.Input.Typography
             this.font = font;
             this.maxLineLength = maxLineLength;
             this.lineSpacing = 0;
-            Size = Size.Empty;
+            Size = Size.Zero;
 
             Font currentFont;
             List<Point> linePositions = new List<Point>();

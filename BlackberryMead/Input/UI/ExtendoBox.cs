@@ -12,7 +12,7 @@ namespace BlackberryMead.Input.UI
     /// list rather than relative to an absolute position. Automatically resizes to encapsulate 
     /// its components.
     /// </summary>
-    internal class ExtendoBox : UIComponent
+    public class ExtendoBox : UIComponent
     {
         /// <summary>
         /// List of components in this.
@@ -23,7 +23,7 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Class that defines padding for each child of this.
         /// </summary>
-        internal class Pad
+        public class Pad
         {
             public int Top;
             public int Bottom;
@@ -53,9 +53,9 @@ namespace BlackberryMead.Input.UI
         /// <inheritdoc cref="UIComponent(Size, Alignment, Alignment, int, int, int)"/>
         [JsonConstructor]
         public ExtendoBox(Dictionary<string, UIComponent> Components, Dictionary<string, Pad> Padding,
-            Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+            Alignment VerticalAlign = Alignment.Top, Alignment HorizontalAlign = Alignment.Left,
+            int Scale = 1, int VerticalOffset = 0, int HorizontalOffset = 0) :
+            base(Size.Zero, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
         {
             this.Components = Components;
             this.Padding = Padding;
