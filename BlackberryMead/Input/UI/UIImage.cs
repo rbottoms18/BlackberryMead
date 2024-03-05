@@ -29,10 +29,8 @@ namespace BlackberryMead.Input.UI
         private Texture2D texture;
 
 
-        public UIImage(string TextureName, Rectangle SourceRect, Size Dimensions,
-            Alignment VerticalAlign, Alignment HorizontalAlign, int Scale, int VerticalOffset,
-            int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+        public UIImage(string TextureName, Rectangle SourceRect, UILayout Layout) :
+            base(Layout)
         {
             this.TextureName = TextureName;
             this.SourceRect = SourceRect;

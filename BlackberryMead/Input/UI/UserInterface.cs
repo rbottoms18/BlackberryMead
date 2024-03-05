@@ -23,8 +23,7 @@ namespace BlackberryMead.Input.UI
         /// </summary>
         /// <remarks>Null-Object Pattern implimentation.</remarks>
         public static readonly Window EmptyWindow = new(new Dictionary<string, UIComponent>(),
-            new List<string> { }, new Size(0, 0), new Rectangle(0, 0, 0, 0),
-            Alignment.Top, Alignment.Left, 1, 0, 0);
+            new List<string> { }, new Rectangle(0, 0, 0, 0), new UILayout());
 
         /// <summary>
         /// Default deserialization options for deserializing UIComponents.
@@ -70,7 +69,8 @@ namespace BlackberryMead.Input.UI
         public string MainWindowName { get; private set; }
 
         /// <summary>
-        /// Name of the default <see cref="Window"/> of this. <br/>
+        /// Name of the default <see cref="Window"/> of this. The default window will be opened when any other
+        /// active window is closed. <br/>
         /// If a window with the given name does not exist, an empty window will be used instead.
         /// </summary>
         public string DefaultWindowName

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using Point = Microsoft.Xna.Framework.Point;
 
@@ -110,9 +111,15 @@ namespace BlackberryMead.Input.UI
         public bool ShowBorder { get; set; }
 
         /// <summary>
-        /// List of actions subscribed to by this.
+        /// List of actions subscribed to by this. Must be overriden in derived class.
         /// </summary>
         public virtual List<string> Actions { get => new(); }
+
+        /// <summary>
+        /// Layout settings of this.
+        /// </summary>
+        [JsonInclude]
+        public UILayout Layout { get; set; }
 
         /// <summary>
         /// Border width of the lines drawn by <see cref="ShowBorder"/>.
@@ -124,23 +131,19 @@ namespace BlackberryMead.Input.UI
         /// Creates a new UIComponent.
         /// Sets origin based on alignment conditions and initializes the bounding rectangle.
         /// </summary>
-        /// <param name="Dimensions">Dimensions of the UIComponent's bounding rectangle.</param>
-        /// <param name="VerticalAlign">Vertical alignment of the component inside its parent element.</param>
-        /// <param name="HorizontalAlign">Horizontal alignment of the component inside its parent element.</param>
-        /// <param name="VerticalOffset">Vertical offset of the component from its vertical alignment.</param>
-        /// <param name="HorizontalOffset">Horizontal offset of the component from its horizontal alignment.</param>
+        /// <param name="Layout">Layout settings for the component.</param>
         [JsonConstructor]
-        public UIComponent(Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset)
+        public UIComponent(UILayout Layout)
         {
-            this.Scale = Scale > 0 ? Scale : 1;
-            if (Dimensions != Size.Zero)
-                this.Dimensions = Dimensions * this.Scale;
-            this.VerticalAlign = VerticalAlign;
-            this.HorizontalAlign = HorizontalAlign;
-            this.VerticalOffset = VerticalOffset * this.Scale;
-            this.HorizontalOffset = HorizontalOffset * this.Scale;
-            Rect = new Rectangle(Origin, this.Dimensions);
+            this.Layout = Layout is not null ? Layout : new UILayout();
+            Scale = this.Layout.Scale > 0 ? this.Layout.Scale : 1;
+            if (this.Layout.Dimensions != Size.Zero)
+                Dimensions = this.Layout.Dimensions * Scale;
+            VerticalAlign = this.Layout.VerticalAlign;
+            HorizontalAlign = this.Layout.HorizontalAlign;
+            VerticalOffset = this.Layout.VerticalOffset * Scale;
+            HorizontalOffset = this.Layout.HorizontalOffset * Scale;
+            Rect = new Rectangle(Origin, Dimensions);
         }
 
 
@@ -294,6 +297,17 @@ namespace BlackberryMead.Input.UI
                 catch { }
             }
         }
+
+
+        /// <summary>
+        /// Returns whether the given point is inside this.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public virtual bool Contains(Point p)
+        {
+            return Rect.Contains(p);
+        }
     }
 
 
@@ -305,7 +319,7 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Create a new NullUIElement
         /// </summary>
-        public NullUIElement() : base(Size.Zero, Alignment.Top, Alignment.Left, 1, 0, 0)
+        public NullUIElement() : base(new UILayout(Size.Zero, Alignment.Top, Alignment.Left, 1, 0, 0))
         { }
 
 

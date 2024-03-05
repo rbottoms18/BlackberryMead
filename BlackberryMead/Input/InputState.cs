@@ -120,13 +120,15 @@ namespace BlackberryMead.Input
         /// <summary>
         /// Preforms an inner join on a dictionary of named <see cref="Keybind"/>s and a list of named actions.
         /// </summary>
+        /// <remarks>
+        /// An Inner Join returns elements that are in both collections.
+        /// </remarks>
         /// <param name="keybindSpace">Dictionary of action names and their associated <see cref="Keybind"/>.</param>
         /// <param name="actions">List of action names to retrieve a <see cref="Keybind"/> for.</param>
         /// <returns>A dictionary with action name keys from <paramref name="actions"/> that have a <see cref="Keybind"/>
         /// in <paramref name="keybindSpace"/>.</returns>
         public static Dictionary<string, Keybind> InnerJoin(Dictionary<string, Keybind> keybindSpace, List<string> actions)
         {
-            // Linq implimentation
             return keybindSpace.Where(s => actions.Contains(s.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
     }

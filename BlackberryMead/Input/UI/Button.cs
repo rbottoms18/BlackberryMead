@@ -53,9 +53,8 @@ namespace BlackberryMead.Input.UI
         /// </summary>
         /// <inheritdoc/>
         [JsonConstructor]
-        public Button(Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+        public Button(UILayout Layout) :
+            base(Layout)
         {
 
         }

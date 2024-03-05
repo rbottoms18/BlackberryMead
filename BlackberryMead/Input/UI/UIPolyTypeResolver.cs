@@ -38,7 +38,9 @@ namespace BlackberryMead.Input.UI
                         new JsonDerivedType(typeof(Window), typeDiscriminator: "Window"),
                         new JsonDerivedType(typeof(ExtendoBox), typeDiscriminator: "ExtendoBox"),
                         new JsonDerivedType(typeof(Group), typeDiscriminator: "Group"),
-                        new JsonDerivedType(typeof(UIImage), typeDiscriminator: "Image")
+                        new JsonDerivedType(typeof(UIImage), typeDiscriminator: "Image"),
+                        new JsonDerivedType(typeof(DragWindow), typeDiscriminator: "DragWindow"),
+                        new JsonDerivedType(typeof(DragWindow.DragRegion), typeDiscriminator: "DragRegion")
                     }
                 };
             }

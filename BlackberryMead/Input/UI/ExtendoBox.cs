@@ -53,9 +53,8 @@ namespace BlackberryMead.Input.UI
         /// <inheritdoc cref="UIComponent(Size, Alignment, Alignment, int, int, int)"/>
         [JsonConstructor]
         public ExtendoBox(Dictionary<string, UIComponent> Components, Dictionary<string, Pad> Padding,
-            Alignment VerticalAlign = Alignment.Top, Alignment HorizontalAlign = Alignment.Left,
-            int Scale = 1, int VerticalOffset = 0, int HorizontalOffset = 0) :
-            base(Size.Zero, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+            UILayout Layout) :
+            base(Layout)
         {
             this.Components = Components;
             this.Padding = Padding;

@@ -47,12 +47,14 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Creates a new UIGroup.
         /// </summary>
-        /// <inheritdoc/>
+        /// <param name="IncludeActions">Extra actions to be made avaliable when this is Open.</param>
+        /// <param name="BackgroundSourceRect">Source rectangle of the background sprite.</param>
+        /// <param name="Components">Subcomponents (children) of this.</param>
+        /// <inheritdoc cref="UIComponent.UIComponent(Size, Alignment, Alignment, int, int, int)"/>
         [JsonConstructor]
-        public Window(Dictionary<string, UIComponent> Components, List<string> IncludeActions, Size Dimensions,
-            Rectangle BackgroundSourceRect, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Components, false, Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+        public Window(Dictionary<string, UIComponent> Components, List<string> IncludeActions,
+            Rectangle BackgroundSourceRect, UILayout Layout) :
+            base(Components, false, Layout)
         {
             IncludeActions ??= new List<string>();
             Components ??= new Dictionary<string, UIComponent>();

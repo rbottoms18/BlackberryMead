@@ -51,9 +51,8 @@ namespace BlackberryMead.Input.UI
         /// <param name="UncheckedSpriteSourceRect">Source rectangle of the sprite when this is unchecked.</param>
         [JsonConstructor]
         public Checkbox(bool IsChecked, Rectangle CheckedSpriteSourceRect,
-            Rectangle UncheckedSpriteSourceRect, Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+            Rectangle UncheckedSpriteSourceRect, UILayout Layout) :
+            base(Layout)
         {
             this.IsChecked = IsChecked;
             this.CheckedSpriteSourceRect = CheckedSpriteSourceRect;

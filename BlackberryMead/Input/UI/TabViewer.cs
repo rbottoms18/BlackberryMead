@@ -125,10 +125,9 @@ namespace BlackberryMead.Input.UI
         [JsonConstructor]
         public TabViewer(Dictionary<string, Window> Tabs, bool VerticalTabs, Size TabDimensions,
             int TabSpacing, int TabVerticalOffset, int TabHorizontalOffset, Rectangle TabSourceRect,
-            Point SelectedTabOffset, Rectangle SelectedTabSourceRect, Size Dimensions,
-            Alignment VerticalAlign, Alignment HorizontalAlign, int Scale, int VerticalOffset, int HorizontalOffset,
+            Point SelectedTabOffset, Rectangle SelectedTabSourceRect, UILayout Layout,
             string SelectTabAction = "Select") :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+            base(Layout)
         {
             this.Tabs = Tabs;
             this.TabDimensions = TabDimensions * Scale;

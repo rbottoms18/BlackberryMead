@@ -29,10 +29,8 @@ namespace BlackberryMead.Input.UI
         /// <param name="Components">Subcomponents of this.</param>
         /// <inheritdoc cref="UIComponent(Size, Alignment, Alignment, int, int, int)"/>
         [JsonConstructor]
-        public Group(Dictionary<string, UIComponent> Components, bool AutoResize, Size Dimensions,
-            Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+        public Group(Dictionary<string, UIComponent> Components, bool AutoResize, UILayout Layout) :
+            base(Layout)
         {
             Components ??= new Dictionary<string, UIComponent>();
             this.Components = Components;

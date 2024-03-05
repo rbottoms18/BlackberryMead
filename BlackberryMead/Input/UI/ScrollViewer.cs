@@ -100,9 +100,8 @@ namespace BlackberryMead.Input.UI
         /// <param name="VerticalOffset">Vertical offset of the component from its vertical allignment.</param>
         /// <param name="HorizontalOffset">Horizontal offset of the component from its horizontal allignment.</param>
         public ScrollViewer(Dictionary<string, UIComponent> Components, Size ViewPortDimensions,
-            ScrollBar ScrollBar, Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset) :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+            ScrollBar ScrollBar, UILayout Layout) :
+            base(Layout)
         {
             // Set values
             this.ScrollBar = ScrollBar;

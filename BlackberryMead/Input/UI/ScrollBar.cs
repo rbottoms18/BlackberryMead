@@ -113,15 +113,13 @@ namespace BlackberryMead.Input.UI
         /// <param name="DefaultValue">Default value of <paramref name="Value"></paramref>.</param>
         /// <inheritdoc/>
         public ScrollBar(Size TrackDimensions, Point TrackOffset, Size KnobSize, ScrollDirections ScrollDirection,
-            Size Dimensions, Alignment VerticalAlign, Alignment HorizontalAlign,
-            int Scale, int VerticalOffset, int HorizontalOffset, int Precision = 2,
-            float DefaultValue = 0, string ScrollActionName = "Drag") :
-            base(Dimensions, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+            UILayout Layout, int Precision = 2, float DefaultValue = 0, string ScrollActionName = "Drag") :
+            base(Layout)
         {
             this.track = new Rectangle(Origin + TrackOffset, TrackDimensions);
             this.TrackOffset = TrackOffset;
-            this.TrackDimensions = TrackDimensions * Scale;
-            this.KnobSize = KnobSize * Scale;
+            this.TrackDimensions = TrackDimensions * Layout.Scale;
+            this.KnobSize = KnobSize * Layout.Scale;
             this.ScrollDirection = ScrollDirection;
             this.Precision = Precision;
             this.DefaultValue = DefaultValue;

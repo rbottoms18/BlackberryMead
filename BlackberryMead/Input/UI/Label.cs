@@ -56,10 +56,8 @@ namespace BlackberryMead.Input.UI
         /// <param name="FontName">Name of the font used to write the text.</param>
         /// <param name="Color">Color of the text.</param>
         /// <param name="LineWidth">Maximum linewidth of the Text.</param>
-        public Label(string Text, Font Font, Color Color, int LineWidth = 0,
-            Alignment VerticalAlign = Alignment.Top, Alignment HorizontalAlign = Alignment.Top,
-            int Scale = 1, int VerticalOffset = 0, int HorizontalOffset = 0) :
-            base(Size.Zero, VerticalAlign, HorizontalAlign, Scale, VerticalOffset, HorizontalOffset)
+        public Label(string Text, Font Font, Color Color, UILayout Layout, int LineWidth = 0) :
+            base(Layout)
         {
             this.Text = Text;
             this.Font = Font;
@@ -81,11 +79,8 @@ namespace BlackberryMead.Input.UI
         /// <inheritdoc cref="Label.Label(string, Font, Color, int, Alignment, Alignment, int, int, int)"/>
         /// <param name="FontName">Name of the font to be used.</param>
         [JsonConstructor]
-        public Label(string Text, string FontName, Color Color, int LineWidth = 0,
-            Alignment VerticalAlign = Alignment.Top, Alignment HorizontalAlign = Alignment.Top, 
-            int Scale = 1, int VerticalOffset = 0, int HorizontalOffset = 0) :
-            this(Text, Font.GetFontByName(FontName), Color, LineWidth, VerticalAlign, HorizontalAlign,
-                Scale, VerticalOffset, HorizontalOffset) {}
+        public Label(string Text, string FontName, Color Color, UILayout Layout, int LineWidth = 0) :
+            this(Text, Font.GetFontByName(FontName), Color, Layout, LineWidth) {}
 
 
         public override void Update(InputState input)
