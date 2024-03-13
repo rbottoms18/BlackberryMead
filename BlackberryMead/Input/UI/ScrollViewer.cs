@@ -1,5 +1,7 @@
 ﻿using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace BlackberryMead.Input.UI
     /// A collection of UIComponents that can be scrolled through vertically and viewed
     /// from a windowed display.
     /// </summary>
+    [OptInJsonSerialization]
     public class ScrollViewer : UIComponent, IRenderable
     {
         /// <summary>
@@ -210,6 +213,16 @@ namespace BlackberryMead.Input.UI
             }
             children.Add(ScrollBarName, ScrollBar);
             return children;
+        }
+
+
+        public override void LoadContent(ContentManager content)
+        {
+            base.LoadContent(content);
+            foreach (UIComponent component in Components.Values)
+            {
+                component.LoadContent(content);
+            }
         }
 
 

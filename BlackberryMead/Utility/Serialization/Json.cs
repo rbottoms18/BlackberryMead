@@ -23,7 +23,6 @@ namespace BlackberryMead.Utility.Serialization
         {
             options ??= new JsonSerializerOptions();
 
-            // Deserialize json
             var json = JsonDocument.Parse(jsonSource).RootElement;
 
             foreach (var property in json.EnumerateObject())
@@ -74,6 +73,28 @@ namespace BlackberryMead.Utility.Serialization
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="s"></param>
+        /// <param name="settings"></param>
+        /// <remarks>
+        /// This does NOT call an object's constructor. Plan accordingly.
+        /// </remarks>
+        /// <returns></returns>
+        public static T Deserialize<T>(string s, DataContractJsonSerializerSettings settings)
+        {
+            // Create a stream to serialize the object to.
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(s));
+            ms.Position = 0;
+
+            // Serializer the object to the stream.
+            var ser = new DataContractJsonSerializer(typeof(T), settings);
+            return (T)ser.ReadObject(ms);
+        }
+
+
+        /// <summary>
         /// Serialize an object to json.
         /// </summary>
         /// <param name="obj">Object to be serialized.</param>
@@ -113,12 +134,8 @@ namespace BlackberryMead.Utility.Serialization
         /// <param name="obj">Object to serialize.</param>
         /// <param name="settings">Settings for serialization.</param>
         /// <returns></returns>
-        public static string Serialize<T>(T obj, DataContractJsonSerializerSettings settings = null,
-            JsonSerializerOptions options = null)
+        public static string Serialize<T>(T obj, DataContractJsonSerializerSettings settings)
         {
-            if (settings == null)
-                settings = new DataContractJsonSerializerSettings();
-
             // Create a stream to serialize the object to.
             var ms = new MemoryStream();
 

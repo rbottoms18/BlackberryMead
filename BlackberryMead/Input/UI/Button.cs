@@ -1,15 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility.Serialization;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 using System.Text.Json.Serialization;
-using Size = BlackberryMead.Utility.Size;
 
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
     /// Clickable UIElement that raises an event upon click.
     /// </summary>
+    [OptInJsonSerialization]
     public class Button : UIComponent
     {
         /// <summary>

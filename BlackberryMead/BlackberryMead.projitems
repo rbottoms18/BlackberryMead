@@ -12,6 +12,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Framework\Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\GameApplicationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\IGameApplicationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIRectangle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonRectangleConverter.cs" />
+    <Compile Include="..\..\BlackberryMead\BlackberryMead\Utility\ReflectionExtensions.cs" />
+    <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\JsonLoadableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\State.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\StateMachine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\DragWindow.cs" />
@@ -39,7 +43,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\TabViewer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIImage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIPolyTypeResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UserInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\HashGrid.cs" />
@@ -52,7 +55,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Maps\Map2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\MapDrawContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\Json.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonExclude.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\ArrayHelper.cs" />
@@ -65,7 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utility\HSLColor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\IDrawable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\IDrawContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\INullImplimentable.cs" />
+    <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\INullImplementable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Motion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Probability.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Shapes.cs" />

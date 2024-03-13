@@ -1,5 +1,7 @@
 ﻿using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace BlackberryMead.Input.UI
     /// list rather than relative to an absolute position. Automatically resizes to encapsulate 
     /// its components.
     /// </summary>
+    [OptInJsonSerialization]
     public class ExtendoBox : UIComponent
     {
         /// <summary>
@@ -134,6 +137,16 @@ namespace BlackberryMead.Input.UI
                     kvp => kvp.Key, kvp => kvp.Value);
             }
             return children;
+        }
+
+
+        public override void LoadContent(ContentManager content)
+        {
+            base.LoadContent(content);
+            foreach (UIComponent c in Components.Values)
+            {
+                c.LoadContent(content);
+            }
         }
     }
 }

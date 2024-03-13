@@ -1,4 +1,4 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,6 +9,7 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// A UIElement that can be enabled or disabled ("checked").
     /// </summary>
+    [OptInJsonSerialization]
     public class Checkbox : UIComponent
     {
         /// <summary>

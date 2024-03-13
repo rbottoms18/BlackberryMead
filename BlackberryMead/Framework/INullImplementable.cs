@@ -1,10 +1,10 @@
 ﻿namespace BlackberryMead.Utility
 {
     /// <summary>
-    /// Marks an object as having a Null Object Pattern implimentation.
+    /// Marks an object as having a Null Object Pattern implementation.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface INullImplimentable<T>
+    public interface INullImplementable<T>
     {
         /// <summary>
         /// Returns true if the object is null, false if not.
@@ -12,8 +12,8 @@
         abstract bool IsNull();
 
         /// <summary>
-        /// Gets the Null Object of type <typeparamref name="T"/>
+        /// Null object implementation of type <typeparamref name="T"/>
         /// </summary>
-        static abstract T GetNull();
+        public static abstract T Null { get; }
     }
 }

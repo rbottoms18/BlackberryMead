@@ -1,5 +1,7 @@
 ﻿using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// UI Element that stores multiple states accessable through 'tabs'
     /// </summary>
+    [OptInJsonSerialization]
     public class TabViewer : UIComponent
     {
         public override Rectangle Rect { get; protected set; }
@@ -184,6 +187,16 @@ namespace BlackberryMead.Input.UI
             foreach (Window tab in Tabs.Values)
             {
                 tab.Realign(Rect);
+            }
+        }
+
+
+        public override void LoadContent(ContentManager content)
+        {
+            base.LoadContent(content);
+            foreach (Window tab in Tabs.Values)
+            {
+                tab.LoadContent(content);
             }
         }
 

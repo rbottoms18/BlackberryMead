@@ -1,8 +1,8 @@
 ﻿#nullable enable
 using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -13,19 +13,19 @@ namespace BlackberryMead.Input.UI
     /// A Group that acts as a self contained menu. When visible adds Actions
     /// of its Children to the <see cref="UserInterface.CurrentWindowActions"/>.
     /// </summary>
-    [Serializable]
+    [OptInJsonSerialization]
     public class Window : Group
     {
         /// <summary>
         /// Source rectangle of the background image of this.
         /// </summary>
-        [JsonInclude]
+        [JsonInclude, JsonOptIn]
         public Rectangle BackgroundSourceRect { get; protected set; }
 
         /// <summary>
         /// List of actions manually included to this.
         /// </summary>
-        [JsonInclude]
+        [JsonInclude, JsonOptIn]
         public List<string> IncludeActions { get; protected set; } = new();
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace BlackberryMead.Input.UI
         /// <remarks>
         /// <see cref="UIComponent.Dimensions"/> if set will override <see cref="MatchViewport"/>.
         /// </remarks>
-        [JsonInclude]
+        [JsonInclude, JsonOptIn]
         public bool MatchViewport { get; init; }
 
         public override List<string> Actions => actions;
@@ -82,14 +82,19 @@ namespace BlackberryMead.Input.UI
         }
 
 
-        /// <summary>
-        /// Method called when this is begin closed.
-        /// </summary>
         public override void OnClose()
         {
             base.OnClose();
             foreach (UIComponent component in Components.Values)
                 component.OnClose();
+        }
+
+
+        public override void OnOpen()
+        {
+            base.OnOpen();
+            foreach (UIComponent component in Components.Values)
+                component.OnOpen();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace BlackberryMead.Utility
         /// <param name="array">The array to be filled.</param>
         /// <param name="value">The value to fill the array with.</param>
         /// <returns><paramref name="array"/> with every entry replaced with <paramref name="value"/>.</returns>
-        public static T[] FillArray<T>(T[] array, T value)
+        public static T[] FillArray<T, S>(T[] array, S value) where S : T
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -157,7 +157,7 @@ namespace BlackberryMead.Utility
         public static T[,] NewFilledArray<T>(int rows, int columns, T value)
         {
             T[,] _ = new T[rows, columns];
-            FillArray<T>(_, value);
+            FillArray(_, value);
             return _;
         }
 

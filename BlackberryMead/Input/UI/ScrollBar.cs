@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility.Serialization;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
@@ -11,6 +12,7 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// A UIElement with a dragable component on a track that determines a value between 0 and 1.
     /// </summary>
+    [OptInJsonSerialization]
     public class ScrollBar : UIComponent
     {
         /// <summary>

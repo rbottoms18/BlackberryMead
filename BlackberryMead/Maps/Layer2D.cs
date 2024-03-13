@@ -73,9 +73,9 @@ namespace BlackberryMead.Maps
         protected GridPoint[,] pointers;
 
         /// <summary>
-        /// <see cref="INullImplimentable{T}"/> null object of type <see cref="T"/>.
+        /// <see cref="INullImplementable{T}"/> null object of type <see cref="T"/>.
         /// </summary>
-        protected T Null = T.GetNull();
+        protected T Null = T.Null;
 
 
         /// <summary>

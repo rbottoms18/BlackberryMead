@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Size = BlackberryMead.Utility.Size;
 
 namespace BlackberryMead.Input.UI
@@ -37,7 +39,14 @@ namespace BlackberryMead.Input.UI
             AllowTrailingCommas = true,
             IncludeFields = true,
             Converters = { new JsonStringEnumConverter() },
-            TypeInfoResolver = new UIPolyTypeResolver()
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver()
+            {
+                Modifiers =
+                {
+                    JsonExtensions.OptInSerialization<OptInJsonSerialization, JsonOptIn>,
+                    JsonExtensions.AddNativePolymorphicTypeInfo<UIComponent>
+                }
+            }
         };
 
         /// <summary>
@@ -186,8 +195,8 @@ namespace BlackberryMead.Input.UI
         /// <param name="graphicsDevice">GraphicsDevice for drawing</param>
         /// <param name="windows">Dictionary of UIWindows in this. Keys are window names, values UIWindows</param>
         /// <param name="ScreenDim">Size of the screen. </param>
-        public UserInterface(GraphicsDevice graphicsDevice, ContentManager content, Dictionary<string, Window> windows, 
-            string SpritesheetPath, Size ScreenDim, float maxZoomOutLevel)
+        public UserInterface(GraphicsDevice graphicsDevice, ContentManager content, Dictionary<string, Window> windows,
+            string SpritesheetName, Size ScreenDim, float maxZoomOutLevel)
         {
             Windows = windows;
             this.graphicsDevice = graphicsDevice;
@@ -221,11 +230,15 @@ namespace BlackberryMead.Input.UI
             Initialize(graphicsDevice);
 
             // Load content
-            Spritesheet = content.Load<Texture2D>(SpritesheetPath);
+            Spritesheet = content.Load<Texture2D>(SpritesheetName);
             foreach (UIComponent component in Children.Values)
             {
                 component.Spritesheet = Spritesheet;
-                component.LoadContent(content);
+                component.SpritesheetName = SpritesheetName;
+            }
+            foreach (Window w in Windows.Values)
+            {
+                w.LoadContent(content);
             }
             OnContentLoadedEvent(new EventArgs());
         }
@@ -399,6 +412,7 @@ namespace BlackberryMead.Input.UI
                 // Set new main window.
                 mainWindow = window;
                 window.IsVisible = true;
+                window.OnOpen();
                 MainWindowName = windowName;
                 IsWindowOpen = true;
             }
@@ -414,6 +428,7 @@ namespace BlackberryMead.Input.UI
             mainWindow.IsVisible = false;
             mainWindow.OnClose();
             mainWindow = defaultWindow;
+            mainWindow.OnOpen();
             MainWindowName = DefaultWindowName;
             mainWindow.IsVisible = true;
             IsWindowOpen = false;

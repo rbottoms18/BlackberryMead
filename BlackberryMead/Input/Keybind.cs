@@ -37,7 +37,8 @@ namespace BlackberryMead.Input
         public Keys Key { get; set; } = Keys.None;
 
         /// <summary>
-        /// Auxiliary keys that must be held while <paramref name="Key"></paramref> and/or <paramref name="MouseButton"></paramref> 
+        /// Auxiliary keys that must be held while <paramref name="Key"></paramref> 
+        /// and/or <paramref name="MouseButton"></paramref> 
         /// is pressed to trigger the action.
         /// </summary>
         public List<Keys> AuxKeys { get; set; } = new List<Keys>();

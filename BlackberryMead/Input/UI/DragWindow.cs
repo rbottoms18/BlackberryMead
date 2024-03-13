@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility.Serialization;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using RonansGame.Utility;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using Size = BlackberryMead.Utility.Size;
 
 namespace BlackberryMead.Input.UI
@@ -12,6 +11,7 @@ namespace BlackberryMead.Input.UI
     /// A UI Component window that can be dragged by the player to reposition it
     /// on the screen.
     /// </summary>
+    [OptInJsonSerialization]
     public class DragWindow : Window
     {
         public override List<string> Actions => new List<string> { "Drag" };
@@ -20,13 +20,15 @@ namespace BlackberryMead.Input.UI
         /// Rectangle regions that can be used to drag the window.
         /// When the mouse is outside these regions, the window will not drag.
         /// </summary>
-        [JsonInclude]
-        public List<DragRegion> DragRegions = new List<DragRegion>();
+        private List<UIRectangle> dragRegions = new List<UIRectangle>();
+
+        [JsonOptIn]
+        public bool ShowDragRegions { get; set; } = false;
 
         /// <summary>
         /// Whether the window is being dragged by the player or not.
         /// </summary>
-        private bool isDragging;
+        public bool IsDragging { get; protected set; }
 
         /// <summary>
         /// Previous mouse position for computing delta mouse position
@@ -35,64 +37,54 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// UIComponent that marks a region of the DragWindow where the DragWindow can be selected to drag from.
-        /// </summary>
-        // I just want this so it will realgin when the drag window is moved. Simple implementation.
-        public class DragRegion : UIComponent
-        {
-            public DragRegion(UILayout Layout) :
-                base(Layout)
-            {}
-
-            public override void Update(InputState input) { }
-        }
-
-
-        /// <summary>
         /// Create a new DragWindow.
         /// </summary>
         /// <inheritdoc cref="Window.Window(Dictionary{string, UIComponent}, List{string}, Size, 
         /// Rectangle, Alignment, Alignment, int, int, int)"/>
-        public DragWindow(Dictionary<string, UIComponent> Components, 
-            List<string> IncludeActions, 
-            Rectangle BackgroundSourceRect, UILayout Layout) : 
+        public DragWindow(Dictionary<string, UIComponent> Components,
+            List<string> IncludeActions,
+            Rectangle BackgroundSourceRect, UILayout Layout) :
             base(Components, IncludeActions, BackgroundSourceRect, Layout)
         {
-            DragRegions = new List<DragRegion>();
-            foreach(UIComponent c in Components.Values) 
+            dragRegions = new List<UIRectangle>();
+            foreach (UIComponent c in Components.Values)
             {
-                if (c is DragRegion)
-                    DragRegions.Add((DragRegion)c);
+                if (c is UIRectangle)
+                    dragRegions.Add((UIRectangle)c);
             }
         }
 
 
         public override void Update(InputState input)
         {
-            if (!input[GameActions.Drag])
-                isDragging = false;
+            if (!input["Drag"])
+                IsDragging = false;
             else
             {
                 // If mouse is down, drag
-                foreach (DragRegion r in DragRegions)
+                foreach (UIRectangle r in dragRegions)
                 {
                     if (r.Contains(input.MousePosition))
                     {
-                        isDragging = true;
+                        IsDragging = true;
                         break;
                     }
                 }
             }
 
-            if (isDragging)
+            if (IsDragging)
             {
                 // Move the window by the change in the mouse position
                 Point deltaMouse = input.MousePosition - prevMousePos;
                 Origin = Origin + deltaMouse;
                 Rect = new Rectangle(Origin, Dimensions);
 
-                Realign(Rect);
+                foreach (UIComponent c in Components.Values)
+                    c.Realign(Rect);
             }
+
+            // Update each compontent contained in the window
+            base.Update(input);
 
             // Must be last thing in Update
             // Set prev mouse position to current
@@ -102,12 +94,14 @@ namespace BlackberryMead.Input.UI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.FillRectangle(Rect, Color.Red, 0);
-            foreach (DragRegion r in DragRegions)
-            {
-                spriteBatch.FillRectangle(r.Rect, Color.Blue, 0);
-            }
             base.Draw(spriteBatch);
+            if (ShowDragRegions)
+            {
+                foreach (UIRectangle r in dragRegions)
+                {
+                    spriteBatch.FillRectangle(r.Rect, Color.Blue, 0);
+                }
+            }
         }
 
 

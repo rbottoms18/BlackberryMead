@@ -3,7 +3,7 @@
 namespace BlackberryMead.Maps
 {
     /// <summary>
-    /// An <see cref="INullImplimentable{T}"/>, <see cref="IDrawable{T}"/> where T is <see cref="MapDrawContext"/>, 
+    /// An <see cref="INullImplementable{T}"/>, <see cref="IDrawable{T}"/> where T is <see cref="MapDrawContext"/>, 
     /// <see cref="ISpanning"/> object
     /// used in a <see cref="Map2D{T}"/>.
     /// </summary>
@@ -14,7 +14,7 @@ namespace BlackberryMead.Maps
     /// <example>
     /// public class Foo : IMapObject(Foo)
     /// </example>
-    public interface IMapObject<T> : INullImplimentable<T>, IDrawable<MapDrawContext>, ISpanning
+    public interface IMapObject<T> : INullImplementable<T>, IDrawable<MapDrawContext>, ISpanning
     {
     }
 }

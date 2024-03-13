@@ -1,5 +1,7 @@
 ﻿using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +12,20 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// A collection of <see cref="UIComponent"/> that act as one unit.
     /// </summary>
+    [OptInJsonSerialization]
     public class Group : UIComponent
     {
         /// <summary>
         /// Dictionary of components in the group. Keys are component
         /// names/structures and values are UIComponents.
         /// </summary>
+        [JsonOptIn, JsonInclude]
         public Dictionary<string, UIComponent> Components { get; set; } = new Dictionary<string, UIComponent>();
 
         /// <summary>
         /// Changes the dimensions of this to exactly encompass <see cref="Components"/>.
         /// </summary>
+        [JsonOptIn]
         public bool AutoResize { get; protected set; } = false;
 
         /// <summary>
@@ -108,6 +113,16 @@ namespace BlackberryMead.Input.UI
                 children = children.Concat(Components.Values.ElementAt(i).GetChildren()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             }
             return children;
+        }
+
+
+        public override void LoadContent(ContentManager content)
+        {
+            base.LoadContent(content);
+            foreach (UIComponent c in Components.Values)
+            {
+                c.LoadContent(content);
+            }
         }
 
 

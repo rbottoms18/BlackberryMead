@@ -1,13 +1,14 @@
 ﻿#nullable enable
-using BlackberryMead.Framework;
 using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace BlackberryMead.Input.UI
@@ -15,6 +16,7 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// Visual structure that represents an interactable element of a UserInterface.
     /// </summary>
+    [OptInJsonSerialization]
     public abstract class UIComponent
     {
         /// <summary>
@@ -30,13 +32,14 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Spritesheet of the UIComponent
         /// </summary>
+        [JsonIgnore]
         public Texture2D? Spritesheet { get; set; }
 
         /// <summary>
         /// Name of the Spritesheet of this. If left empty,
         /// the containing <see cref="UserInterface.Spritesheet"/> will be used instead.
         /// </summary>
-        [JsonInclude]
+        [JsonOptIn]
         public string SpritesheetName { get; set; } = "";
 
         /// <summary>
@@ -70,44 +73,37 @@ namespace BlackberryMead.Input.UI
         /// <remarks>
         /// Affects dimensions but does not affect horizontal and vertical offsets.
         /// </remarks>
-        [JsonInclude]
         public int Scale { get; protected set; } = 1;
 
         /// <summary>
         /// Dimensions of the UIComponent.
         /// </summary>
-        [JsonInclude]
         public Size Dimensions { get; set; }
 
         /// <summary>
         /// Vertical offset of the UIElement from its Origin.
         /// </summary>
-        [JsonInclude]
         public int VerticalOffset { get; set; }
 
         /// <summary>
         /// Horizontal offset of the UIElement from its Origin.
         /// </summary>
-        [JsonInclude]
         public int HorizontalOffset { get; set; }
 
         /// <summary>
         /// Vertical allignment of the UIElement against its Origin.
         /// </summary>
-        [JsonInclude]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Alignment VerticalAlign { get; set; }
 
         /// <summary>
         /// Horizontal allignment of the UIElement against its Origin.
         /// </summary>
-        [JsonInclude]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Alignment HorizontalAlign { get; set; }
 
         /// <summary>
         /// Enables the drawing of the bounding box.
         /// </summary>
+        [JsonOptIn]
         public bool ShowBorder { get; set; }
 
         /// <summary>
@@ -118,7 +114,7 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Layout settings of this.
         /// </summary>
-        [JsonInclude]
+        [JsonOptIn]
         public UILayout Layout { get; set; }
 
         /// <summary>
@@ -135,7 +131,7 @@ namespace BlackberryMead.Input.UI
         [JsonConstructor]
         public UIComponent(UILayout Layout)
         {
-            this.Layout = Layout is not null ? Layout : new UILayout();
+            this.Layout = Layout;
             Scale = this.Layout.Scale > 0 ? this.Layout.Scale : 1;
             if (this.Layout.Dimensions != Size.Zero)
                 Dimensions = this.Layout.Dimensions * Scale;
@@ -243,9 +239,15 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Preform logic when the this' parent UserInterface is closed.
+        /// Preforms logic when the this' parent <see cref="Window"/> is closed.
         /// </summary>
         public virtual void OnClose() { }
+
+
+        /// <summary>
+        /// Preforms logic when this' parent <see cref="Window"/> is closed.
+        /// </summary>
+        public virtual void OnOpen() { }
 
 
         /// <summary>
@@ -307,6 +309,28 @@ namespace BlackberryMead.Input.UI
         public virtual bool Contains(Point p)
         {
             return Rect.Contains(p);
+        }
+
+
+        public static T ToNew<T>(T obj, ContentManager contentManager) where T : UIComponent
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                AllowTrailingCommas = true,
+                IncludeFields = true,
+                Converters = { new JsonStringEnumConverter() },
+                TypeInfoResolver = new DefaultJsonTypeInfoResolver()
+                {
+                    Modifiers =
+                        {
+                            JsonExtensions.AddNativePolymorphicTypeInfo<UIComponent>,
+                            JsonExtensions.OptInSerialization<OptInJsonSerialization, JsonOptIn>
+                        }
+                }
+            };
+            T newObj = Json.Deserialize<T>(Json.Serialize(obj, options), options);
+            newObj.LoadContent(contentManager);
+            return newObj;
         }
     }
 

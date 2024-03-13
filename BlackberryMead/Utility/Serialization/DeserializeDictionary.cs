@@ -11,7 +11,7 @@ namespace BlackberryMead.Utility.Serialization
     /// Getting the value associated with a key will return the deserialized Json of type <typeparamref name="TValue"/>.
     /// </summary>
     public class DeserializeDictionary<TKey, TValue> where TKey : notnull
-        where TValue : INullImplimentable<TValue>
+        where TValue : INullImplementable<TValue>
     {
         /// <summary>
         /// List of keys in the dictionary.
@@ -27,7 +27,7 @@ namespace BlackberryMead.Utility.Serialization
         /// <summary>
         /// Null Object implimentation of <typeparamref name="TValue"/>.
         /// </summary>
-        private TValue Null = TValue.GetNull();
+        private TValue Null = TValue.Null;
 
         /// <summary>
         /// Options to use when deserializing.

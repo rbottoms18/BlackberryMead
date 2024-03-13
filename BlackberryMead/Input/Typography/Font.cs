@@ -123,7 +123,7 @@ namespace BlackberryMead.Input.Typography
                     Size size = new Size(charInfo.CharacterRect.Size);
                     return new Char(c, charInfo, Texture, size * FontSize);
                 }
-                return new Char(c, new CharInfoContainer(Rectangle.Empty, Rectangle.Empty, Point.Zero), 
+                return new Char(c, new CharInfoContainer(Rectangle.Empty, Rectangle.Empty, Point.Zero),
                     Texture, Size.Zero);
             }
         }

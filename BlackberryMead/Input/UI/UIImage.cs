@@ -1,4 +1,4 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +9,7 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// <see cref="UIComponent"/> that draws a static image to the <see cref="UserInterface"/>.
     /// </summary>
+    [OptInJsonSerialization]
     public class UIImage : UIComponent
     {
         /// <summary>

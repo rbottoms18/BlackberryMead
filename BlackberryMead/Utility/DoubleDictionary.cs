@@ -44,7 +44,7 @@ namespace BlackberryMead.Utility
         /// <returns></returns>
         public (S, S) this[T key]
         {
-            get 
+            get
             {
                 S value1 = default;
                 S value2 = default;

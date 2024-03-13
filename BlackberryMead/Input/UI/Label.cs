@@ -1,5 +1,5 @@
 ﻿using BlackberryMead.Input.Typography;
-using BlackberryMead.Utility;
+using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Text.Json.Serialization;
@@ -10,18 +10,18 @@ namespace BlackberryMead.Input.UI
     /// <summary>
     /// A UIElement that writes text to the screen.
     /// </summary>
+    [OptInJsonSerialization]
     public class Label : UIComponent
     {
         /// <summary>
         /// Font used to draw text in this.
         /// </summary>
-        [JsonInclude]
         public Font Font { get; protected set; }
 
         /// <summary>
         /// Name of the font used to draw the text of this.
         /// </summary>
-        [JsonInclude, JsonRequired]
+        [JsonInclude, JsonRequired, JsonOptIn]
         public string FontName { get; protected set; }
 
         /// <summary>
@@ -80,7 +80,8 @@ namespace BlackberryMead.Input.UI
         /// <param name="FontName">Name of the font to be used.</param>
         [JsonConstructor]
         public Label(string Text, string FontName, Color Color, UILayout Layout, int LineWidth = 0) :
-            this(Text, Font.GetFontByName(FontName), Color, Layout, LineWidth) {}
+            this(Text, Font.GetFontByName(FontName), Color, Layout, LineWidth)
+        { }
 
 
         public override void Update(InputState input)
