@@ -116,6 +116,28 @@ namespace BlackberryMead.Input.UI
         }
 
 
+        /// <summary>
+        /// Gets the Child element with the given name from in this.
+        /// </summary>
+        /// <typeparam name="T">Type of the child component where <typeparamref name="T"/> : <see cref="UIComponent"/>.</typeparam> 
+        /// <param name="name">Name of the child component.</param>
+        /// <param name="child">The child component of type <typeparamref name="T"/>.</param>
+        /// <returns>True if a component of the given type with the given name exists inside this, false if not.</returns>
+        public bool GetChild<T>(string name, out T? child) where T : UIComponent
+        {
+            if (GetChildren().TryGetValue(name, out var element))
+            {
+                if (element is T t)
+                {
+                    child = t;
+                    return true;
+                }
+            }
+            child = default;
+            return false;
+        }
+
+
         public override void LoadContent(ContentManager content)
         {
             base.LoadContent(content);

@@ -15,7 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIRectangle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonRectangleConverter.cs" />
     <Compile Include="..\..\BlackberryMead\BlackberryMead\Utility\ReflectionExtensions.cs" />
-    <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\JsonLoadableObject.cs" />
+    <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\JsonLoadable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\State.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\StateMachine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\DragWindow.cs" />

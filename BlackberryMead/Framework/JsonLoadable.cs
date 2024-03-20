@@ -1,6 +1,7 @@
 ﻿using BlackberryMead.Utility;
 using BlackberryMead.Utility.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace BlackberryMead.Framework
 {
@@ -9,7 +10,8 @@ namespace BlackberryMead.Framework
     /// from Json read from file.
     /// </summary>
     /// <typeparam name="T">Object type to be loaded from Json.</typeparam>
-    public class JsonLoadableObject<T> where T : INullImplementable<T>
+    public abstract class JsonLoadable<T> : IJsonOnDeserialized, IJsonOnDeserializing 
+        where T : INullImplementable<T>
     {
         /// <summary>
         /// Dictionary of Json data of each <typeparamref name="T"/> able to be loaded.
@@ -58,7 +60,13 @@ namespace BlackberryMead.Framework
         /// <typeparamref name="T"/> able to be loaded.</param>
         public static void SetObjects(DeserializeDictionary<int, T> objectsDict)
         {
-            JsonLoadableObject<T>.objectsDict = objectsDict;
+            JsonLoadable<T>.objectsDict = objectsDict;
         }
+
+
+        public virtual void OnDeserialized() {}
+
+
+        public virtual void OnDeserializing() {}
     }
 }
