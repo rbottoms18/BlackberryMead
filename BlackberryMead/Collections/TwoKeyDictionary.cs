@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Collections
 {
     /// <summary>
     /// A Dictionary that takes one of two possible keys to return a value.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Collections
 {
     /// <summary>
     /// Represents a pair of dictionaries.

@@ -9,13 +9,19 @@
     <Import_RootNamespace>BlackberryMead</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\Box.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\FlatStack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\IInstanceStackable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\IStackable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\StackingBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\GameApplicationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\IGameApplicationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Framework\IQuantifiable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIRectangle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonRectangleConverter.cs" />
     <Compile Include="..\..\BlackberryMead\BlackberryMead\Utility\ReflectionExtensions.cs" />
-    <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\JsonLoadable.cs" />
+    <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\JsonLoadableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\State.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\StateMachine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\DragWindow.cs" />
@@ -45,7 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UserInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\Window.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Maps\HashGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\HashGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\IAnimate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\ICollidable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Maps\IMapObject.cs" />
@@ -59,19 +65,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\ArrayHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\ASCIIArt.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\DeserializeDictionary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\DirectedGraph.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\DoubleDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\DeserializeDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\DirectedGraph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\DoubleDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\FileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\GridPointComparer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\HSLColor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\IDrawable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\IDrawContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Framework\IDrawable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Framework\IDrawContext.cs" />
     <Compile Include="..\..\BlackberryMead\BlackberryMead\Framework\INullImplementable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Motion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Probability.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Shapes.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utility\TwoKeyDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\TwoKeyDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\WeightedRandomBag.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BlackberryMead.Maps
+namespace BlackberryMead.Collections
 {
     /// <summary>
     /// Represents a 2D grid of <see cref="HashSet{T}"/> objects.
@@ -10,12 +10,13 @@ namespace BlackberryMead.Maps
     /// <typeparam name="T"></typeparam>
     public class HashGrid<T>
     {
-        protected HashSet<T>[,] grid;
-
         public HashGrid(int rows, int cols)
         {
             grid = new HashSet<T>[rows, cols];
         }
+
+        protected HashSet<T>[,] grid;
+
 
         /// <summary>
         /// Gets the Hashset <typeparamref name="T"/> 'bucket' of objects at this grid location.
@@ -32,6 +33,7 @@ namespace BlackberryMead.Maps
             protected set { grid[p.Row, p.Column] = value; }
         }
 
+
         /// <summary>
         /// Adds the object to a position in the grid.
         /// </summary>
@@ -45,6 +47,7 @@ namespace BlackberryMead.Maps
                 grid[p.Row, p.Column] = new HashSet<T>();
             return grid[p.Row, p.Column].Add(obj);
         }
+
 
         /// <summary>
         /// Removes the object from the position in the grid.
@@ -67,6 +70,7 @@ namespace BlackberryMead.Maps
             return false;
         }
 
+
         public bool Remove(T obj, List<GridPoint> points)
         {
             bool result = false;
@@ -75,6 +79,7 @@ namespace BlackberryMead.Maps
                     result = true;
             return result;
         }
+
 
         /// <summary>
         /// Gets the union of the sets of objects of type <typeparamref name="T"/> in 

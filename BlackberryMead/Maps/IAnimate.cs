@@ -1,4 +1,4 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
 using Microsoft.Xna.Framework;
 
 namespace BlackberryMead.Maps

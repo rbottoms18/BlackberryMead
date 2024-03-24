@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Framework
 {
     /// <summary>
     /// Marks an object as able to be drawn to the screen.

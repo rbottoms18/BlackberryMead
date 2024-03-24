@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Framework
 {
     /// <summary>
     /// Interface that holds necessary values for drawing an <see cref="IDrawable"/>.

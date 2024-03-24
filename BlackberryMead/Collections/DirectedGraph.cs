@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Collections
 {
     public class DirectedGraph<T> where T : notnull
     {
