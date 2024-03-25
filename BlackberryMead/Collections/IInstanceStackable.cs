@@ -1,5 +1,6 @@
 ﻿using BlackberryMead.Utility;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace BlackberryMead.Collections
 {
@@ -9,12 +10,18 @@ namespace BlackberryMead.Collections
     /// </summary>
     /// <typeparam name="T"><see cref="INullImplementable{T}"/> type. Must include
     /// <see cref="IEquatable{T}"/> implementation.</typeparam>
-    internal interface IInstanceStackable<T> : IStackable<T> where T : INullImplementable<T>, IEquatable<T>
+    public interface IInstanceStackable<T> : IStackable<T>, INullImplementable<IInstanceStackable<T>>
+        where T : INullImplementable<T>, IEquatable<T>
     {
+        static IInstanceStackable<T> INullImplementable<IInstanceStackable<T>>.Null { get; }
+
+        /// <inheritdoc cref="INullImplementable{T}.IsNull"/>
+        new abstract bool IsNull();
+
         /// <summary>
         /// Instance of type <typeparamref name="T"/> that the <see cref="IStackable{T}"/> stores
         /// and stacks with.
         /// </summary>
-        public abstract T Value { get; }
+        public new abstract T Value { get; }
     }
 }

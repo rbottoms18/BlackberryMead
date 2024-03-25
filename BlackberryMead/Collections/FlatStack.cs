@@ -16,12 +16,14 @@ namespace BlackberryMead.Collections
     {
         public int MaxStackSize => int.MaxValue;
 
+        public T Value => T.Null;
+
         public int Count => count;
 
         /// <summary>
         /// Number of objects contained in this.
         /// </summary>
-        private int count = count;
+        protected int count = count;
 
 
         public virtual bool Add(T item)
@@ -78,6 +80,12 @@ namespace BlackberryMead.Collections
 
         public virtual bool Stack(IStackable<T> other)
         {
+            return Stack(other, out _);
+        }
+
+
+        public virtual bool Stack(IStackable<T> other, out IStackable<T> values)
+        {
             bool stackAdded = false;
             int otherCount = other.Count;
             for (int i = 0; i < otherCount; i++)
@@ -85,9 +93,11 @@ namespace BlackberryMead.Collections
                 if (Add(other.Take()))
                     stackAdded = true;
                 else
-                    // If the stack fails to add, means collection is full.
+                    // If the stack fails to add it means collection is full.
                     break;
             }
+
+            values = new FlatStack<T>(otherCount - other.Count);
             return stackAdded;
         }
 

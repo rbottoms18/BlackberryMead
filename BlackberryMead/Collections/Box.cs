@@ -82,7 +82,7 @@ namespace BlackberryMead.Collections
         }
 
 
-        public bool IsNull()
+        public virtual bool IsNull()
         {
             return (count == 0);
         }
@@ -235,6 +235,17 @@ namespace BlackberryMead.Collections
 
         public virtual bool Stack(IStackable<T> other)
         {
+            return Stack(other, out _);
+        }
+
+
+        public virtual bool Stack(IStackable<T> other, out IStackable<T> values)
+        {
+            Box<T> addedItems = new Box<T>(other.Count);
+            // Assign added to addedItems so they share the same reference.
+            values = addedItems;
+            int index = 0;
+
             int startingCount = other.Count;
             for (int i = 0; i < startingCount; i++)
             {
@@ -242,7 +253,9 @@ namespace BlackberryMead.Collections
                 if (count == 0) return false;
 
                 // If count > 0, it's gauranteed that an item can fit.
-                Add(other.Take());
+                T item = other.Take();
+                Add(item);
+                addedItems[index] = item;
 
                 // If the other is empty, return.
                 if (other.Count == 0)
@@ -254,6 +267,8 @@ namespace BlackberryMead.Collections
             if (other.Count < startingCount)
                 return true;
 
+
+            values = addedItems;
             return false;
         }
 

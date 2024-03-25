@@ -23,6 +23,10 @@ namespace BlackberryMead.Collections
         public abstract int MaxStackSize { get; }
 
 
+        /// <inheritdoc cref="INullImplementable{T}.IsNull"/>
+        new abstract bool IsNull();
+
+
         /// <summary>
         /// Adds a <see cref="T"/> to the <see cref="IStackable{T}"/>.
         /// </summary>
@@ -59,6 +63,11 @@ namespace BlackberryMead.Collections
         /// <returns><see langword="true"/> if <paramref name="other"/> successfully stacks for any amount; otherwise,
         /// <see langword="false"/>.</returns>
         public abstract bool Stack(IStackable<T> other);
+
+
+        /// <param name="values">Objects that were added to the <see cref="IStackable{T}"/>.</param>
+        /// <inheritdoc cref="IStackable{T}.Stack(IStackable{T})"/>
+        public abstract bool Stack(IStackable<T> other, out IStackable<T> values);
 
 
         /// <summary>

@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\Box.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\FlatStack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\IInstanceStackable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\InstanceBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\IStackable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\StackingBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\Game.cs" />
