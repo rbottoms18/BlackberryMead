@@ -60,16 +60,18 @@ namespace BlackberryMead.Utility.Serialization
                     IgnoreUnrecognizedTypeDiscriminators = true,
                     UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FallBackToNearestAncestor,
                 };
-                var types = Assembly
-                    .GetExecutingAssembly()
-                    .GetTypes()
-                    .Where(t => t.IsSubclassOf(typeof(T)));
-                foreach(var t in types)
+                foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    // Allowing the type to be abstract will throw an error.
-                    if (baseValueObjectType.IsAssignableFrom(t) && !t.IsAbstract)
+                    var types = assembly
+                        .GetTypes()
+                        .Where(t => t.IsSubclassOf(typeof(T)));
+                    foreach (var t in types)
                     {
-                        jsonTypeInfo.PolymorphismOptions.DerivedTypes.Add(new JsonDerivedType(t, t.FullName));
+                        // Allowing the type to be abstract will throw an error.
+                        if (baseValueObjectType.IsAssignableFrom(t) && !t.IsAbstract)
+                        {
+                            jsonTypeInfo.PolymorphismOptions.DerivedTypes.Add(new JsonDerivedType(t, t.FullName));
+                        }
                     }
                 }
             }

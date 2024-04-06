@@ -8,7 +8,7 @@ namespace BlackberryMead.Framework
     /// Implementation of <see cref="IGameApplicationService"/>. <br/>
     /// 
     /// </summary>
-    internal class GameApplicationManager : IGameApplicationService
+    public class GameApplicationManager : IGameApplicationService
     {
         /// <summary>
         /// Game this manages.

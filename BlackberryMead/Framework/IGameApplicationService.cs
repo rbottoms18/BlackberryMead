@@ -5,7 +5,7 @@ namespace BlackberryMead.Framework
     /// <summary>
     /// Service that records information about the state of the application.
     /// </summary>
-    internal interface IGameApplicationService
+    public interface IGameApplicationService
     {
         /// <summary>
         /// Whether the mouse is visible or not.

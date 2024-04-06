@@ -7,7 +7,7 @@ namespace BlackberryMead.Framework
     /// <summary>
     /// Default implementation of a <see cref="IDrawContext"/>.
     /// </summary>
-    internal class DrawContext : IDrawContext
+    public class DrawContext : IDrawContext
     {
         public SpriteBatch SpriteBatch { get; set; }
 
