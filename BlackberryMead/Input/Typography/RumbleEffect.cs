@@ -1,4 +1,4 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
 using System;
 
 namespace BlackberryMead.Input.Typography

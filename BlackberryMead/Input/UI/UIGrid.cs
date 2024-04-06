@@ -1,12 +1,11 @@
 ﻿using BlackberryMead.Framework;
-using BlackberryMead.Utility;
 using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Size = BlackberryMead.Utility.Size;
+using Size = BlackberryMead.Framework.Size;
 
 namespace BlackberryMead.Input.UI
 {
@@ -98,7 +97,7 @@ namespace BlackberryMead.Input.UI
         public UIGrid(UILayout Layout, UIGridLayout GridLayout) : base(Layout)
         {
             this.GridLayout = GridLayout;
-            
+
             GridSize = GridLayout.GridSize * Layout.Scale;
             VerticalSpacing = GridLayout.VerticalSpacing * Scale;
             HorizontalSpacing = GridLayout.HorizontalSpacing * Scale;
@@ -122,7 +121,7 @@ namespace BlackberryMead.Input.UI
                 GridSlots[i] = new Rectangle(
                     Origin.X + GridHorizontalOffset + i % RowLength * GridSize.Width + i % RowLength * HorizontalSpacing,
                     Origin.Y + GridVerticalOffset + i / RowLength * GridSize.Height + i / RowLength * VerticalSpacing,
-                    GridSize.Width, 
+                    GridSize.Width,
                     GridSize.Height);
             }
         }
@@ -184,7 +183,7 @@ namespace BlackberryMead.Input.UI
         /// <param name="spriteBatch"><see cref="SpriteBatch"/> used for drawing.</param>
         protected virtual void DrawGrid(SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < NumSlots; i++) 
+            for (int i = 0; i < NumSlots; i++)
             {
                 spriteBatch.FillRectangle(GridSlots[i], Color.White, 0);
             }
@@ -197,7 +196,7 @@ namespace BlackberryMead.Input.UI
         /// <param name="spriteBatch"><see cref="SpriteBatch"/> used for drawing.</param>
         protected virtual void DrawMouse(SpriteBatch spriteBatch)
         {
-            if (mouseObject.IsNull()) return;
+            if (mouseObject.IsNull) return;
 
             DrawContext context = new DrawContext(spriteBatch, new Rectangle(mousePosition - (GridSize / 2), GridSize), Color.White);
             mouseObject.Draw(context);

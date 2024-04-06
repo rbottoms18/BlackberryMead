@@ -15,6 +15,6 @@
         /// <summary>
         /// Returns <see langword="true"/> if the object is null; otherwise, <see langword="false"/>.
         /// </summary>
-        abstract bool IsNull();
+        public abstract bool IsNull { get; }
     }
 }

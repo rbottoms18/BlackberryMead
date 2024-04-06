@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using BlackberryMead.Utility;
+using BlackberryMead.Framework;
 using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

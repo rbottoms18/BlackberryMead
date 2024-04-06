@@ -17,6 +17,12 @@ namespace BlackberryMead.Collections
         // Override it here so there isn't an ambiguity between Null properties.
         static new IStackable<T> Null { get; }
 
+        bool INullImplementable<IStackable<T>>.IsNull => IsNull;
+
+        /// <inheritdoc cref="INullImplementable{T}.IsNull"/>
+        // Override it here so there isn't an ambiguity between IsNull properties.
+        public new abstract bool IsNull { get; }
+
         /// <summary>
         /// Maximum number of objects than can be stored in the <see cref="IStackable{T}"/>.
         /// </summary>
@@ -24,10 +30,6 @@ namespace BlackberryMead.Collections
         /// To represent a (functionally) unlimited number of objects, use <see cref="System.Int32.MaxValue"/>.
         /// </remarks>
         public abstract int MaxStackSize { get; }
-
-
-        /// <inheritdoc cref="INullImplementable{T}.IsNull"/>
-        new abstract bool IsNull();
 
 
         /// <summary>

@@ -1,5 +1,4 @@
 ﻿using BlackberryMead.Framework;
-using BlackberryMead.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

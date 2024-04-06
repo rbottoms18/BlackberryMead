@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System.Collections.Generic;
-using Size = BlackberryMead.Utility.Size;
+using Size = BlackberryMead.Framework.Size;
 
 namespace BlackberryMead.Input.UI
 {

@@ -18,10 +18,11 @@ namespace BlackberryMead.Collections
         // Override it here so there isn't an ambiguity between Null properties.
         static new IInstanceStackable<T> Null => Null;
 
-        /// <inheritdoc cref="INullImplementable{T}.IsNull"/>
-        new bool IsNull() => IsNull();
+        bool INullImplementable<IInstanceStackable<T>>.IsNull => IsNull;
 
-        abstract bool INullImplementable<IInstanceStackable<T>>.IsNull();
+        /// <inheritdoc cref="INullImplementable{T}.IsNull"/>
+        // Hide to prevent ambiguity
+        public new abstract bool IsNull { get; }
 
         /// <summary>
         /// Instance of type <typeparamref name="T"/> that the <see cref="IStackable{T}"/> stores

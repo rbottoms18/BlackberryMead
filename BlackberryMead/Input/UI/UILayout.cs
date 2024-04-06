@@ -1,4 +1,4 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
 using System.Text.Json.Serialization;
 
 namespace BlackberryMead.Input.UI

@@ -4,7 +4,7 @@ using System;
 using System.Text.Json.Serialization;
 using Point = Microsoft.Xna.Framework.Point;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Maps
 {
     /// <summary>
     /// A point struct that represents a position in a grid.
@@ -37,7 +37,7 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Converts this to a <see cref="Microsoft.Xna.Framework.Vector2"/>.
+        /// Converts this to a <see cref="Vector2"/>.
         /// </summary>
         public Vector2 ToVector2()
         {
@@ -46,7 +46,7 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Converts this to a <see cref="Microsoft.Xna.Framework.Point"/>.
+        /// Converts this to a <see cref="Point"/>.
         /// </summary>
         public Point ToPoint()
         {
@@ -205,7 +205,7 @@ namespace BlackberryMead.Utility
             if (obj == null) return false;
 
             GridPoint other = (GridPoint)obj!;
-            return (Row == other.Row && Column == other.Column);
+            return Row == other.Row && Column == other.Column;
         }
 
 

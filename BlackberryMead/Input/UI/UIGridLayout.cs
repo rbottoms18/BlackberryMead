@@ -1,4 +1,6 @@
-﻿namespace BlackberryMead.Input.UI
+﻿using BlackberryMead.Framework;
+
+namespace BlackberryMead.Input.UI
 {
     /// <summary>
     /// A set of spacing and alignment instructions for a grid.
@@ -8,7 +10,7 @@
         /// <summary>
         /// Dimensions of the grid slots.
         /// </summary>
-        public Utility.Size GridSize { get; set; }
+        public Size GridSize { get; set; }
 
         /// <summary>
         /// Number of slots.
@@ -50,7 +52,7 @@
         /// <param name="HorizontalSpacing">Horizontal spacing between slots.</param>
         /// <param name="GridVerticalOffset">Vertical offset from the Origin to which the first slot is drawn to.</param>
         /// <param name="GridHorizontalOffset">Horizontal offset from the Origin to which the first slot is drawn to.</param>
-        public UIGridLayout(Utility.Size GridSize, int NumSlots, int RowLength, int VerticalSpacing,
+        public UIGridLayout(Size GridSize, int NumSlots, int RowLength, int VerticalSpacing,
         int HorizontalSpacing, int GridVerticalOffset, int GridHorizontalOffset)
         {
             this.GridSize = GridSize;

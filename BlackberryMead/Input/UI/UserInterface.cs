@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
-using Size = BlackberryMead.Utility.Size;
+using Size = BlackberryMead.Framework.Size;
 
 namespace BlackberryMead.Input.UI
 {

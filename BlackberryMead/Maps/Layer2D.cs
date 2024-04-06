@@ -1,4 +1,5 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
+using BlackberryMead.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -125,7 +126,7 @@ namespace BlackberryMead.Maps
             {
                 for (int col = 0; col < Values[0].Length; col++)
                 {
-                    if (Values[row][col].IsNull())
+                    if (Values[row][col].IsNull)
                         continue;
                     GridPoint p = new GridPoint(row, col);
                     Set(Values[row][col], p);
@@ -219,7 +220,7 @@ namespace BlackberryMead.Maps
             {
                 for (int col = startDraw.Column; col < endDraw.Column; col++)
                 {
-                    if (Values[row][col].IsNull())
+                    if (Values[row][col].IsNull)
                         continue;
 
                     // Remember that to switch to screen cordinates need to invert row and col order
@@ -267,7 +268,7 @@ namespace BlackberryMead.Maps
             if (row > Rows || col > Columns)
                 return Null;
 
-            if (!Values[row][col].IsNull())
+            if (!Values[row][col].IsNull)
             {
                 return Values[row][col];
             }
@@ -289,7 +290,7 @@ namespace BlackberryMead.Maps
         {
             if (col < Columns && row < Rows)
             {
-                if (!Values[row][col].IsNull())
+                if (!Values[row][col].IsNull)
                 {
                     return true;
                 }
@@ -355,7 +356,7 @@ namespace BlackberryMead.Maps
         {
             List<GridPoint> _ = new List<GridPoint>();
 
-            if (obj.IsNull())
+            if (obj.IsNull)
                 return _;
 
             Values[position.Row][position.Column] = obj;
@@ -376,7 +377,7 @@ namespace BlackberryMead.Maps
             List<GridPoint> _ = new List<GridPoint>();
             T entity = ObjectAt(position);
 
-            if (entity.IsNull())
+            if (entity.IsNull)
                 return _;
 
             GridPoint pointer = pointers[position.Row, position.Column];

@@ -1,5 +1,4 @@
 ﻿using BlackberryMead.Framework;
-using BlackberryMead.Utility;
 using System;
 
 namespace BlackberryMead.Collections
@@ -12,6 +11,8 @@ namespace BlackberryMead.Collections
     /// <param name="size">Size of the see <see cref="InstanceBox{T}"/>.</param>
     public class InstanceBox<T>(int size) : Box<T>(size), IInstanceStackable<T> where T : INullImplementable<T>, IEquatable<T>
     {
+        public override bool IsNull => Count == 0 || Value.IsNull;
+
         public T Value => item;
 
         T IInstanceStackable<T>.Value => item;
@@ -39,7 +40,7 @@ namespace BlackberryMead.Collections
         public override bool Add(T item)
         {
             // If this is a null stack, make it a new stack of item.
-            if (Value.IsNull())
+            if (Value.IsNull)
             {
                 this.item = item;
                 return base.Add(item);
@@ -69,12 +70,6 @@ namespace BlackberryMead.Collections
             }
 
             return newStack;
-        }
-
-
-        public override bool IsNull()
-        {
-            return count == 0 || item.IsNull();
         }
     }
 }

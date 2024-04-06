@@ -1,5 +1,4 @@
-﻿using BlackberryMead.Utility;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BlackberryMead.Framework
@@ -11,13 +10,13 @@ namespace BlackberryMead.Framework
     {
         public SpriteBatch SpriteBatch { get; set; }
 
-        public Point Position {get; set;}
+        public Point Position { get; set; }
 
         public Rectangle Rect { get; set; }
 
         public Size Size { get; set; }
 
-        public Vector2 PositionV {get; set;}
+        public Vector2 PositionV { get; set; }
 
         public Color Color { get; set; }
 
@@ -34,7 +33,7 @@ namespace BlackberryMead.Framework
         /// <param name="position">Position to draw to.</param>
         /// <param name="color">Color of the object.</param>
         /// <param name="opacity">Opacity of the object.</param>
-        public DrawContext(SpriteBatch spriteBatch, Point position, Color color, float opacity = 1f) 
+        public DrawContext(SpriteBatch spriteBatch, Point position, Color color, float opacity = 1f)
         {
             SpriteBatch = spriteBatch;
             Position = position;

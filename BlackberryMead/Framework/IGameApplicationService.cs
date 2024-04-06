@@ -1,6 +1,4 @@
-﻿using BlackberryMead.Utility;
-
-namespace BlackberryMead.Framework
+﻿namespace BlackberryMead.Framework
 {
     /// <summary>
     /// Service that records information about the state of the application.

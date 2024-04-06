@@ -9,7 +9,7 @@ namespace BlackberryMead.Collections
     /// </summary>
     /// <typeparam name="T"><see cref="INullImplementable{T}"/> type.</typeparam>
     /// <param name="size">Size of the <see cref="StackingBox{T}"/></param>
-    public class StackingBox<T>(int size) : Box<IInstanceStackable<T>>(size) 
+    public class StackingBox<T>(int size) : Box<IInstanceStackable<T>>(size)
         where T : INullImplementable<T>, IEquatable<T>
     {
         /// <summary>
@@ -26,7 +26,7 @@ namespace BlackberryMead.Collections
         public override bool Add(IInstanceStackable<T> item)
         {
             // If the item is null, don't add it.
-            if (item.IsNull()) return false;
+            if (item.IsNull) return false;
 
             for (int i = 0; i < Size; i++)
             {

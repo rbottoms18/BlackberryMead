@@ -19,6 +19,8 @@ namespace BlackberryMead.Collections
     {
         public static Box<T> Null => new Box<T>(0);
 
+        public virtual bool IsNull => (Count == 0);
+
         /// <summary>
         /// Amount of objects in the <see cref="Box{T}"/>.
         /// </summary>
@@ -69,13 +71,13 @@ namespace BlackberryMead.Collections
                 // Set directly because the collection is null
                 collection[i] = items[i];
                 // Only increase the count if the item is not null.
-                if (!items[i].IsNull())
+                if (!items[i].IsNull)
                     Count++;
             }
         }
 
 
-        protected Box() {}
+        protected Box() { }
 
 
         public Box(int size)
@@ -109,12 +111,6 @@ namespace BlackberryMead.Collections
         }
 
 
-        public virtual bool IsNull()
-        {
-            return (Count == 0);
-        }
-
-
         /// <remarks>Base implementation always returns <see langword="true"/>.</remarks>
         /// <returns><see langword="true"/>.</returns>
         /// <inheritdoc cref="IStackable{T}.IsStackableWith(IStackable{T})"/>
@@ -127,12 +123,12 @@ namespace BlackberryMead.Collections
         public virtual bool Add(T item)
         {
             // If the item is null, don't add it.
-            if (item.IsNull()) return false;
+            if (item.IsNull) return false;
 
             for (int i = 0; i < Size; i++)
             {
                 // If the collection item is not null, we can't add anything there.
-                if (!collection[i].IsNull()) continue;
+                if (!collection[i].IsNull) continue;
 
                 collection[i] = item;
                 // Added an item so the count goes up.
@@ -215,7 +211,7 @@ namespace BlackberryMead.Collections
         {
             for (int i = Size - 1; i >= 0; i--)
             {
-                if (collection[i].IsNull()) continue;
+                if (collection[i].IsNull) continue;
                 Count--;
                 T item = collection[i];
                 collection[i] = T.Null;
@@ -231,7 +227,7 @@ namespace BlackberryMead.Collections
             int removed = 0;
             for (int i = Size - 1; i >= 0; i--)
             {
-                if (collection[i].IsNull()) continue;
+                if (collection[i].IsNull) continue;
                 Count--;
                 removed++;
                 collection[i] = T.Null;

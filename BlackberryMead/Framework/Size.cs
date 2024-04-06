@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Text.Json.Serialization;
 
-namespace BlackberryMead.Utility
+namespace BlackberryMead.Framework
 {
     /// <summary>
     /// Class that represents a two dimensional size with a Width and Height.
@@ -75,7 +75,7 @@ namespace BlackberryMead.Utility
 
         public bool Equals(Size other)
         {
-            return (other.Width == this.Width && other.Height == this.Height);
+            return other.Width == Width && other.Height == Height;
         }
 
         public override bool Equals(object obj)
@@ -85,7 +85,7 @@ namespace BlackberryMead.Utility
 
         public override int GetHashCode()
         {
-            return (Width.GetHashCode() * 397) ^ Height.GetHashCode();
+            return Width.GetHashCode() * 397 ^ Height.GetHashCode();
         }
 
         public static bool operator ==(Size a, Size b)

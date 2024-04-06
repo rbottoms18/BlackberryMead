@@ -5,7 +5,7 @@ using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Size = BlackberryMead.Utility.Size;
+using Size = BlackberryMead.Framework.Size;
 
 namespace BlackberryMead.Input.UI
 {

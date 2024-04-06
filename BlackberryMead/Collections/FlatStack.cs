@@ -1,5 +1,4 @@
 ﻿using BlackberryMead.Framework;
-using BlackberryMead.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +14,8 @@ namespace BlackberryMead.Collections
     /// <typeparam name="T"></typeparam>
     public class FlatStack<T> : IStackable<T> where T : INullImplementable<T>
     {
+        public virtual bool IsNull => Count == 0;
+
         public int MaxStackSize => maxStackSize;
 
         int IStackable<T>.MaxStackSize => maxStackSize;
@@ -48,12 +49,6 @@ namespace BlackberryMead.Collections
                 return true;
             }
             return false;
-        }
-
-
-        public virtual bool IsNull()
-        {
-            return count == 0;
         }
 
 
