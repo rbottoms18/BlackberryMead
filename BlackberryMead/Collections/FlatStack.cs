@@ -1,4 +1,5 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
+using BlackberryMead.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,23 +13,36 @@ namespace BlackberryMead.Collections
     /// <see cref="FlatStack{T}"/> does not keep or remember any <typeparamref name="T"/> added to it.
     /// </remarks>
     /// <typeparam name="T"></typeparam>
-    public class FlatStack<T>(int count = 0) : IStackable<T> where T : INullImplementable<T>
+    public class FlatStack<T> : IStackable<T> where T : INullImplementable<T>
     {
-        public int MaxStackSize => int.MaxValue;
+        public int MaxStackSize => maxStackSize;
 
-        public T Value => T.Null;
+        int IStackable<T>.MaxStackSize => maxStackSize;
 
-        public int Count => count;
+        public virtual int Count { get { return count; } set { count = value; } }
+
+        int IQuantifiable.Count => count;
 
         /// <summary>
         /// Number of objects contained in this.
         /// </summary>
-        protected int count = count;
+        private int count;
+
+        /// <summary>
+        /// Maximum number of objects than can be stored in the <see cref="FlatStack{T}"/>.
+        /// </summary>
+        protected virtual int maxStackSize => int.MaxValue;
+
+
+        public FlatStack(int count)
+        {
+            this.count = count;
+        }
 
 
         public virtual bool Add(T item)
         {
-            if (count < MaxStackSize)
+            if (count < maxStackSize)
             {
                 count++;
                 return true;
@@ -39,7 +53,7 @@ namespace BlackberryMead.Collections
 
         public virtual bool IsNull()
         {
-            return Count == 0;
+            return count == 0;
         }
 
 
@@ -56,16 +70,22 @@ namespace BlackberryMead.Collections
 
         public virtual bool Remove(int amount)
         {
-            count -= amount;
-            if (count < 0)
-                count = 0;
+            Count -= amount;
+            if (Count < 0)
+                Count = 0;
             return true;
+        }
+
+
+        public virtual bool Remove(T item)
+        {
+            return Remove(1);
         }
 
 
         public virtual IStackable<T> Split(int amount)
         {
-            FlatStack<T> stack = new FlatStack<T>();
+            FlatStack<T> stack = new FlatStack<T>(0);
 
             // Return the fewest number of objects between amount and count
             for (int i = 0; i < Math.Min(amount, count); i++)
@@ -108,11 +128,12 @@ namespace BlackberryMead.Collections
         /// <inheritdoc cref="IStackable{T}.Take"/>
         public virtual T Take()
         {
+            count--;
             return T.Null;
         }
 
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
             for (int i = 0; i < count; i++)
             {

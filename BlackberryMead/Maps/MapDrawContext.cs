@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace BlackberryMead.Maps
 {
     /// <summary>
-    /// Implimentation of <see cref="IDrawContext"/> that includes a TileDimension of a map.
+    /// Implementation of <see cref="IDrawContext"/> that includes a Tile Dimension of a <see cref="Map2D{T}"/>.
     /// </summary>
     public class MapDrawContext : IDrawContext
     {
@@ -25,7 +25,20 @@ namespace BlackberryMead.Maps
         /// </summary>
         public Size TileDim { get; set; }
 
+        public Rectangle Rect { get; set; }
 
+        public Size Size { get; set; }
+
+
+        /// <summary>
+        /// Create a new <see cref="MapDrawContext"/>.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="position"></param>
+        /// <param name="positionV"></param>
+        /// <param name="color"></param>
+        /// <param name="opacity"></param>
+        /// <param name="tileDim"></param>
         public MapDrawContext(SpriteBatch spriteBatch, Point position, Vector2 positionV, Color color, float opacity,
             Size tileDim)
         {

@@ -64,8 +64,14 @@ namespace BlackberryMead.Utility.Serialization
                     .GetExecutingAssembly()
                     .GetTypes()
                     .Where(t => t.IsSubclassOf(typeof(T)));
-                foreach (var t in types.Select(t => new JsonDerivedType(t, t.FullName)))
-                    jsonTypeInfo.PolymorphismOptions.DerivedTypes.Add(t);
+                foreach(var t in types)
+                {
+                    // Allowing the type to be abstract will throw an error.
+                    if (baseValueObjectType.IsAssignableFrom(t) && !t.IsAbstract)
+                    {
+                        jsonTypeInfo.PolymorphismOptions.DerivedTypes.Add(new JsonDerivedType(t, t.FullName));
+                    }
+                }
             }
         }
 

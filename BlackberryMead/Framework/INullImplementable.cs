@@ -1,4 +1,4 @@
-﻿namespace BlackberryMead.Utility
+﻿namespace BlackberryMead.Framework
 {
     /// <summary>
     /// Defines a Null-Object Pattern implementation for objects of type <typeparamref name="T"/>.

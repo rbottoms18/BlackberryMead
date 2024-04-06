@@ -1,4 +1,5 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
+using BlackberryMead.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,16 +14,29 @@ namespace BlackberryMead.Collections
     /// </summary>
     /// <typeparam name="T">Type of object to be stored.</typeparam>
     /// <param name="size">Number of items able to be stored in the <see cref="Box{T}"/>.</param>
-    public class Box<T>(int size) : IEnumerable<T>, INullImplementable<Box<T>>, IStackable<T>
+    public class Box<T> : IEnumerable<T>, INullImplementable<Box<T>>, IStackable<T>
         where T : INullImplementable<T>
     {
         public static Box<T> Null => new Box<T>(0);
 
-        public int Count => count;
+        /// <summary>
+        /// Amount of objects in the <see cref="Box{T}"/>.
+        /// </summary>
+        public virtual int Count { get => count; set => count = value; }
 
-        public int Size = size;
+        int IQuantifiable.Count => count;
 
-        public int MaxStackSize => int.MaxValue;
+        /// <summary>
+        /// Number of objects that can fit in the <see cref="Box{T}"/>.
+        /// </summary>
+        public int Size { get; protected set; }
+
+        int IStackable<T>.MaxStackSize => MaxStackSize;
+
+        /// <summary>
+        /// Maximum number of objects that can be stacked in the <see cref="Box{T}"/>.
+        /// </summary>
+        public virtual int MaxStackSize => maxStackSize;
 
         /// <summary>
         /// <see langword="true"/> if the <see cref="Box{T}"/> contains no non-null items; otherwise,
@@ -33,7 +47,7 @@ namespace BlackberryMead.Collections
         /// <summary>
         /// Collection of <see cref="T"/> this holds.
         /// </summary>
-        protected T[] collection = ArrayHelper.FillArray(new T[size], T.Null);
+        protected virtual T[] collection { get; set; }
 
         /// <summary>
         /// Number of objects in this.
@@ -41,20 +55,33 @@ namespace BlackberryMead.Collections
         protected int count;
 
         /// <summary>
-        /// Number of objects that can fit in the <see cref="Box{T}"/>.
+        /// Maximum number of objects than can be stored in the <see cref="FlatStack{T}"/>.
         /// </summary>
-        protected int size = size;
+        protected int maxStackSize;
+
 
         public Box(List<T> items, int size = 0) : this(size == 0 ? items.Count : size)
         {
+            maxStackSize = size;
+
             for (int i = 0; i < items.Count; i++)
             {
                 // Set directly because the collection is null
                 collection[i] = items[i];
                 // Only increase the count if the item is not null.
                 if (!items[i].IsNull())
-                    count++;
+                    Count++;
             }
+        }
+
+
+        protected Box() {}
+
+
+        public Box(int size)
+        {
+            collection = ArrayHelper.FillArray(new T[size], T.Null);
+            this.Size = size;
         }
 
 
@@ -65,17 +92,17 @@ namespace BlackberryMead.Collections
         /// <returns><typeparamref name="T"/> at the specified <paramref name="index"/>.</returns>
         /// <exception cref="IndexOutOfRangeException"> Throws an exception if <paramref name="index"/> is
         /// greater or equal to <see cref="Size"/>. </exception>
-        public T this[int index]
+        public virtual T this[int index]
         {
             get
             {
-                if (index >= size)
+                if (index >= Size)
                     throw new IndexOutOfRangeException();
                 return collection[index];
             }
             set
             {
-                if (index >= size)
+                if (index >= Size)
                     throw new IndexOutOfRangeException();
                 collection[index] = value;
             }
@@ -84,7 +111,7 @@ namespace BlackberryMead.Collections
 
         public virtual bool IsNull()
         {
-            return (count == 0);
+            return (Count == 0);
         }
 
 
@@ -102,14 +129,14 @@ namespace BlackberryMead.Collections
             // If the item is null, don't add it.
             if (item.IsNull()) return false;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
                 // If the collection item is not null, we can't add anything there.
                 if (!collection[i].IsNull()) continue;
 
                 collection[i] = item;
                 // Added an item so the count goes up.
-                count++;
+                Count++;
                 return true;
             }
             return false;
@@ -135,17 +162,18 @@ namespace BlackberryMead.Collections
         /// <summary>
         /// Removes a <typeparamref name="T"/> from the <see cref="Box{T}"/>.
         /// </summary>
+        /// <remarks>Equality is checked using Reference Equality.</remarks>
         /// <param name="item"><typeparamref name="T"/> to remove from the <see cref="Box{T}"/>.</param>
         /// <returns><see langword="true"/> if <paramref name="item"/> is removed from the <see cref="Box{T}"/>;
         /// otherwise, <see langword="false"/>.</returns>
         public virtual bool Remove(T item)
         {
-            for (int i = 0; i < size; i++)
+            for (int i = Size - 1; i >= 0; i--)
             {
-                if (item.Equals(collection[i]))
+                if (ReferenceEquals(item, collection[i]))
                 {
                     collection[i] = T.Null;
-                    count--;
+                    Count--;
                     return true;
                 }
             }
@@ -163,12 +191,12 @@ namespace BlackberryMead.Collections
         public virtual bool RemoveAll(T item)
         {
             bool removed = false;
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
                 if (item.Equals(collection[i]))
                 {
                     collection[i] = T.Null;
-                    count--;
+                    Count--;
                     removed = true;
                 }
             }
@@ -185,10 +213,10 @@ namespace BlackberryMead.Collections
         /// be returned instead.</returns>
         public virtual T Take()
         {
-            for (int i = size - 1; i >= 0; i--)
+            for (int i = Size - 1; i >= 0; i--)
             {
                 if (collection[i].IsNull()) continue;
-                count--;
+                Count--;
                 T item = collection[i];
                 collection[i] = T.Null;
                 // Will this return Null? Don't think it should.
@@ -201,10 +229,10 @@ namespace BlackberryMead.Collections
         public virtual bool Remove(int amount)
         {
             int removed = 0;
-            for (int i = size - 1; i >= 0; i--)
+            for (int i = Size - 1; i >= 0; i--)
             {
                 if (collection[i].IsNull()) continue;
-                count--;
+                Count--;
                 removed++;
                 collection[i] = T.Null;
 
@@ -221,10 +249,10 @@ namespace BlackberryMead.Collections
         /// <inheritdoc cref="IStackable{T}.Split(int)"/>
         public virtual IStackable<T> Split(int amount)
         {
-            if (size == 0)
-                size = count;
+            if (Size == 0)
+                Size = count;
 
-            Box<T> newBox = new Box<T>(size);
+            Box<T> newBox = new Box<T>(Size);
             for (int i = 0; i < Math.Min(count, amount); i++)
             {
                 newBox.Add(Take());
@@ -250,7 +278,7 @@ namespace BlackberryMead.Collections
             for (int i = 0; i < startingCount; i++)
             {
                 // If there are no more slots avaliable, return.
-                if (count == 0) return false;
+                if (Count == 0) return false;
 
                 // If count > 0, it's gauranteed that an item can fit.
                 T item = other.Take();
@@ -289,9 +317,9 @@ namespace BlackberryMead.Collections
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (T t in collection)
+            for (int i = Size - 1; i >= 0; i--)
             {
-                yield return t;
+                yield return collection[i];
             }
         }
 
@@ -299,6 +327,11 @@ namespace BlackberryMead.Collections
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public bool Stack(IStackable<T> other, int amount)
+        {
+            throw new NotImplementedException();
         }
     }
 }

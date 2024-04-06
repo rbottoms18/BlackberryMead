@@ -146,7 +146,26 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Creates a new array filled with <paramref name="value"/>.
+        /// Creates a new 1D array filled with a value.
+        /// </summary>
+        /// <typeparam name="T">Type of object contained in the array.</typeparam>
+        /// <param name="count">Number of entries in the array.</param>
+        /// <param name="value">Value to fill the array with.</param>
+        /// <returns>A array of length <paramref name="count"/> which each index occupied by
+        /// <paramref name="value"/>.</returns>
+        public static T[] NewFilledArray<T>(int count, T value)
+        {
+            T[] array = new T[count];
+            for (int i = 0; i < count; i++)
+            {
+                array[i] = value;
+            }
+            return array;
+        }
+
+
+        /// <summary>
+        /// Creates a new 2D array filled with <paramref name="value"/>.
         /// </summary>
         /// <typeparam name="T">Type of array to be created.</typeparam>
         /// <param name="rows">Number of rows in the array.</param>

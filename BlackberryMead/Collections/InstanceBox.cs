@@ -1,4 +1,5 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
+using BlackberryMead.Utility;
 using System;
 
 namespace BlackberryMead.Collections
@@ -11,37 +12,42 @@ namespace BlackberryMead.Collections
     /// <param name="size">Size of the see <see cref="InstanceBox{T}"/>.</param>
     public class InstanceBox<T>(int size) : Box<T>(size), IInstanceStackable<T> where T : INullImplementable<T>, IEquatable<T>
     {
-        public T Value => value;
+        public T Value => item;
 
-        public new int Count
+        T IInstanceStackable<T>.Value => item;
+
+        public override int Count
         {
-            get { return count; }
+            get => base.Count;
             set
             {
-                count = value;
-                // If the count goes to zero, make this stack become Null
-                if (count == 0)
-                    this.value = T.Null;
+                base.Count = value;
+                if (Count == 0)
+                    this.item = T.Null;
             }
         }
 
         /// <summary>
         /// <see cref="T"/> instance that is stacked in this.
         /// </summary>
-        private T value;
+        protected T item;
 
 
+        /// <returns><see langword="true"/> if <paramref name="item"/> is equatable with <see cref="Value"/>
+        /// and is successfully stacked into the <see cref="InstanceBox{T}"/>; otherwise, <see langword="false"/>.</returns>
+        /// <inheritdoc cref="IStackable{T}.Add(T)"/>
         public override bool Add(T item)
         {
-            if (base.Add(item))
+            // If this is a null stack, make it a new stack of item.
+            if (Value.IsNull())
             {
-                // If the stack instance is null and param item isn't, set param item as the
-                // new instance
-                if (Value.IsNull())
-                    this.value = item;
-                return true;
+                this.item = item;
+                return base.Add(item);
             }
-            return false;
+
+            if (!item.Equals(Value)) return false;
+
+            return base.Add(item);
         }
 
 
@@ -49,7 +55,7 @@ namespace BlackberryMead.Collections
         {
             // Stackable if other is also a UniqueItemStack and they both have the
             // same instance item.
-            return (other is InstanceBox<T> stack) && value.Equals(stack.Value);
+            return (other is InstanceBox<T> stack) && item.Equals(stack.Value);
         }
 
 
@@ -68,7 +74,7 @@ namespace BlackberryMead.Collections
 
         public override bool IsNull()
         {
-            return count == 0 || value.IsNull();
+            return count == 0 || item.IsNull();
         }
     }
 }

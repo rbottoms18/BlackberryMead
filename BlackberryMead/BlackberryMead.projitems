@@ -15,10 +15,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Collections\InstanceBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\IStackable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\StackingBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Framework\DrawContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\GameApplicationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\IGameApplicationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Framework\IQuantifiable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIGridLayout.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\UI\UIRectangle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utility\Serialization\JsonRectangleConverter.cs" />
     <Compile Include="..\..\BlackberryMead\BlackberryMead\Utility\ReflectionExtensions.cs" />

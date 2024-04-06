@@ -1,20 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace BlackberryMead.Framework
+﻿namespace BlackberryMead.Framework
 {
     /// <summary>
     /// Marks an object as able to be drawn to the screen.
     /// </summary>
+    /// <typeparam name="T">Type of <see cref="IDrawContext"/> the inheriting type uses.</typeparam>
     public interface IDrawable<T> where T : IDrawContext
     {
         /// <summary>
-        /// Draws the <see cref="IDrawable"/> to the screen.
+        /// Draws the <see cref="IDrawable{T}"/> to the screen.
         /// </summary>
-        /// <param name="spriteBatch"><see cref="SpriteBatch"/> used for drawing.</param>
-        /// <param name="position">Position to draw the <see cref="IDrawable"/> to.</param>
-        /// <param name="color">Color override of the draw call.</param>
-        /// <param name="opacity">Opacity of the <see cref="IDrawable"/>.</param>
+        /// <param name="context"><see cref="IDrawContext"/> used to draw the <see cref="IDrawable{T}"/>.</param>
         abstract void Draw(T context);
     }
 }

@@ -1,4 +1,4 @@
-﻿using BlackberryMead.Utility;
+﻿using BlackberryMead.Framework;
 using System;
 
 namespace BlackberryMead.Collections
@@ -28,7 +28,7 @@ namespace BlackberryMead.Collections
             // If the item is null, don't add it.
             if (item.IsNull()) return false;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Size; i++)
             {
                 if (collection[i].IsStackableWith(item)) collection[i].Stack(item);
                 if (item.Count == 0) break;

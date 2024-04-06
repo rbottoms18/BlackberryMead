@@ -1,15 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BlackberryMead.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace BlackberryMead.Framework
 {
     /// <summary>
-    /// Interface that holds necessary values for drawing an <see cref="IDrawable"/>.
+    /// Interface that holds necessary values for drawing an <see cref="IDrawable{T}"/>.
     /// </summary>
     public interface IDrawContext
     {
         /// <summary>
-        /// SpriteBatch to draw with.
+        /// Spritebatch to draw with.
         /// </summary>
         SpriteBatch SpriteBatch { get; }
 
@@ -19,9 +20,14 @@ namespace BlackberryMead.Framework
         Point Position { get; }
 
         /// <summary>
-        /// Position Vector to draw to.
+        /// Position <see cref="Vector2"/> to draw to.
         /// </summary>
         Vector2 PositionV { get; }
+
+        /// <summary>
+        /// Size of the object.
+        /// </summary>
+        Size Size { get; }
 
         /// <summary>
         /// Color of the object.
@@ -32,5 +38,10 @@ namespace BlackberryMead.Framework
         /// Opacity of the object.
         /// </summary>
         float Opacity { get; }
+
+        /// <summary>
+        /// Rectangle the object is drawn in.
+        /// </summary>
+        Rectangle Rect { get; }
     }
 }
