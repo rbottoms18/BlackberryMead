@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,7 @@ namespace BlackberryMead.Input
     /// To say that an <c>action</c> was "triggered" is to say that its associated <see cref="Keybinds.Keybind"/> was satisfied
     /// by player input.
     /// </summary>
-    public struct InputState
+    public class InputState
     {
         /// <summary>
         /// List of action names.
@@ -25,6 +26,11 @@ namespace BlackberryMead.Input
         /// Position of the mouse on the screen.
         /// </summary>
         public Point MousePosition { get; set; }
+
+        /// <summary>
+        /// Change in Mouse Position between this update and the last.
+        /// </summary>
+        public Point MouseDelta { get; set; }
 
         /// <summary>
         /// Change in the Scroll Wheel Value of the mouse.
@@ -41,6 +47,11 @@ namespace BlackberryMead.Input
         /// </summary>
         public Dictionary<string, bool> ActionStates { get; set; }
 
+        /// <summary>
+        /// Position of the mouse on the previous update.
+        /// </summary>
+        protected Point PreviousMousePosition { get; set; }
+
 
         /// <summary>
         /// Create a new InputState.
@@ -56,6 +67,8 @@ namespace BlackberryMead.Input
             ActionStates = actions.ToDictionary(kvp => kvp.Key, kvp => false);
 
             MousePosition = mouseState.currentState.Position;
+            PreviousMousePosition = mouseState.prevState.Position;
+            MouseDelta = MousePosition - PreviousMousePosition;
             ScrollWheelDelta = mouseState.currentState.ScrollWheelValue - mouseState.prevState.ScrollWheelValue;
 
             foreach ((string name, Keybind keybind) in ActionBinds)
@@ -114,6 +127,18 @@ namespace BlackberryMead.Input
         public InputState ToNew()
         {
             return new InputState(this.ActionBinds, this.ActionStates, this.MousePosition, this.ScrollWheelDelta);
+        }
+
+
+        /// <summary>
+        /// Applies a transformation to and sets <see cref="MousePosition"/>. Recomputes <see cref="MouseDelta"/>.
+        /// </summary>
+        /// <param name="action"></param>
+        public void MousePositionApply(Func<Point, Point> action)
+        {
+            MousePosition = action.Invoke(MousePosition);
+            PreviousMousePosition = action.Invoke(PreviousMousePosition);
+            MouseDelta = MousePosition - PreviousMousePosition;
         }
 
 

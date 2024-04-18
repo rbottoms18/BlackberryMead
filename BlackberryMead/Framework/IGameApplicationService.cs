@@ -11,7 +11,7 @@
         bool IsMouseVisible { get; set; }
 
         /// <summary>
-        /// Size of the game window.
+        /// Size of the application window.
         /// </summary>
         Size DisplayDim { get; set; }
     }

@@ -4,7 +4,7 @@ using System;
 namespace BlackberryMead.Collections
 {
     /// <summary>
-    /// Implementation of <see cref="Box{T}"/> that stores a set of equivalent instances of an object of
+    /// A <see cref="Box{T}"/> that stores a collection of equivalent instances of an object of
     /// type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T"><see cref="INullImplementable{T}"/> type that implements <see cref="IEquatable{T}"/>.</typeparam>
@@ -13,6 +13,9 @@ namespace BlackberryMead.Collections
     {
         public override bool IsNull => Count == 0 || Value.IsNull;
 
+        /// <summary>
+        /// Unique <typeparamref name="T"/> object stored in the <see cref="InstanceBox{T}"/>.
+        /// </summary>
         public T Value => item;
 
         T IInstanceStackable<T>.Value => item;
@@ -29,7 +32,7 @@ namespace BlackberryMead.Collections
         }
 
         /// <summary>
-        /// <see cref="T"/> instance that is stacked in this.
+        /// <see cref="T"/> instance that is stacked in the <see cref="InstanceBox{T}"/>.
         /// </summary>
         protected T item;
 

@@ -3,7 +3,9 @@ using System;
 
 namespace BlackberryMead.Input.Typography
 {
-    // Example of what an effect could do to a Char.
+    /// <summary>
+    /// <see cref="CharEffect"/> that causes the <see cref="Char"/> to shake, or "rumble".
+    /// </summary>
     internal class RumbleEffect : CharEffect
     {
         /// <summary>
@@ -16,11 +18,18 @@ namespace BlackberryMead.Input.Typography
         /// </summary>
         private int amplitude;
 
+
+        /// <summary>
+        /// Create a new <see cref="RumbleEffect"/>.
+        /// </summary>
+        /// <param name="amplitude">Amplitude in pixel of the offset of the <see cref="Char"/> 
+        /// from its position.</param>
         public RumbleEffect(int amplitude)
         {
             rng = new Random();
             this.amplitude = amplitude;
         }
+
 
         public override Action<Char> Apply => (c) =>
         {

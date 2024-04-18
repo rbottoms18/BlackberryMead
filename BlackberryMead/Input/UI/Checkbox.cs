@@ -7,49 +7,53 @@ using System.Text.Json.Serialization;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// A UIElement that can be enabled or disabled ("checked").
+    /// A <see cref="UIComponent"/> that can be enabled or disabled ("checked").
     /// </summary>
     [OptInJsonSerialization]
     public class Checkbox : UIComponent
     {
         /// <summary>
-        /// Whether the checkbox is currently checked or not
+        /// Whether the <see cref="Checkbox"/> is currently checked or not.
         /// </summary>
         [JsonInclude]
         public bool IsChecked { get; protected set; }
 
         /// <summary>
-        /// Source rectangle of the sprite when this is checked.
+        /// Source rectangle of the sprite when the <see cref="Checkbox"/> is checked.
         /// </summary>
         [JsonInclude]
         public Rectangle CheckedSpriteSourceRect { get; protected set; }
 
         /// <summary>
-        /// Source rectangle of the sprite when this is unchecked.
+        /// Source rectangle of the sprite when the <see cref="Checkbox"/> is unchecked.
         /// </summary>
         [JsonInclude]
         public Rectangle UncheckedSpriteSourceRect { get; protected set; }
 
         /// <summary>
-        /// Event published when the Checked status of the Checkbox changes.
+        /// Event published when the Checked status of the <see cref="Checkbox"/> changes.
         /// </summary>
         public event EventHandler<bool> OnModified;
 
         /// <summary>
-        /// Name of the action that must be triggered to check this. <br/>
-        /// Default value "Select".
+        /// Name of the action that must be triggered to check the <see cref="Checkbox"/>.
         /// </summary>
+        /// <remarks>
+        /// Default value "Select".
+        /// </remarks>
         [JsonInclude]
         public string Action { get; protected set; } = "Select";
 
 
         /// <summary>
-        /// Create a new Checkbox
+        /// Create a new <see cref="Checkbox"/>.
         /// </summary>
         /// <inheritdoc/>
-        /// <param name="IsChecked">Whether this is checked or not.</param>
-        /// <param name="CheckedSpriteSourceRect">Source rectangle of the sprite when this is checked.</param>
-        /// <param name="UncheckedSpriteSourceRect">Source rectangle of the sprite when this is unchecked.</param>
+        /// <param name="IsChecked">Whether the <see cref="Checkbox"/> is checked or not.</param>
+        /// <param name="CheckedSpriteSourceRect">Source rectangle of the sprite when 
+        /// the <see cref="Checkbox"/> is checked.</param>
+        /// <param name="UncheckedSpriteSourceRect">Source rectangle of the sprite when 
+        /// the <see cref="Checkbox"/> is unchecked.</param>
         [JsonConstructor]
         public Checkbox(bool IsChecked, Rectangle CheckedSpriteSourceRect,
             Rectangle UncheckedSpriteSourceRect, UILayout Layout) :

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Text.Json.Serialization;
 using Point = Microsoft.Xna.Framework.Point;
@@ -7,28 +6,28 @@ using Point = Microsoft.Xna.Framework.Point;
 namespace BlackberryMead.Maps
 {
     /// <summary>
-    /// A point struct that represents a position in a grid.
+    /// A set of indeces that represent a location in a 2D grid.
     /// </summary>
     public struct GridPoint
     {
         /// <summary>
-        /// Row in the grid.
+        /// Row index in the grid.
         /// </summary>
         [JsonInclude, JsonRequired]
         public int Row { get; set; }
 
         /// <summary>
-        /// Column in the grid.
+        /// Column index in the grid.
         /// </summary>
         [JsonInclude, JsonRequired]
         public int Column { get; set; }
 
 
         /// <summary>
-        /// Create a new GridPoint.
+        /// Create a new <see cref="GridPoint"/>.
         /// </summary>
-        /// <param name="row">Row of the grid.</param>
-        /// <param name="column">Column of the grid.</param>
+        /// <param name="row">Row index of the grid.</param>
+        /// <param name="column">Column index of the grid.</param>
         public GridPoint(int row, int column)
         {
             Row = row;
@@ -37,7 +36,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Converts this to a <see cref="Vector2"/>.
+        /// Converts the <see cref="GridPoint"/> to a <see cref="Vector2"/>.
         /// </summary>
         public Vector2 ToVector2()
         {
@@ -46,7 +45,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Converts this to a <see cref="Point"/>.
+        /// Converts the <see cref="GridPoint"/> to a <see cref="Point"/>.
         /// </summary>
         public Point ToPoint()
         {
@@ -55,7 +54,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Clamps this values between an inclusive upper and lower limit.
+        /// Clamps the indeces of the <see cref="GridPoint"/> between an inclusive upper and inclusive lower limit.
         /// </summary>
         /// <param name="lower">Inclusive lower bound.</param>
         /// <param name="upper">Inclusive upper bound.</param>
@@ -69,10 +68,11 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Clamps this between inclusive upper and lower bounds for both row and column.
+        /// Clamps the indeces of the <see cref="GridPoint"/> between independent inclusive upper and inclusive lower limits
+        /// for both row and column indeces.
         /// </summary>
-        /// <param name="lowerBounds"></param>
-        /// <param name="upperBounds"></param>
+        /// <param name="lowerBounds">Lower bounds for <see cref="Row"/> and <see cref="Column"/>.</param>
+        /// <param name="upperBounds">Upper bounds for <see cref="Row"/> and <see cref="Column"/>.</param>
         public void Clamp(GridPoint lowerBounds, GridPoint upperBounds)
         {
             ClampLower(lowerBounds);
@@ -81,7 +81,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Clamps this values with an inclusive lower bound.
+        /// Clamps both indeces of the <see cref="GridPoint"/> to a single inclusive lower bound.
         /// </summary>
         /// <param name="lowerBound">Inclusive lower bound.</param>
         public void ClampLower(int lowerBound)
@@ -92,9 +92,10 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Clamps this from below inclusively against values in another GridPoint.
+        /// Clamps the indeces of the <see cref="GridPoint"/> from below inclusively.
         /// </summary>
-        /// <param name="lowerBounds">Inclusive lower bounds for Row and Column respectively.</param>
+        /// <param name="lowerBounds"><see cref="GridPoint"/> containing the inclusive lower bounds for 
+        /// <see cref="Row"/> and <see cref="Column"/> respectively.</param>
         public void ClampLower(GridPoint lowerBounds)
         {
             Row = Math.Max(lowerBounds.Row, Row);
@@ -103,7 +104,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Clamps this values with an inclusive upper bound.
+        /// Clamps both indeces of the <see cref="GridPoint"/> to a single inclusive upper bound.
         /// </summary>
         /// <param name="upperBound">Inclusive upper bound.</param>
         public void ClampUpper(int upperBound)
@@ -114,9 +115,10 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Clamps this from above inclusively against values in another GridPoint.
+        /// Clamps the indeces of the <see cref="GridPoint"/> to a inclusive upper bounds.
         /// </summary>
-        /// <param name="upperBounds"></param>
+        /// <param name="upperBounds"><see cref="GridPoint"/> containing the upper bound 
+        /// for <see cref="Row"/> and <see cref="Column"/>.</param>
         public void ClampUpper(GridPoint upperBounds)
         {
             Row = Math.Min(upperBounds.Row, Row);
@@ -181,18 +183,21 @@ namespace BlackberryMead.Maps
         }
 
 
+        /// <summary>
+        /// A <see cref="GridPoint"/> with zero valued indeces.
+        /// </summary>
         public static GridPoint Zero
         {
             get { return new GridPoint(0, 0); }
         }
 
         /// <summary>
-        /// Returns whether a <see cref="GridPoint"/>'s components are greater than or equal to zero and 
+        /// Returns whether a <see cref="GridPoint"/> object's indeces are greater than or equal to zero and 
         /// less than or equal to upper limits.
         /// </summary>
-        /// <param name="p">Point to evaluate whether is in the range.</param>
-        /// <param name="rowBound">Upper bound on the row of <paramref name="p"/>.</param>
-        /// <param name="columnBound">Upper bound on the column of <paramref name="p"/>.</param>
+        /// <param name="p"><see cref="GridPoint"/> to evaluate whether is in the range.</param>
+        /// <param name="rowBound">Upper bound on the <see cref="Row"/> of <paramref name="p"/>.</param>
+        /// <param name="columnBound">Upper bound on the <see cref="Column"/> of <paramref name="p"/>.</param>
         /// <returns></returns>
         public static bool InRange(GridPoint p, int rowBound, int columnBound)
         {

@@ -6,74 +6,74 @@ using System.Collections.Generic;
 namespace BlackberryMead.Input.Typography
 {
     /// <summary>
-    /// An alpha-numeric character used as part of a Font.
+    /// An alpha-numeric character used as part of a <see cref="Font"/>.
     /// </summary>
     public class Char
     {
         /// <summary>
-        /// The alpha-numeric character represented by this.
+        /// The alpha-numeric character represented by the <see cref="Char"/>.
         /// </summary>
         public char Character { get; init; }
 
         /// <summary>
-        /// Size of the Character.
+        /// Size of the <see cref="Char"/>.
         /// </summary>
         public Size Size { get; set; }
 
         /// <summary>
-        /// The opacity of this Char when drawn to the screen.
+        /// The opacity of the <see cref="Char"/> when drawn to the screen.
         /// </summary>
         public float Opacity { get; set; } = 1f;
 
         /// <summary>
-        /// Offset of the Char from text string allignment.
+        /// Offset of the <see cref="Char"/> from text string allignment.
         /// </summary>
         public Point Offset { get; set; }
 
         /// <summary>
-        /// The Color of the body of this Char when drawn to the screen.
+        /// The <see cref="Color"/> of the body of the <see cref="Char"/> when drawn to the screen.
         /// </summary>
         public Color Color { get; set; }
 
         /// <summary>
-        /// The color of the border of this Char when drawn to the screen.
+        /// The <see cref="Color"/> of the border of the <see cref="Char"/> when drawn to the screen.
         /// </summary>
         public Color BorderColor { get; set; }
 
         /// <summary>
-        /// List of <see cref="CharCopy"/>s of the main Char sprite to be drawn 
+        /// List of <see cref="CharCopy"/> of the main <see cref="Char"/> sprite to be drawn 
         /// before <see cref="Draw(SpriteBatch, Point)"/>.
         /// </summary>
         public List<CharCopy> PreDraws { get; set; }
 
         /// <summary>
-        /// List of <see cref="CharCopy"/>s of the main Char sprite to be drawn after 
+        /// List of <see cref="CharCopy"/>s of the main <see cref="Char"/> sprite to be drawn after 
         /// <see cref="Draw(SpriteBatch, Point)"/>.
         /// </summary>
         public List<CharCopy> PostDraws { get; set; }
 
         /// <summary>
-        /// Texture of this.
+        /// Texture of the <see cref="Char"/>.
         /// </summary>
         public Texture2D Texture { get; set; }
 
         /// <summary>
-        /// Source rectangle of this from the parent font.
+        /// Source rectangle of the <see cref="Char"/> from the parent <see cref="Font"/>.
         /// </summary>
         public Rectangle SourceRect { get; set; }
 
         /// <summary>
-        /// Source rectangle of the border rectangle from the parent font.
+        /// Source rectangle of the border rectangle from the parent <see cref="Font"/>.
         /// </summary>
         public Rectangle BorderRect { get; set; }
 
         /// <summary>
-        /// Effects that are reapplied to this each update tick.
+        /// Effects that are reapplied to the <see cref="Char"/> each update.
         /// </summary>
         public List<CharEffect> Effects { get; set; } = new List<CharEffect>();
 
         /// <summary>
-        /// Instructions to draw a copy of the main Char sprite.
+        /// Instructions to draw a copy of the main <see cref="Char"/> sprite.
         /// </summary>
         public struct CharCopy
         {
@@ -93,10 +93,10 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Create a new Character
+        /// Create a new <see cref="Char"/>.
         /// </summary>
         /// <param name="character">char that this object represents.</param>
-        /// <param name="source">Source rectangle of this in the parent font sprite.</param>
+        /// <param name="source">Source rectangle of this in the parent <see cref="Font"/> sprite.</param>
         /// <param name="size">Size of the rectangle that circumscribes this.</param>
         public Char(char character, CharInfoContainer source, Texture2D texture, Size size)
         {
@@ -114,8 +114,11 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Updates the Char.
+        /// Updates the <see cref="Char"/>.
         /// </summary>
+        /// <remarks>
+        /// Applies effects.
+        /// </remarks>
         public void Update()
         {
             foreach (CharEffect effect in Effects)
@@ -126,7 +129,7 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Draws the Char.
+        /// Draws the <see cref="Char"/>.
         /// </summary>
         /// <param name="spriteBatch"></param>
         /// <param name="position">Position to draw this at.</param>

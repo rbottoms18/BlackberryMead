@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,7 +55,7 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Flattens a 2d array into a list.
+        /// Flattens a 2D array into a list.
         /// </summary>
         /// <typeparam name="T">Type of objects in <paramref name="array"/>.</typeparam>
         /// <param name="array">2 dimensional array to flatten.</param>
@@ -97,8 +96,8 @@ namespace BlackberryMead.Utility
         /// </summary>
         /// <typeparam name="T">Type of objects to populate with.</typeparam>
         /// <param name="values">List of values to unflatten.</param>
-        /// <param name="rows">Number of rows in the 2d array.</param>
-        /// <param name="columns">Number of columns in the 2d array.</param>
+        /// <param name="rows">Number of rows in the 2D array.</param>
+        /// <param name="columns">Number of columns in the 2D array.</param>
         /// <returns>A two dimensional array of size [<paramref name="rows"/>, <paramref name="columns"/>]
         /// populated with objects from values.<br/>
         /// Objects from <paramref name="values"/> will only be added up to the capacity of the array. If there are fewer
@@ -121,10 +120,10 @@ namespace BlackberryMead.Utility
         /// Replaces all instances of <paramref name="targetValue"/> in <paramref name="values"/> with <paramref name="replacement"/>.
         /// </summary>
         /// <typeparam name="T">Type of objects in <paramref name="values"/>.</typeparam>
-        /// <param name="values">2d array of values to operate on.</param>
+        /// <param name="values">2D array of values to operate on.</param>
         /// <param name="targetValue">Value to be replaced with <paramref name="replacement"/>.</param>
         /// <param name="replacement">Value to be assigned to any instance of <paramref name="targetValue"/>.</param>
-        /// <returns>A 2d array identical to <paramref name="values"/> except any instance of <paramref name="targetValue"/>
+        /// <returns>A 2D array identical to <paramref name="values"/> except any instance of <paramref name="targetValue"/>
         /// is replaced with <paramref name="replacement"/>.</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static T[,] Replace<T>(T[,] values, T? targetValue, T? replacement)

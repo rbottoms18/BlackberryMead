@@ -3,35 +3,35 @@
 namespace BlackberryMead.Collections
 {
     /// <summary>
-    /// A Dictionary that takes one of two possible keys to return a value.
-    /// Does not support removing elements from the dictionary,
-    /// and must only be used for entries that will not change
+    /// A Dictionary that accepts two possible keys for a given value.
     /// </summary>
-    public class TwoKeyDictionary<K1, K2, V>
+    /// <remarks>
+    /// Does not support removing elements from the dictionary,
+    /// and must only be used for entries that will not change.
+    /// </remarks>
+    public class TwoKeyDictionary<TKey1, TKey2, TValue>
     {
-        private Dictionary<K1, V> key1Dictionary;
+        private Dictionary<TKey1, TValue> key1Dictionary;
 
-        private Dictionary<K2, V> key2Dictionary;
+        private Dictionary<TKey2, TValue> key2Dictionary;
 
 
         /// <summary>
-        /// Creates a new empty TwoKeyDictionary
+        /// Creates a new empty <see cref="TwoKeyDictionary{K1, K2, V}"/>.
         /// </summary>
         public TwoKeyDictionary()
         {
-            key1Dictionary = new Dictionary<K1, V>();
-            key2Dictionary = new Dictionary<K2, V>();
+            key1Dictionary = new Dictionary<TKey1, TValue>();
+            key2Dictionary = new Dictionary<TKey2, TValue>();
         }
 
 
         /// <summary>
-        /// Creates a new TwoKeyDictionary from two existing dictionaries
+        /// Creates a new <see cref="TwoKeyDictionary{K1, K2, V}"/> from two existing <see cref="Dictionary{TKey, TValue}"/>.
         /// that share a value type.
         /// </summary>
-        /// <param name="dictionary1"></param>
-        /// <param name="dictionary2"></param>
-        public TwoKeyDictionary(Dictionary<K1, V> dictionary1,
-            Dictionary<K2, V> dictionary2)
+        public TwoKeyDictionary(Dictionary<TKey1, TValue> dictionary1,
+            Dictionary<TKey2, TValue> dictionary2)
         {
             key1Dictionary = dictionary1;
             key2Dictionary = dictionary2;
@@ -39,11 +39,11 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Adds an item with the given keys to the Dictionary
+        /// Adds an item with the given keys to the <see cref="TwoKeyDictionary{K1, K2, V}"/>.
         /// </summary>
         /// <param name="keyPair"></param>
         /// <param name="value"></param>
-        public void Add((K1, K2) keyPair, V value)
+        public void Add((TKey1, TKey2) keyPair, TValue value)
         {
             key1Dictionary.Add(keyPair.Item1, value);
             key2Dictionary.Add(keyPair.Item2, value);
@@ -51,12 +51,12 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Tries to get a value with the given key from the Dictionary
+        /// Tries to get a value with the given key from the <see cref="TwoKeyDictionary{K1, K2, V}"/>.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool TryGetValue(K1 key, out V value)
+        public bool TryGetValue(TKey1 key, out TValue value)
         {
             if (key1Dictionary.TryGetValue(key, out value))
                 return true;
@@ -66,12 +66,12 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Tries to get a value with the given key from the Dictionary
+        /// Tries to get a value with the given key from the <see cref="TwoKeyDictionary{TKey1, TKey2, TValue}"/>.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool TryGetValue(K2 key, out V value)
+        public bool TryGetValue(TKey2 key, out TValue value)
         {
             if (key2Dictionary.TryGetValue(key, out value))
                 return true;

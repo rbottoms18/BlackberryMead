@@ -4,46 +4,47 @@ using Microsoft.Xna.Framework;
 namespace BlackberryMead.Maps
 {
     /// <summary>
-    /// An Interface that marks the object as one that moves about the map ("animate").
-    /// Derives from IUpdatable and ICollidable
+    /// Defines methods for an object to through about a <see cref="Map2D{T}"/>.
     /// </summary>
     public interface IAnimate : ICollidable, IDrawable<MapDrawContext>, IUpdatable
     {
         /// <summary>
-        /// Velocity of the object.
+        /// Velocity of the <see cref="IAnimate"/>.
         /// </summary>
         public Vector2 Velocity { get; set; }
 
         /// <summary>
-        /// Hitboxes of the object.
+        /// Hitboxes of the <see cref="IAnimate"/>.
         /// </summary>
         public Rectangle Hitbox { get; }
 
         /// <summary>
-        /// Position of the object.
+        /// Position of the <see cref="IAnimate"/>.
         /// </summary>
         public Vector2 Position { get; set; }
 
+
         /// <summary>
-        /// Whether this is touching the left side of <paramref name="collisionObjHitbox"/>.
+        /// Determines whether the <see cref="IAnimate"/> will collide with the left of a <see cref="Rectangle"/> if a 
+        /// given velocity is applied to it. 
         /// </summary>
-        /// <param name="velocity"></param>
-        /// <param name="collisionObjHitbox"></param>
-        /// <returns></returns>
-        public bool IsTouchingLeft(Vector2 velocity, Rectangle collisionObjHitbox)
+        /// <param name="velocity">Potential velocity to be applied to the <see cref="IAnimate"/>.</param>
+        /// <param name="Rect"><see cref="Rectangle"/> to evaluate collision with.</param>
+        /// <returns><see langword="true"/> if the <see cref="IAnimate"/> collides with <paramref name="Rect"/> if
+        /// <paramref name="velocity"/> is applied to it.</returns>
+        public bool IsTouchingLeft(Vector2 velocity, Rectangle Rect)
         {
-            return Hitbox.Right - 1 + velocity.X >= collisionObjHitbox.Left &&
-              Hitbox.Right <= collisionObjHitbox.Left &&
-              Hitbox.Bottom - 1 > collisionObjHitbox.Top &&
-              Hitbox.Top < collisionObjHitbox.Bottom - 1;
+            return Hitbox.Right - 1 + velocity.X >= Rect.Left &&
+              Hitbox.Right <= Rect.Left &&
+              Hitbox.Bottom - 1 > Rect.Top &&
+              Hitbox.Top < Rect.Bottom - 1;
         }
 
         /// <summary>
-        /// Whether this is touching the right side of <paramref name="collisionObjHitbox"/>.
+        /// Determines whether the <see cref="IAnimate"/> will collide with the right of a <see cref="Rectangle"/> if a 
+        /// given velocity is applied to it. 
         /// </summary>
-        /// <param name="velocity"></param>
-        /// <param name="collisionObjHitbox"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="IsTouchingLeft(Vector2, Rectangle)"/>
         public bool IsTouchingRight(Vector2 velocity, Rectangle collisionObjHitbox)
         {
             return Hitbox.Left + velocity.X <= collisionObjHitbox.Right - 1 &&
@@ -53,11 +54,10 @@ namespace BlackberryMead.Maps
         }
 
         /// <summary>
-        /// Whether this is touching the top side of <paramref name="collisionObjHitbox"/>.
+        /// Determines whether the <see cref="IAnimate"/> will collide with the top of a <see cref="Rectangle"/> if a 
+        /// given velocity is applied to it. 
         /// </summary>
-        /// <param name="velocity"></param>
-        /// <param name="collisionObjHitbox"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="IsTouchingLeft(Vector2, Rectangle)"/>
         public bool IsTouchingTop(Vector2 velocity, Rectangle collisionObjHitbox)
         {
             return Hitbox.Bottom - 1 <= collisionObjHitbox.Bottom - 1 && // if Bottom above Top
@@ -67,11 +67,10 @@ namespace BlackberryMead.Maps
         }
 
         /// <summary>
-        /// Whether this is touching the bottom side of <paramref name="collisionObjHitbox"/>.
+        /// Determines whether the <see cref="IAnimate"/> will collide with the bottom of a <see cref="Rectangle"/> if a 
+        /// given velocity is applied to it. 
         /// </summary>
-        /// <param name="velocity"></param>
-        /// <param name="collisionObjHitbox"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="IsTouchingLeft(Vector2, Rectangle)"/>
         public bool IsTouchingBottom(Vector2 velocity, Rectangle collisionObjHitbox)
         {
             return Hitbox.Top + velocity.Y <= collisionObjHitbox.Bottom - 1 &&
@@ -82,7 +81,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Move the object around the map
+        /// Move the <see cref="IAnimate"/> in the <see cref="Map2D{T}"/>.
         /// </summary>
         public virtual void Move()
         {

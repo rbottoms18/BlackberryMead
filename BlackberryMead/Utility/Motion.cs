@@ -3,11 +3,17 @@ using System;
 
 namespace BlackberryMead.Utility
 {
+    /// <summary>
+    /// Utility class for various types of motion.
+    /// </summary>
+    /// <remarks>
+    /// UNSTABLE
+    /// </remarks>
     public static class Motion
     {
         /// <summary>
         /// Returns a vector representing the tick movement towards the destination 
-        /// from the current position on a straight line
+        /// from the current position on a straight line.
         /// </summary>
         /// <param name="destination"></param>
         /// <param name="currentPosition"></param>
@@ -53,6 +59,7 @@ namespace BlackberryMead.Utility
             return new Vector2(x, y);
         }
 
+
         /// <summary>
         /// Returns a vector representing the tick movement towards a destination 
         /// in a sinusoidal motion. Requires an external increasing integer tick.
@@ -63,7 +70,8 @@ namespace BlackberryMead.Utility
         /// <param name="oscellateSpeed"></param>
         /// <param name="tick"></param>
         /// <returns></returns>
-        public static Vector2 SinusoidalMotion(Vector2 destination, Vector2 currentPosition, int movementSpeed, double oscellateSpeed, int amplitude, int tick)
+        public static Vector2 SinusoidalMotion(Vector2 destination, Vector2 currentPosition, int movementSpeed,
+            double oscellateSpeed, int amplitude, int tick)
         {
             // draw distance line
             // calculate linear distance
@@ -120,8 +128,9 @@ namespace BlackberryMead.Utility
             return Vector2.Zero;
         }
 
+
         /// <summary>
-        /// Returns a float representing the rotation of the object
+        /// Returns a float representing the rotation of the object.
         /// </summary>
         /// <param name="t"></param>
         /// <param name="rotateSpeed"></param>
@@ -147,6 +156,7 @@ namespace BlackberryMead.Utility
             return 0f;
         }
 
+
         /// <summary>
         /// Moves a float value between values of an array.
         /// </summary>
@@ -155,6 +165,7 @@ namespace BlackberryMead.Utility
         {
             return 0f;
         }
+
 
         /// <summary>
         /// Returns a vector representing the position of the object 

@@ -10,24 +10,24 @@ using Size = BlackberryMead.Framework.Size;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// A UIElement with a dragable component on a track that determines a value between 0 and 1.
+    /// A <see cref="UIComponent"/> with a dragable component that determines a value between 0 and 1.
     /// </summary>
     [OptInJsonSerialization]
     public class ScrollBar : UIComponent
     {
         /// <summary>
-        /// Value of the scroll bar constrained between 0 and 1.
+        /// Value of the <see cref="ScrollBar"/> constrained between 0 and 1.
         /// </summary>
         public float Value { get; protected set; }
 
         /// <summary>
-        /// Number of decimal places Value will be rounded to.
+        /// Number of decimal places <see cref="Value"/> will be rounded to.
         /// </summary>
         [JsonInclude]
         public int Precision { get; protected set; }
 
         /// <summary>
-        /// Default Value of this.
+        /// Default <see cref="Value"/> of the <see cref="ScrollBar"/>.
         /// </summary>
         [JsonInclude]
         public float DefaultValue { get; protected set; }
@@ -39,7 +39,7 @@ namespace BlackberryMead.Input.UI
         public Size TrackDimensions { get; protected set; }
 
         /// <summary>
-        /// Offset of the track from the Origin of this.
+        /// Offset of the track from <see cref="UIComponent.Origin"/>.
         /// </summary>
         [JsonInclude]
         public Point TrackOffset { get; protected set; }
@@ -60,7 +60,7 @@ namespace BlackberryMead.Input.UI
         }
 
         /// <summary>
-        /// 
+        /// Adjustment factor of the <see cref="ScrollBar"/>.
         /// </summary>
         public float ScrollWheelFactor { get; set; } = 1f;
 
@@ -72,7 +72,7 @@ namespace BlackberryMead.Input.UI
         public ScrollDirections ScrollDirection { get; protected set; }
 
         /// <summary>
-        /// The name of the action that enables dragging of the scroll bar.
+        /// The name of the action that enables dragging of the <see cref="ScrollBar"/>.
         /// </summary>
         public string ScrollActionName { get; set; } = "Drag";
 
@@ -90,7 +90,7 @@ namespace BlackberryMead.Input.UI
         protected int trackLength;
 
         /// <summary>
-        /// Knob that can be dragged to change the value
+        /// Knob that can be dragged to change the <see cref="Value"/>.
         /// </summary>
         protected Rectangle knob;
 
@@ -103,14 +103,15 @@ namespace BlackberryMead.Input.UI
         /// Mouse position of the previous tick.
         /// </summary>
         // For calculating mouse delta
+        // !! Possibly obsolete following InputState changes.
         protected Point prevMousePos;
 
 
         /// <summary>
-        /// Create a new ScrollBar.
+        /// Create a new <see cref="ScrollBar"/>.
         /// </summary>
-        /// <param name="KnobSize"></param>
-        /// <param name="ScrollDirection">Direction in which the scroll bar scrolls. </param>
+        /// <param name="KnobSize">Size of the knob.</param>
+        /// <param name="ScrollDirection">Direction in which the <see cref="ScrollBar"/> scrolls. </param>
         /// <param name="Precision">Number of decimal precision of <paramref name="Value"></paramref>.</param>
         /// <param name="DefaultValue">Default value of <paramref name="Value"></paramref>.</param>
         /// <inheritdoc/>

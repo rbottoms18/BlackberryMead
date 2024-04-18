@@ -8,49 +8,52 @@ using System.Text.Json.Serialization;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// Clickable UIElement that raises an event upon click.
+    /// Clickable <see cref="UIComponent"/> that raises an event upon click.
     /// </summary>
     [OptInJsonSerialization]
     public class Button : UIComponent
     {
         /// <summary>
-        /// Event raised when the button is clicked
+        /// Event raised when the <see cref="Button"/> is clicked.
         /// </summary>
         public event EventHandler OnClick;
 
         /// <summary>
-        /// Name of the action that must be triggered to .<br/>
-        /// Default value "Select".
+        /// Name of the action that must be triggered to register a
+        /// down press on the button.
         /// </summary>
+        /// <remarks>
+        /// Default value "Select".
+        /// </remarks>
         [JsonInclude]
         public string ButtonDownAction { get; protected set; } = "Drag";
 
         /// <summary>
-        /// Name of the action that must be triggered to .<br/>
-        /// Default value "Select".
+        /// Name of the action that must be triggered to a release
+        /// of the button.
         /// </summary>
+        /// <remarks>Default value "Select".</remarks>
         [JsonInclude]
         public string ButtonUpAction { get; protected set; } = "Select";
 
         /// <summary>
-        /// Source rectangle of the sprite of this.
+        /// Source rectangle of the sprite of the <see cref="Button"/>.
         /// </summary>
         protected Rectangle sourceRect;
 
         /// <summary>
-        /// Source rectangle of the sprite of this when it is being clicked
+        /// Source rectangle of the sprite of the <see cref="Button"/> when it is being clicked.
         /// </summary>
         protected Rectangle clickedSourceRect;
 
         /// <summary>
-        /// Whether this is currently being clicked on.
-        /// If true, the mouse is being held down on this.
+        /// Whether the <see cref="Button"/> is currently being clicked on.
         /// </summary>
         protected bool isBeingClicked = false;
 
 
         /// <summary> 
-        /// Create a new Button
+        /// Create a new <see cref="Button"/>
         /// </summary>
         /// <inheritdoc/>
         [JsonConstructor]
@@ -80,7 +83,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Publishes the ClickEvent of this.
+        /// Publishes the ClickEvent of the <see cref="Button"/>.
         /// </summary>
         /// <param name="e"></param>
         protected virtual void OnClickEvent(EventArgs e)

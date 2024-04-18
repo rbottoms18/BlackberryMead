@@ -15,21 +15,22 @@ namespace BlackberryMead.Input.Typography
         public Rectangle CharacterRect;
 
         /// <summary>
-        /// Source rectangle for the border of the character.
+        /// Source rectangle for the border of the <see cref="Char"/>.
         /// </summary>
         public Rectangle BorderRect;
 
         /// <summary>
-        /// Offset of the Char from its perscribed position in the Text.
+        /// Offset of the <see cref="Char"/> from its perscribed position in the <see cref="Text"/>.
         /// </summary>
         public Point Offset;
 
 
         /// <summary>
-        /// Create a new CharInfoContainer
+        /// Create a new <see cref="CharInfoContainer"/>
         /// </summary>
-        /// <param name="CharacterRect"></param>
-        /// <param name="BorderRect"></param>
+        /// <param name="CharacterRect">Rectangle of the <see cref="Char"/>.</param>
+        /// <param name="BorderRect">Border rectangle of the <see cref="Char"/>.</param>
+        /// <param name="Offset">Offset of the <see cref="Char"/>.</param>
         [JsonConstructor]
         public CharInfoContainer(Rectangle CharacterRect, Rectangle BorderRect, Point Offset)
         {

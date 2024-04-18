@@ -19,7 +19,7 @@ namespace BlackberryMead.Input.UI
         public string TextureName { get; init; }
 
         /// <summary>
-        /// Source rectangle of the image. 
+        /// Source rectangle of the <see cref="UIImage"/>. 
         /// </summary>
         [JsonInclude]
         public Rectangle SourceRect { get; init; }
@@ -30,6 +30,13 @@ namespace BlackberryMead.Input.UI
         private Texture2D texture;
 
 
+        /// <summary>
+        /// Create a new <see cref="UIImage"/>.
+        /// </summary>
+        /// <param name="TextureName">Name of the texture the <see cref="UIImage"/>
+        /// pulls from.</param>
+        /// <param name="SourceRect">Source rectangle of the image in the texture.</param>
+        /// <param name="Layout">Layout settings.</param>
         public UIImage(string TextureName, Rectangle SourceRect, UILayout Layout) :
             base(Layout)
         {

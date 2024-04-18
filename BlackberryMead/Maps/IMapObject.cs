@@ -9,12 +9,7 @@ namespace BlackberryMead.Maps
     /// </summary>
     /// <typeparam name="T">Type of the inherited class.</typeparam>
     /// <remarks>
-    /// To inherit from <see cref="IMapObject{T}"/>, use the type of the inheriting class in place of T.
+    /// Encapsulates multiple types required by objects in order to be constructed into a <see cref="Map2D{T}"/>.
     /// </remarks>
-    /// <example>
-    /// public class Foo : IMapObject(Foo)
-    /// </example>
-    public interface IMapObject<T> : INullImplementable<T>, IDrawable<MapDrawContext>, ISpanning
-    {
-    }
+    public interface IMapObject<T> : INullImplementable<T>, IDrawable<MapDrawContext>, ISpanning { }
 }

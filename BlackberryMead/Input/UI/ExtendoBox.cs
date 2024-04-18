@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// <see cref="UIGroup"/> in which Components are defined relative to each other in a vertical
+    /// <see cref="UIGroup"/> in which components are defined relative to each other in a vertical
     /// list rather than relative to an absolute position. Automatically resizes to encapsulate 
     /// its components.
     /// </summary>
@@ -18,13 +18,13 @@ namespace BlackberryMead.Input.UI
     public class ExtendoBox : UIComponent
     {
         /// <summary>
-        /// List of components in this.
+        /// List of components in the <see cref="ExtendoBox"/>.
         /// </summary>
         [JsonInclude]
         public Dictionary<string, UIComponent> Components { get; protected set; }
 
         /// <summary>
-        /// Class that defines padding for each child of this.
+        /// Class that defines padding for each child of the <see cref="ExtendoBox"/>.
         /// </summary>
         public class Pad
         {
@@ -39,7 +39,8 @@ namespace BlackberryMead.Input.UI
         }
 
         /// <summary>
-        /// Padding of each child of this. Keys are Component names as in <see cref="Components"/>,
+        /// Padding of each child of the <see cref="ExtendoBox"/>. 
+        /// Keys are Component names as in <see cref="Components"/>,
         /// values are objects with a "Top" padding and a "Bottom" padding in pixels.
         /// </summary>
         [JsonInclude]
@@ -47,10 +48,10 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Create a new ExtendoBox
+        /// Create a new <see cref="ExtendoBox"/>
         /// </summary>
-        /// <param name="Components">Sub-components of thsi. All components added to this
-        /// will have VerticalAlign and HorizontalAlign set to Alignment.None.</param>
+        /// <param name="Components">Sub-components of the <see cref="ExtendoBox"/>. 
+        /// All components added will have VerticalAlign and HorizontalAlign set to Alignment.None.</param>
         /// <param name="Padding">Dictionary of top and bottom padding per component indexed by names
         /// from <see cref="Components"/>.</param>
         /// <inheritdoc cref="UIComponent(Size, Alignment, Alignment, int, int, int)"/>

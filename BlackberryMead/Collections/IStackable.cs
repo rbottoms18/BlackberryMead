@@ -42,10 +42,10 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Removes a number of <typeparamref name="T"/> from the <see cref="IStackable{T}"/>.
+        /// Removes a number of <typeparamref name="T"/> objects from the <see cref="IStackable{T}"/>.
         /// </summary>
-        /// <param name="amount">Amount of <typeparamref name="T"/> to remove.</param>
-        /// <returns><see langword="true"/> if <paramref name="amount"/> objects were removed or
+        /// <param name="amount">Number of <typeparamref name="T"/> objects to remove.</param>
+        /// <returns><see langword="true"/> if <paramref name="amount"/> number of objects were removed or
         /// if the <see cref="IStackable{T}"/> becomes emtpy in the process; otherwise, <see langword="false"/>.</returns>
         public abstract bool Remove(int amount);
 
@@ -63,7 +63,7 @@ namespace BlackberryMead.Collections
         /// </summary>
         /// <param name="amount">Amount of <typeparamref name="T"/> to be split from the <see cref="IStackable{T}"/>
         /// and returned. </param>
-        /// <returns>An <see cref="IStackable{T}"/> containing <paramref name="amount"/> <typeparamref name="T"/>
+        /// <returns>An <see cref="IStackable{T}"/> containing <paramref name="amount"/> number of <typeparamref name="T"/> objects
         /// from the <see cref="IStackable{T}"/>.</returns>
         public abstract IStackable<T> Split(int amount);
 
@@ -86,8 +86,8 @@ namespace BlackberryMead.Collections
         /// <summary>
         /// Evaluates whether the <see cref="IStackable{T}"/> can be stacked with another <see cref="IStackable{T}"/>.
         /// </summary>
-        /// <param name="other">Other <see cref="IStackable{T}"/> to evaluate whether it can stack
-        /// with the <see cref="IStackable{T}"/>.</param>
+        /// <param name="other">Other <see cref="IStackable{T}"/> to evaluate whether it can be stacked
+        /// into the <see cref="IStackable{T}"/>.</param>
         /// <returns><see langword="true"/> if <paramref name="other"/> can be stacked into the
         /// <see cref="IStackable{T}"/>; otherwise, <see langword="false"/>.</returns>
         public abstract bool IsStackableWith(IStackable<T> other);
@@ -96,7 +96,7 @@ namespace BlackberryMead.Collections
         /// <summary>
         /// Takes and returns one <typeparamref name="T"/> from the <see cref="IStackable{T}"/>.
         /// </summary>
-        /// <returns>A <typeparamref name="T"/> from the <see cref="IStackable{T}"/>.</returns>
+        /// <returns>A <typeparamref name="T"/> object from the <see cref="IStackable{T}"/>.</returns>
         public abstract T Take();
     }
 }

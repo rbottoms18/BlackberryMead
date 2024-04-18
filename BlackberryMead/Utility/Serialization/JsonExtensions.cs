@@ -12,7 +12,7 @@ namespace BlackberryMead.Utility.Serialization
     public static class JsonExtensions
     {
         /// <summary>
-        /// Extension method that allows all properites with <typeparamref name="TAttribute"/> 
+        /// Extension method that allows all properites with the <typeparamref name="TAttribute"/> attribute
         /// to be excluded from serialization.
         /// </summary>
         /// <typeparam name="TAttribute">Type of <see cref="Attribute"/> to exclude from serialization.</typeparam>
@@ -37,14 +37,14 @@ namespace BlackberryMead.Utility.Serialization
 
 
         /// <summary>
-        /// Modifier that adds all derived types of type <typeparamref name="T"/> in the current assembly to be included as KnownTypes
-        /// by the serializer.
+        /// Modifier that adds all derived types of type <typeparamref name="T"/> in the current assembly 
+        /// to be included as known types by the serializer.
         /// </summary>
         /// <remarks>
-        /// Uses type discriminator <c>$type</c> and <see cref="JsonUnknownDerivedTypeHandling.FallBackToNearestAncestor"/>. <br/>
+        /// Uses type discriminator "<c>$type</c>" and <see cref="JsonUnknownDerivedTypeHandling.FallBackToNearestAncestor"/>. <br/>
         /// The discriminator names of types are the full names of the types. For instance, to deserialize an
         /// <see cref="BlackberryMead.Input.UI.UIComponent"/>, the discriminator would be 
-        /// <c>"$type": "BlackberryMead.Input.UI.UIComponent"</c>.
+        /// <c>"$type": "BlackberryMead.Input.UI.UIComponent"</c>
         /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="jsonTypeInfo"></param>
@@ -104,9 +104,9 @@ namespace BlackberryMead.Utility.Serialization
 
 
         /// <summary>
-        /// Modifer for <see cref="JsonTypeInfoResolver"/> that requires a class decorated with
-        /// <typeparamref name="TClassAttribute"/> to only serialize its properties decorated with
-        /// <typeparamref name="TPropertyAttribute"/> (Opt-In Serialization).
+        /// Modifer for <see cref="JsonTypeInfoResolver"/> that enables a class decorated with
+        /// <typeparamref name="TClassAttribute"/> to only serialize its properties that are decorated
+        /// with <typeparamref name="TPropertyAttribute"/> (Opt-In Serialization).
         /// </summary>
         /// <typeparam name="TClassAttribute">Attribute that opts a class in.</typeparam>
         /// <typeparam name="TPropertyAttribute">Attribute that opts a property into serialization.</typeparam>

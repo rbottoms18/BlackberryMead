@@ -13,22 +13,21 @@ namespace BlackberryMead.Framework
         where T : INullImplementable<T>
     {
         /// <summary>
-        /// Dictionary of Json data of each <typeparamref name="T"/> able to be loaded.
+        /// Dictionary of Json data of each loadable <typeparamref name="T"/>.
         /// </summary>
         protected static DeserializeDictionary<int, T> objectsDict { get; set; } =
             new DeserializeDictionary<int, T>(JsonSerializerOptions.Default);
 
 
         /// <summary>
-        /// Create a new instance of <typeparamref name="T"/> with ID <paramref name="ID"/>.
+        /// Create a new instance of a <typeparamref name="T"/> object with a given ID.
         /// </summary>
-        /// <param name="ID">ID of the <typeparamref name="T"/> to return.</param>
+        /// <param name="ID">ID of the <typeparamref name="T"/> object to return.</param>
         /// <remarks>
         /// If a <typeparamref name="T"/> with the given <paramref name="ID"/> is not found,
-        /// <see cref="T.GetNull()"/> will be returned.
+        /// <see cref="T.Null"/> will be returned.
         /// </remarks>
-        /// <returns><typeparamref name="T"/> with key <paramref name="ID"/> in 
-        /// <see cref="objectsDict"/>.</returns>
+        /// <returns><typeparamref name="T"/> with key <paramref name="ID"/> in the loaded collection.</returns>
         public static T New(int ID)
         {
             if (objectsDict.TryGetValue(ID, out var value)) return value;
@@ -37,8 +36,7 @@ namespace BlackberryMead.Framework
 
 
         /// <summary>
-        /// Populate <paramref name="obj"/> with fields from the <typeparamref name="T"/> with 
-        /// key <paramref name="ID"/>.
+        /// Populates an object with fields from an existing object in the imported collection.
         /// </summary>
         /// <param name="obj">Object to populate.</param>
         /// <param name="ID">Key in <see cref="objectsDict"/> of the <typeparamref name="T"/> to 
@@ -53,10 +51,10 @@ namespace BlackberryMead.Framework
 
 
         /// <summary>
-        /// Set the <see cref="objectsDict"/> for <typeparamref name="T"/>.
+        /// Sets the collection of existing objects for <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="objectsDict"><see cref="DeserializeDictionary{int, T}"/> of all the 
-        /// <typeparamref name="T"/> able to be loaded.</param>
+        /// <param name="objectsDict"><see cref="DeserializeDictionary{int, T}"/> of all the loadable
+        /// <typeparamref name="T"/>.</param>
         public static void SetObjects(DeserializeDictionary<int, T> objectsDict)
         {
             JsonLoadableObject<T>.objectsDict = objectsDict;

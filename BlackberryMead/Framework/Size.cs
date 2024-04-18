@@ -21,6 +21,9 @@ namespace BlackberryMead.Framework
         public int Height { get; set; }
 
 
+        /// <summary>
+        /// Create a new Size.
+        /// </summary>
         [JsonConstructor]
         public Size(int Width, int Height)
         {
@@ -30,6 +33,9 @@ namespace BlackberryMead.Framework
         }
 
 
+        /// <summary>
+        /// Create a new <see cref="Size"/> from a <see cref="MonoGame.Extended.Size"/>.
+        /// </summary>
         public Size(MonoGame.Extended.Size size)
         {
             Width = size.Width;

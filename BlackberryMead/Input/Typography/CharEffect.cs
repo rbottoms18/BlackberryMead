@@ -2,6 +2,9 @@
 
 namespace BlackberryMead.Input.Typography
 {
+    /// <summary>
+    /// A visual effect that can be applied to a <see cref="Char"/>.
+    /// </summary>
     public abstract class CharEffect
     {
         /// <summary>
@@ -11,9 +14,8 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Creates a new CharEffect.
+        /// Creates a new <see cref="CharEffect"/>.
         /// </summary>
-        /// <param name="applyMethod"></param>
         public CharEffect() { }
     }
 }

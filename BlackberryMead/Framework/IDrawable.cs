@@ -1,7 +1,7 @@
 ﻿namespace BlackberryMead.Framework
 {
     /// <summary>
-    /// Marks an object as able to be drawn to the screen.
+    /// Defines a method that allows an object to be drawn to the screen.
     /// </summary>
     /// <typeparam name="T">Type of <see cref="IDrawContext"/> the inheriting type uses.</typeparam>
     public interface IDrawable<T> where T : IDrawContext

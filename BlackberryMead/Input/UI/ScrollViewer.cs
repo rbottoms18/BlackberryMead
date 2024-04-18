@@ -11,26 +11,26 @@ using System.Text.Json.Serialization;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// A collection of UIComponents that can be scrolled through vertically and viewed
-    /// from a windowed display.
+    /// A collection of <see cref="UIComponent"/> objects that can be scrolled through 
+    /// vertically and viewed from a windowed display.
     /// </summary>
     [OptInJsonSerialization]
     public class ScrollViewer : UIComponent, IRenderable
     {
         /// <summary>
-        /// Rectangle that the contents of the this are drawn to.
+        /// Rectangle that the contents of the <see cref="ScrollViewer"/> are drawn to.
         /// </summary>
         [JsonInclude]
         public Rectangle ViewPort { get; protected set; }
 
         /// <summary>
-        /// Dimensions of the ViewPort
+        /// Dimensions of the <see cref="ViewPort"/>.
         /// </summary>
         [JsonInclude, JsonRequired]
         public Size ViewPortDimensions { get; protected set; }
 
         /// <summary>
-        /// ScrollBar used to scroll this.
+        /// <see cref="UI.ScrollBar"/> used to scroll the <see cref="ScrollViewer"/>.
         /// </summary>
         [JsonInclude, JsonRequired]
         public ScrollBar ScrollBar { get; init; }
@@ -42,19 +42,19 @@ namespace BlackberryMead.Input.UI
         public string ScrollBarName { get; protected set; }
 
         /// <summary>
-        /// Elements contained in this that can be scrolled through.
+        /// <see cref="UIComponent"/> contained in this that can be scrolled through.
         /// </summary>
         [JsonInclude]
         public Dictionary<string, UIComponent> Components { get; protected set; } = new Dictionary<string, UIComponent>();
 
         /// <summary>
-        /// Spacing between elements in Elements.
+        /// Spacing between components in <see cref="Components"/>.
         /// </summary>
         [JsonInclude]
         public int Spacing { get; protected set; }
 
         /// <summary>
-        /// Render target that the elements are drawn to.
+        /// Render target that the <see cref="Components"/> are drawn to.
         /// </summary>
         protected RenderTarget2D renderTarget;
 
@@ -67,10 +67,11 @@ namespace BlackberryMead.Input.UI
             set { x = value; }
         }
 
+        // What does x do???
         protected Size x;
 
         /// <summary>
-        /// Value of the ScrollBar on the previous update tick.
+        /// Value of the <see cref="UI.ScrollBar"/> on the previous update tick.
         /// </summary>
         protected float prevScrollValue;
 
@@ -80,20 +81,23 @@ namespace BlackberryMead.Input.UI
         protected SpriteBatch spriteBatch;
 
         /// <summary>
-        /// Rectangle of same dimensions as ViewPort that serves as the 
+        /// Rectangle of same dimensions as <see cref="ViewPort"/> that serves as the 
         /// source rectangle when sampling from the render target.
         /// </summary>
         protected Rectangle window;
 
         /// <summary>
-        /// Number of pixels that the render target is longer than the view port, i.e. how much the render target can be scrolled down.
+        /// Number of pixels that the render target is longer than the view port.
         /// </summary>
+        /// <remarks>
+        /// How much the render target can be scrolled down.
+        /// </remarks>
         protected int scrollFreedom;
 
         protected int Shift { get { return (int)(ScrollBar.Value * scrollFreedom); } }
 
         /// <summary>
-        /// Create a new ScrollViewer.
+        /// Create a new <see cref="ScrollViewer"/>.
         /// </summary>
         /// <param name="ViewPortDimensions"></param>
         /// <param name="ScrollBar"></param>
@@ -256,160 +260,4 @@ namespace BlackberryMead.Input.UI
             graphicsDevice.SetRenderTarget(null);
         }
     }
-
-    // Old code from a continuous ScrollViewer using a render target
-    /*
-
-     */
-
-    // Old Code from discrete scroll viewer
-    /*
-     *         /// <summary>
-        /// UIElements contained in each Entry in this.
-        /// </summary>
-        [JsonInclude]
-        public List<Dictionary<string,UIElement>> EntryContents { get; protected set; }
-
-        /// <summary>
-        /// Height of an entry in this.
-        /// </summary>
-        [JsonInclude]
-        public int EntryHeight { get; protected set; }
-
-        /// <summary>
-        /// Rectangle that the contents of the this are drawn to.
-        /// </summary>
-        [JsonInclude]
-        public Rectangle ViewPort { get; protected set; }
-
-        /// <summary>
-        /// Dimensions of the ViewPort
-        /// </summary>
-        [JsonInclude]
-        public Size ViewPortDimensions { get; protected set; }
-
-        /// <summary>
-        /// ScrollBar used to scroll this.
-        /// </summary>
-        [JsonInclude]
-        public ScrollBar ScrollBar { get; init; }
-
-        /// <summary>
-        /// Groups of UIElements in the scroll viewer that can be scrolled through
-        /// </summary>
-        protected UIWindow[] entries;
-
-        /// <summary>
-        /// Number of entries displayed at one time
-        /// </summary>
-        protected int numVisibleEntries;
-
-        /// <summary>
-        /// Index in <paramref name="entries"></paramref> of the top-most entry shown.
-        /// </summary>
-        protected int topEntryIndex;
-
-        public ScrollViewer(List<Dictionary<string, UIElement>> EntryContents, int EntryHeight, Size ViewPortDimensions, ScrollBar ScrollBar, Size Dimensions,
-            VerticalAlignment VerticalAllign, HorizontalAlignment HorizontalAllign,
-            int VerticalOffset, int HorizontalOffset, Dictionary<string, List<(Point offset, Rectangle source)>> SeasonalDetails) :
-            base(Dimensions, VerticalAllign, HorizontalAllign,
-                VerticalOffset, HorizontalOffset, SeasonalDetails)
-        {
-            this.EntryContents = EntryContents;
-            this.EntryHeight = EntryHeight;
-            this.ViewPortDimensions = ViewPortDimensions;
-            this.ScrollBar = ScrollBar;
-
-            // Realign ScrollBar to this
-            ScrollBar.Realign(Rect);
-
-            // Initialize ViewPort
-            ViewPort = new Rectangle(Origin, ViewPortDimensions);
-
-            // Create entries array
-            // Calculate number of visible entries
-            numVisibleEntries = ViewPort.Height / EntryHeight;
-            entries = new UIWindow[numVisibleEntries];
-            for (int i = 0; i < numVisibleEntries; i++)
-            {
-                // Populate the window with the UIElements in EntryContents
-                entries[i] = new UIWindow(EntryContents[i], new List<string>(), new Size(ViewPortDimensions.Width, EntryHeight),
-                    new Rectangle(0, 0, 0, 0), VerticalAlignment.Top, HorizontalAlignment.Left, i * EntryHeight, 0, 
-                    new Dictionary<string, List<(Point offset, Rectangle source)>>());
-
-                entries[i].Realign(Rect);
-            }
-
-        }
-
-
-        public override void Update(ref ItemStack mouseInv, Point mousePos)
-        {
-            base.Update(ref mouseInv, mousePos);
-
-            ScrollBar.Update(ref mouseInv, mousePos);
-
-            if (ScrollBar.Value > 0.5)
-            {
-                // Reassign contents shifted up
-                topEntryIndex++;
-                for (int i = 0; i < numVisibleEntries; i++)
-                {
-                    entries[i].Elements = EntryContents[topEntryIndex + i];
-                }
-            }
-        }
-
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-
-            // Draw ScrollBar
-            ScrollBar.Draw(spriteBatch);
-
-
-            // Draw Entries
-            for (int i = 0; i < numVisibleEntries; i++)
-            {
-                entries[i].Draw(spriteBatch);
-            }
-        }
-
-
-        public override void Rescale()
-        {
-            base.Rescale();
-
-            ScrollBar.Rescale();
-
-            foreach (UIWindow entry in entries)
-            {
-                entry.Rescale();
-            }
-        }
-
-
-        public override void Realign(Rectangle boundingRect)
-        {
-            base.Realign(boundingRect);
-
-            ScrollBar.Realign(Rect);
-
-            foreach (UIWindow entry in entries)
-            {
-                entry.Realign(Rect);
-            }
-        }
-
-
-        public override void DrawText(SpriteBatch spriteBatch, Func<Point, Point> translate)
-        {
-            base.DrawText(spriteBatch, translate);
-
-            foreach (UIWindow entry in entries)
-                entry.DrawText(spriteBatch, translate);
-        }
-
-     */
 }

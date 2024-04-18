@@ -9,37 +9,51 @@ namespace BlackberryMead.Input
     public class InputManager
     {
         /// <summary>
-        /// MouseState of the current update tick.
+        /// <see cref="MouseState"/> of the current update tick.
         /// </summary>
         public MouseState CurrentMouseState;
 
         /// <summary>
-        /// MouseState of the previous update tick.
+        /// <see cref="MouseState"/> of the previous update tick.
         /// </summary>
         public MouseState PrevMouseState;
 
         /// <summary>
-        /// KeyboardState of the current update tick.
+        /// <see cref="KeyboardState"/> of the current update tick.
         /// </summary>
         public KeyboardState CurrentKeyboardState;
 
         /// <summary>
-        /// KeyboardState of the previous update tick.
+        /// <see cref="KeyboardState"/> of the previous update tick.
         /// </summary>
         public KeyboardState PrevKeyboardState;
 
         /// <summary>
-        /// GamePadState of the current update tick.
+        /// <see cref="GamePadState"/> of the current update tick.
         /// </summary>
         public GamePadState CurrentGamePadState;
 
         /// <summary>
-        /// GamePadState of the previous update tick.
+        /// <see cref="GamePadState"/> of the previous update tick.
         /// </summary>
         public GamePadState PrevGamePadState;
 
+
+        /// <summary>
+        /// Create a new empty <see cref="InputManager"/>.
+        /// </summary>
         public InputManager() { }
 
+
+        /// <summary>
+        /// Updates the state of the <see cref="InputManager"/>.
+        /// </summary>
+        /// <param name="actions">Actions that can be taken on this update.</param>
+        /// <remarks>
+        /// Updates the previous and current Mouse, Keyboard, and Gamepad states. Computes
+        /// whether each action in <paramref name="actions"/> has had its <see cref="Keybind"/> satisfied.
+        /// </remarks>
+        /// <returns></returns>
         public InputState GetState(Dictionary<string, Keybind> actions)
         {
             // Set current states to previous

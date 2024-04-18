@@ -9,7 +9,9 @@
         /// Gets the name of a file with the given path.
         /// </summary>
         /// <param name="path">Path of the file.</param>
-        /// <returns>The name of the file at the given path</returns>
+        /// <param name="includeExtension">Returns the extension of the file in the return 
+        /// name if <see langword="true"/>.</param>
+        /// <returns>The name of the file at the given path.</returns>
         public static string GetFileName(string path, bool includeExtension = false)
         {
             string[] _ = path.Split('\\');

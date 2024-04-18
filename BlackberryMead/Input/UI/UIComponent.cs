@@ -1,5 +1,4 @@
-﻿#nullable enable
-using BlackberryMead.Framework;
+﻿using BlackberryMead.Framework;
 using BlackberryMead.Utility;
 using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
@@ -15,61 +14,63 @@ using Point = Microsoft.Xna.Framework.Point;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// Visual structure that represents an interactable element of a UserInterface.
+    /// Object that represents an element of a <see cref="UserInterface"/>.
     /// </summary>
     [OptInJsonSerialization]
     public abstract class UIComponent
     {
         /// <summary>
-        /// An Empty UIElement. Use instead of setting a UI element to null.
+        /// An empty <see cref="UIComponent"/>.
         /// </summary>
         public static NullUIElement Null = new();
 
         /// <summary>
-        /// The percent opacity of a UIElement that is disabled.
+        /// The opacity that the <see cref="UIComponent"/> is drawn with when it is disabled..
         /// </summary>
         public const float DisabledOpacity = 0.5f;
 
         /// <summary>
-        /// Spritesheet of the UIComponent
+        /// Spritesheet of the <see cref="UIComponent"/>.
         /// </summary>
         [JsonIgnore]
         public Texture2D? Spritesheet { get; set; }
 
         /// <summary>
-        /// Name of the Spritesheet of this. If left empty,
-        /// the containing <see cref="UserInterface.Spritesheet"/> will be used instead.
+        /// Name of the Spritesheet of the <see cref="UIComponent"/>. 
         /// </summary>
+        /// <remarks>If left empty,
+        /// the containing <see cref="UserInterface.Spritesheet"/> will be used instead.
+        /// </remarks>
         [JsonOptIn]
         public string SpritesheetName { get; set; } = "";
 
         /// <summary>
-        /// Rectangle that the UIComponent is encapsulated in and drawn to
+        /// Rectangle that the <see cref="UIComponent"/> is encapsulated in and drawn to.
         /// </summary>
         public virtual Rectangle Rect { get; protected set; }
 
         /// <summary>
-        /// Origin of the UIComponent insides its parent collection's Rectangle
+        /// Origin of the <see cref="UIComponent"/> insides its parent collection's Rectangle.
         /// </summary>
         public virtual Point Origin { get; protected set; }
 
         /// <summary>
-        /// Whether the UIComponent is currently visible or not
+        /// Whether the <see cref="UIComponent"/> is currently visible or not.
         /// </summary>
         public bool IsVisible = true;
 
         /// <summary>
-        /// Whether this can be interacted with.
+        /// Whether the <see cref="UIComponent"/> can be interacted with.
         /// </summary>
         public bool Enabled = true;
 
         /// <summary>
-        /// The draw opacity of this.
+        /// The draw opacity the <see cref="UIComponent"/> is drawn with.
         /// </summary>
         public float Opacity = 1f;
 
         /// <summary>
-        /// Factor to which this is scaled.
+        /// Factor to which the <see cref="UIComponent"/> is scaled in the <see cref="UserInterface"/>.
         /// </summary>
         /// <remarks>
         /// Affects dimensions but does not affect horizontal and vertical offsets.
@@ -77,43 +78,46 @@ namespace BlackberryMead.Input.UI
         public int Scale { get; protected set; } = 1;
 
         /// <summary>
-        /// Dimensions of the UIComponent.
+        /// Dimensions of the <see cref="UIComponent"/>.
         /// </summary>
         public Size Dimensions { get; set; }
 
         /// <summary>
-        /// Vertical offset of the UIElement from its Origin.
+        /// Vertical offset of the <see cref="UIComponent"/> from its <see cref="Origin"/>.
         /// </summary>
         public int VerticalOffset { get; set; }
 
         /// <summary>
-        /// Horizontal offset of the UIElement from its Origin.
+        /// Horizontal offset of the <see cref="UIComponent"/> from its <see cref="Origin"/>.
         /// </summary>
         public int HorizontalOffset { get; set; }
 
         /// <summary>
-        /// Vertical allignment of the UIElement against its Origin.
+        /// Vertical allignment of the <see cref="UIComponent"/> against its <see cref="Origin"/>.
         /// </summary>
         public Alignment VerticalAlign { get; set; }
 
         /// <summary>
-        /// Horizontal allignment of the UIElement against its Origin.
+        /// Horizontal allignment of the <see cref="UIComponent"/> against its <see cref="Origin"/>.
         /// </summary>
         public Alignment HorizontalAlign { get; set; }
 
         /// <summary>
-        /// Enables the drawing of the bounding box.
+        /// If true, draws the bounding box in <see cref="Draw(SpriteBatch)"/>.
         /// </summary>
         [JsonOptIn]
         public bool ShowBorder { get; set; }
 
         /// <summary>
-        /// List of actions subscribed to by this. Must be overriden in derived class.
+        /// List of actions subscribed to by the <see cref="UIComponent"/>.
         /// </summary>
+        /// <remarks>
+        /// Must be overriden in derived class.
+        /// </remarks>
         public virtual List<string> Actions { get => new(); }
 
         /// <summary>
-        /// Layout settings of this.
+        /// Layout settings of the <see cref="UIComponent"/>.
         /// </summary>
         [JsonOptIn]
         public UILayout Layout { get; set; }
@@ -125,10 +129,10 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Creates a new UIComponent.
+        /// Creates a new <see cref="UIComponent"/>.
         /// Sets origin based on alignment conditions and initializes the bounding rectangle.
         /// </summary>
-        /// <param name="Layout">Layout settings for the component.</param>
+        /// <param name="Layout">Layout settings for the <see cref="UIComponent"/>.</param>
         [JsonConstructor]
         public UIComponent(UILayout Layout)
         {
@@ -145,12 +149,12 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Sets the origin of the UIComponent to align inside a rectangle.
+        /// Aligns the origin of the <see cref="UIComponent"/> inside a rectangle.
         /// </summary>
         /// <param name="boundingRect">Rectangle to align against.</param>
         /// <param name="vAllign">Vertical alignment.</param>
         /// <param name="hAllign">Horizontal alignment.</param>
-        /// <param name="dim">Dimensions of the UIComponent rectangle.</param>
+        /// <param name="dim">Dimensions of the <see cref="UIComponent"/> rectangle.</param>
         /// <param name="hOffset">Horizontal offset of the alignment in screen pixels.</param>
         /// <param name="vOffset">Vertical offset of the alignment in screen pixels.</param>
         public static Point Align(Rectangle boundingRect, MonoGame.Extended.Size dim,
@@ -208,7 +212,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Realign this inside on a bounding rectangle.
+        /// Realign the <see cref="UIComponent"/> inside a rectangle.
         /// </summary>
         public virtual void Realign(Rectangle boundingRect)
         {
@@ -221,13 +225,13 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Preforms update logic for this each in-game tick.
+        /// Preforms update logic for the <see cref="UIComponent"/>.
         /// </summary>
         public abstract void Update(InputState input);
 
 
         /// <summary>
-        /// Draws this.
+        /// Draws the <see cref="UIComponent"/>.
         /// </summary>
         /// <param name="spriteBatch"></param>
         public virtual void Draw(SpriteBatch spriteBatch)
@@ -240,20 +244,23 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Preforms logic when the this' parent <see cref="Window"/> is closed.
+        /// Preforms logic when the <see cref="UIComponent"/>'s parent <see cref="Window"/> is closed.
         /// </summary>
         public virtual void OnClose() { }
 
 
         /// <summary>
-        /// Preforms logic when this' parent <see cref="Window"/> is closed.
+        /// Preforms logic when teh <see cref="UIComponent"/>'s parent <see cref="Window"/> is opened.
         /// </summary>
         public virtual void OnOpen() { }
 
 
         /// <summary>
-        /// Gets a list of all UIElement children contained in this. Does not include itself as a child.
+        /// Gets a list of all <see cref="UIComponent"/> children contained in this.
         /// </summary>
+        /// <remarks>
+        /// Does not include itself as a child.
+        /// </remarks>
         /// <returns>List of children UIElements contained in this UIElement.
         /// Must be overridden if the Component contains subcomponents.</returns>
         public virtual Dictionary<string, UIComponent> GetChildren()
@@ -263,7 +270,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Disables this and makes it uninteractable.
+        /// Disables the <see cref="UIComponent"/> and makes it uninteractable.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -274,7 +281,7 @@ namespace BlackberryMead.Input.UI
         }
 
         /// <summary>
-        /// Enables this and makes it interactable.
+        /// Enables the <see cref="UIComponent"/> and makes it interactable.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -286,7 +293,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Loads content required by this.
+        /// Loads content required by the <see cref="UIComponent"/>.
         /// </summary>
         /// <param name="content"></param>
         public virtual void LoadContent(ContentManager content)
@@ -303,16 +310,27 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Returns whether the given point is inside this.
+        /// Returns whether the given point is inside the <see cref="UIComponent"/>.
         /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
+        /// <param name="p">Point to evaluate.</param>
+        /// <returns>Whether <paramref name="p"/> is contained inside the <see cref="UIComponent"/>.</returns>
         public virtual bool Contains(Point p)
         {
             return Rect.Contains(p);
         }
 
 
+        /// <summary>
+        /// Creates a deep copy of the <see cref="UIComponent"/>.
+        /// </summary>
+        /// <remarks>
+        /// Serializes the <see cref="UIComponent"/> to Json and deserializes back to a new object.
+        /// </remarks>
+        /// <typeparam name="T">Type of <see cref="UIComponent"/> to copy.</typeparam>
+        /// <param name="obj"><see cref="UIComponent"/> to copy.</param>
+        /// <param name="contentManager"><see cref="ContentManager"/> required to call 
+        /// <see cref="LoadContent(ContentManager)"/> on the copy.</param>
+        /// <returns>A deep copy of <paramref name="obj"/>.</returns>
         public static T ToNew<T>(T obj, ContentManager contentManager) where T : UIComponent
         {
             JsonSerializerOptions options = new JsonSerializerOptions()
@@ -333,24 +351,5 @@ namespace BlackberryMead.Input.UI
             newObj.LoadContent(contentManager);
             return newObj;
         }
-    }
-
-
-    /// <summary>
-    /// NOP implimentation of the UIElement. 
-    /// </summary>
-    public class NullUIElement : UIComponent
-    {
-        /// <summary>
-        /// Create a new NullUIElement
-        /// </summary>
-        public NullUIElement() : base(new UILayout(Size.Zero, Alignment.Top, Alignment.Left, 1, 0, 0))
-        { }
-
-
-        public override void Draw(SpriteBatch spriteBatch) { }
-
-
-        public override void Update(InputState input) { }
     }
 }

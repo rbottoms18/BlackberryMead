@@ -1,7 +1,7 @@
 ﻿namespace BlackberryMead.Framework
 {
     /// <summary>
-    /// Defines a method that assigns a numerical count to a type.
+    /// Defines a property that assigns a numerical count to an object.
     /// </summary>
     public interface IQuantifiable
     {

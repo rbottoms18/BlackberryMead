@@ -8,36 +8,40 @@ using Size = BlackberryMead.Framework.Size;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// A UI Component window that can be dragged by the player to reposition it
+    /// A <see cref="Window"/> that can be dragged to reposition it
     /// on the screen.
     /// </summary>
     [OptInJsonSerialization]
-    public class DragWindow : Window
+    public class DragWindow : Window, IDraggable
     {
         public override List<string> Actions => new List<string> { "Drag" };
 
         /// <summary>
-        /// Rectangle regions that can be used to drag the window.
-        /// When the mouse is outside these regions, the window will not drag.
+        /// Rectangle regions that can be used to drag the <see cref="DragWindow"/>.
         /// </summary>
+        /// <remarks>
+        /// When the mouse is outside these regions, the window will not drag.
+        /// </remarks>
         private List<UIRectangle> dragRegions = new List<UIRectangle>();
 
+        /// <summary>
+        /// Whether the <see cref="dragRegions"/> are drawn in <see cref="Draw(SpriteBatch)"/>.
+        /// </summary>
         [JsonOptIn]
         public bool ShowDragRegions { get; set; } = false;
 
         /// <summary>
-        /// Whether the window is being dragged by the player or not.
+        /// Whether the <see cref="DragWindow"/> is being dragged or not.
         /// </summary>
-        public bool IsDragging { get; protected set; }
+        public bool IsDragging { get; set; }
+
+        public string DragAction => "Drag";
+
+        public List<UIRectangle> DragRegions => dragRegions;
+
 
         /// <summary>
-        /// Previous mouse position for computing delta mouse position
-        /// </summary>
-        private Point prevMousePos;
-
-
-        /// <summary>
-        /// Create a new DragWindow.
+        /// Create a new <see cref="DragWindow"/>.
         /// </summary>
         /// <inheritdoc cref="Window.Window(Dictionary{string, UIComponent}, List{string}, Size, 
         /// Rectangle, Alignment, Alignment, int, int, int)"/>
@@ -57,50 +61,19 @@ namespace BlackberryMead.Input.UI
 
         public override void Update(InputState input)
         {
-            if (!input["Drag"])
-                IsDragging = false;
-            else
-            {
-                // If mouse is down, drag
-                foreach (UIRectangle r in dragRegions)
-                {
-                    if (r.Contains(input.MousePosition))
-                    {
-                        IsDragging = true;
-                        break;
-                    }
-                }
-            }
-
-            if (IsDragging)
-            {
-                // Move the window by the change in the mouse position
-                Point deltaMouse = input.MousePosition - prevMousePos;
-                Origin = Origin + deltaMouse;
-                Rect = new Rectangle(Origin, Dimensions);
-
-                foreach (UIComponent c in Components.Values)
-                    c.Realign(Rect);
-            }
-
-            // Update each compontent contained in the window
+            ((IDraggable)this).UpdateDrag(input);
             base.Update(input);
-
-            // Must be last thing in Update
-            // Set prev mouse position to current
-            prevMousePos = input.MousePosition;
         }
 
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            if (ShowDragRegions)
+            if (!ShowDragRegions) return;
+
+            foreach (UIRectangle r in dragRegions)
             {
-                foreach (UIRectangle r in dragRegions)
-                {
-                    spriteBatch.FillRectangle(r.Rect, Color.Blue, 0);
-                }
+                spriteBatch.FillRectangle(r.Rect, Color.Blue, 0);
             }
         }
 
@@ -108,6 +81,16 @@ namespace BlackberryMead.Input.UI
         public override void Realign(Rectangle boundingRect)
         {
             base.Realign(boundingRect);
+        }
+
+
+        public void OnDrag(InputState input)
+        {
+            Origin += input.MouseDelta;
+            Rect = new Rectangle(Origin, Dimensions);
+
+            foreach (UIComponent c in Components.Values)
+                c.Realign(Rect);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace BlackberryMead.Utility
         private Random rnd = new Random();
 
         /// <summary>
-        /// An entry in the bag
+        /// An entry in the bag.
         /// </summary>
         private struct Entry
         {
@@ -21,18 +21,18 @@ namespace BlackberryMead.Utility
         }
 
         /// <summary>
-        /// List of all the possible entries in the bag
+        /// List of all the possible entries in the bag.
         /// </summary>
         private List<Entry> entries;
 
         /// <summary>
-        /// Total weight of all items in the bag
+        /// Total weight of all items in the bag.
         /// </summary>
         private int totalWeight;
 
 
         /// <summary>
-        /// Creates a new empty WeightedRandomBag
+        /// Creates a new empty <see cref="WeightedRandomBag{T}"/>.
         /// </summary>
         public WeightedRandomBag()
         {
@@ -41,7 +41,7 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Creates a WeightedRandomBag from a list of items and weights.
+        /// Creates a <see cref="WeightedRandomBag{T}"/> from a list of items and weights.
         /// Items and weights must index match.
         /// Generates the probability table.
         /// </summary>
@@ -59,8 +59,8 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Add an entry to the bag.
-        /// Recomputes the order of entries in the bag to optimize pulling.
+        /// Add an entry to the <see cref="WeightedRandomBag{T}"/>.
+        /// Recomputes the order of entries in the <see cref="WeightedRandomBag{T}"/> to optimize pulling.
         /// </summary>
         public void AddEntry(T item, int weight)
         {
@@ -71,7 +71,7 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Gets a random item from the bag.
+        /// Gets a random item from the <see cref="WeightedRandomBag{T}"/>.
         /// </summary>
         /// <returns></returns>
         public T GetRandom()
@@ -91,10 +91,9 @@ namespace BlackberryMead.Utility
 
 
         /// <summary>
-        /// Returns an unweighted random T from the list of
-        /// all possible Ts
+        /// Returns an unweighted random <typeparamref name="T"/> from the list of
+        /// all possible <typeparamref name="T"/> objects in the <see cref="WeightedRandomBag{T}"/>.
         /// </summary>
-        /// <returns></returns>
         public T PickOne()
         {
             return entries[rnd.Next(0, entries.Count)].item;

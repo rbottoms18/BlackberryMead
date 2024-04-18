@@ -11,22 +11,25 @@ using System.Text.Json.Serialization;
 
 namespace BlackberryMead.Maps
 {
+    /// <summary>
+    /// A 2D grid of <see cref="IMapObject{T}"/> objects with multiple layers.
+    /// </summary>
     public class Map2D<T> where T : IMapObject<T>
     {
         /// <summary>
-        /// Number of Rows in this.
+        /// Number of Rows in the <see cref="Map2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public int Rows { get; init; }
 
         /// <summary>
-        /// Number of Columns in this.
+        /// Number of Columns in the <see cref="Map2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public int Columns { get; init; }
 
         /// <summary>
-        /// Size of this in tiles.
+        /// Size of the <see cref="Map2D{T}"/> in tiles.
         /// </summary>
         [JsonIgnore]
         public GridPoint Size { get { return new GridPoint(Rows, Columns); } }
@@ -50,13 +53,13 @@ namespace BlackberryMead.Maps
         public Size TileDim { get { return new Size(TileWidth, TileHeight); } }
 
         /// <summary>
-        /// <see cref="Layer2D{T}"/> that constitute this.
+        /// <see cref="Layer2D{T}"/> objects in the <see cref="Map2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public Layer2D<T>[] Layers { get; init; }
 
         /// <summary>
-        /// 2d <see cref="bool"/> array containing passability information for each location on the map.
+        /// 2D <see cref="bool"/> array containing passability information for each location on the <see cref="Map2D{T}"/>.
         /// </summary>
         /// <remarks>
         /// True if location is passable, false if impassible.
@@ -65,7 +68,7 @@ namespace BlackberryMead.Maps
         public bool[][] CollisionLayer { get; set; }
 
         /// <summary>
-        /// Returns a <see cref="Vector2"/> of the coordinates of the top right corner of the map.
+        /// Returns a <see cref="Vector2"/> of the coordinates of the top right corner of the <see cref="Map2D{T}"/>.
         /// </summary>
         public Vector2 TopRight
         {
@@ -73,7 +76,7 @@ namespace BlackberryMead.Maps
         }
 
         /// <summary>
-        /// Returns a <see cref="Vector2"/> of the coordinates of the top left corner of the map.
+        /// Returns a <see cref="Vector2"/> of the coordinates of the top left corner of the <see cref="Map2D{T}"/>.
         /// </summary>
         [JsonIgnore]
         public Vector2 TopLeft
@@ -82,7 +85,7 @@ namespace BlackberryMead.Maps
         }
 
         /// <summary>
-        /// Returns a <see cref="Vector2"/> of the coordinates of the bottom right corner of the map.
+        /// Returns a <see cref="Vector2"/> of the coordinates of the bottom right corner of the <see cref="Map2D{T}"/>.
         /// </summary>
         /// <returns></returns>
         [JsonIgnore]
@@ -92,7 +95,7 @@ namespace BlackberryMead.Maps
         }
 
         /// <summary>
-        /// Returns a <see cref="Vector2"/> of the coordinates of the bottom left corner of the map.
+        /// Returns a <see cref="Vector2"/> of the coordinates of the bottom left corner of the <see cref="Map2D{T}"/>.
         /// </summary>
         [JsonIgnore]
         public Vector2 BottomLeft
@@ -108,7 +111,7 @@ namespace BlackberryMead.Maps
         { get; set; }
 
         /// <summary>
-        /// Whether gridlines are drawn for each tile in the map.
+        /// Whether gridlines are drawn for each tile in the <see cref="Map2D{T}"/>.
         /// </summary>
         [JsonIgnore]
         public bool DrawGridlines { get; set; }
@@ -119,7 +122,7 @@ namespace BlackberryMead.Maps
         protected virtual int scale { get { return 1; } }
 
         /// <summary>
-        /// Set of <see cref="IAnimate"/> objects in the map.
+        /// Set of <see cref="IAnimate"/> objects in the <see cref="Map2D{T}"/>.
         /// </summary>
         protected HashSet<IAnimate> animateObjs = new();
 
@@ -129,7 +132,7 @@ namespace BlackberryMead.Maps
         protected readonly int RegionSize = 5;
 
         /// <summary>
-        /// <see cref="HashGrid{T}"/> holding the location of <see cref="IAnimate"/> objects on the map.
+        /// <see cref="HashGrid{T}"/> holding the location of <see cref="IAnimate"/> objects on the <see cref="Map2D{T}"/>.
         /// </summary>
         protected HashGrid<IAnimate> animateGrid;
 
@@ -139,7 +142,7 @@ namespace BlackberryMead.Maps
         private static GridPointComparer gpComparer { get; set; } = new GridPointComparer();
 
         /// <summary>
-        /// BlendState for drawing shadows
+        /// BlendState for drawing shadows.
         /// </summary>
         private static BlendState blend = new BlendState
         {
@@ -150,10 +153,13 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Create a new empty Map.
+        /// Create a new empty <see cref="Map2D{T}"/>.
         /// Base constructor does not initialize <see cref="Layers"/>"
         /// </summary>
-        /// <inheritdoc cref="Map(MonoGame.Extended.Size, int, int, Layer2D[], bool[][])"/>
+        /// <param name="Rows">Number of rows in the <see cref="Map2D{T}"/>.</param>
+        /// <param name="Columns">Number of columns in the <see cref="Map2D{T}"/>.</param>
+        /// <param name="TileHeight">Height of a tile.</param>
+        /// <param name="TileWidth">Width of a tile.</param>
         public Map2D(int Rows, int Columns, int TileWidth, int TileHeight)
         {
             this.TileWidth = TileWidth * scale;
@@ -171,12 +177,11 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Create a new Map.
+        /// Create a new <see cref="Map2D{T}"/>.
         /// </summary>
-        /// <param name="TileDim"></param>
-        /// <param name="Rows"></param>
-        /// <param name="Columns"></param>
-        /// <param name="Layers"></param>
+        /// <inheritdoc cref="Map2D{T}.Map2D(int, int, int, int)"/>
+        /// <param name="Layers"><see cref="Layer2D{T}"/>s in the <see cref="Map2D{T}"/>.</param>
+        /// <param name="CollisionLayer">Jagged array containing passability information.</param>
         /// <remarks>Use this constructor for deserialization.</remarks>
         [JsonConstructor]
         public Map2D(int Rows, int Columns, int TileWidth, int TileHeight, Layer2D<T>[] Layers, bool[][] CollisionLayer)
@@ -214,7 +219,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Updates the map every in-game tick.
+        /// Updates the <see cref="Map2D{T}"/>.
         /// </summary>
         public void Update(GameTime gameTime)
         {
@@ -237,11 +242,11 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Set an <see cref="T"/> on the map.
+        /// Set an <see cref="T"/> on the <see cref="Map2D{T}"/>.
         /// </summary>
         /// <param name="layerIndex">Index of the layer to set a <see cref="T"/> to.</param>
         /// <param name="pos">Position to set the <see cref="T"/> to.</param>
-        /// <param name="obj">Object of type <see cref="T"/> to add to the map.</param>
+        /// <param name="obj">Object of type <see cref="T"/> to add to the <see cref="Map2D{T}"/>.</param>
         public virtual void Set(int layerIndex, T obj, GridPoint pos)
         {
             foreach (GridPoint p in Layers[layerIndex].Set(obj, pos))
@@ -250,7 +255,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Remove a <typeparamref name="T"/> from the map.
+        /// Remove a <typeparamref name="T"/> from the <see cref="Map2D{T}"/>.
         /// </summary>
         /// <param name="layer">Layer from which to remove the <see cref="T"/> from.</param>
         /// <param name="pos">Position at which to remove the <see cref="T"/>.</param>
@@ -266,9 +271,9 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Adds an IAnimate sprite to the map.
+        /// Adds an <see cref="IAnimate"/> sprite to the <see cref="Map2D{T}"/>.
         /// </summary>
-        /// <param name="animate"><see cref="IAnimate"/> to add to the map.</param>
+        /// <param name="animate"><see cref="IAnimate"/> to add to the <see cref="Map2D{T}"/>.</param>
         public virtual void AddAnimate(IAnimate animate)
         {
             animateObjs.Add(animate);
@@ -278,9 +283,9 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Removes an IAnimate object from the map
+        /// Removes an <see cref="IAnimate"/> object from the <see cref="Map2D{T}"/>.
         /// </summary>
-        /// <param name="animate"><see cref="IAnimate"/> to remove from the map.</param>
+        /// <param name="animate"><see cref="IAnimate"/> to remove from the <see cref="Map2D{T}"/>.</param>
         public virtual void RemoveAnimate(IAnimate animate)
         {
             animateObjs.Remove(animate);
@@ -291,7 +296,6 @@ namespace BlackberryMead.Maps
         /// Returns the index of the tile with the given position vector.
         /// </summary>
         /// <param name="position">Position to get the tile at.</param>
-        /// <returns></returns>
         public virtual GridPoint GetTileIndexAtPosition(Vector2 position)
         {
             int x = (int)Math.Floor(position.X / TileWidth);
@@ -301,10 +305,12 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Returns whether the GridPoint 'p' is within the GridPoint bounds of the map.
+        /// Returns whether a given <see cref="GridPoint"/> is within the bounds of the map.
         /// </summary>
         /// <param name="p">Point to check whether is in the bounds of the map.</param>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the row and column of <paramref name="p"/> are both greater than or equal to zero
+        /// and less than the number of rows and columns in the <see cref="Map2D{T}"/> respectively; otherwise, 
+        /// <see langword="false"/>.</returns>
         public virtual bool IsInBounds(GridPoint p)
         {
             return (p.Column >= 0 && p.Column < Columns && p.Row >= 0 && p.Row < Rows);
@@ -312,10 +318,11 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Returns whether the tile at 'p' is passable or not.
+        /// Returns whether a given position in the <see cref="Map2D{T}"/> is passable.
         /// </summary>
         /// <param name="p">Point to check whether is passable or not.</param>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the tile at <paramref name="p"/> is passable; 
+        /// otherwise, <see langword="false"/>.</returns>
         public virtual bool IsPassable(GridPoint p)
         {
             return CollisionLayer[p.Row][p.Column];
@@ -340,7 +347,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Gets an ordered list of objects of type <typeparamref name="U"/> that intersect with the given coordinate
+        /// Gets an ordered list of objects of type <typeparamref name="U"/> that intersect with the given coordinate.
         /// </summary>
         /// <typeparam name="U">Type of object to slice for.</typeparam>
         /// <param name="pos">Position to slice at.</param>
@@ -360,7 +367,7 @@ namespace BlackberryMead.Maps
 
         /// <summary>
         /// Gets a list of all the <see cref="IAnimate"/> objects that intersect with the
-        /// tile index <paramref name="pos"/>
+        /// tile index <paramref name="pos"/>.
         /// </summary>
         /// <param name="pos">Position to slice at.</param>
         /// <returns>Unordered list of all <see cref="IAnimate"/> objects at <paramref name="pos"/>.</returns>
@@ -378,8 +385,8 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Updates the movement of an IAnimate object.
-        /// Preforms checks for collisions with other IAnimate objects,
+        /// Updates the movement of an <see cref="IAnimate"/> object.
+        /// Preforms checks for collisions with other <see cref="IAnimate"/> objects,
         /// and for movement in the vertical and horizontal directions.
         /// </summary>
         /// <param name="animateObj"><see cref="IAnimate"/> to update.</param>
@@ -482,7 +489,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Collides the IAnimate animateObj with all objects and tiles in the span of its hitbox
+        /// Collides an <see cref="IAnimate"/> with all objects and tiles in the span of its hitbox.
         /// </summary>
         /// <param name="animateObj"><see cref="IAnimate"/> to do collisions for.</param>
         protected virtual void DoCollisions(IAnimate animateObj)
@@ -549,7 +556,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Gets the Collision regions that contain the Rectangle 'r'
+        /// Gets the Collision regions that contain a given <see cref="Rectangle"/>.
         /// </summary>
         /// <param name="r">Rectangle to get collision regions that intersect with.</param>
         /// <returns>List of collision region indeces in units <see cref="GridPoint"/> that 

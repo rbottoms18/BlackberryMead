@@ -1,5 +1,4 @@
-﻿#nullable enable
-using BlackberryMead.Framework;
+﻿using BlackberryMead.Framework;
 using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,26 +9,26 @@ using System.Text.Json.Serialization;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// A Group that acts as a self contained menu. When visible adds Actions
-    /// of its Children to the <see cref="UserInterface.CurrentWindowActions"/>.
+    /// A <see cref="Group"/> that acts as a self contained menu. When visible adds the actions
+    /// of its children to the <see cref="UserInterface.CurrentWindowActions"/>.
     /// </summary>
     [OptInJsonSerialization]
     public class Window : Group
     {
         /// <summary>
-        /// Source rectangle of the background image of this.
+        /// Source rectangle of the background image of the <see cref="Group"/>.
         /// </summary>
         [JsonInclude, JsonOptIn]
         public Rectangle BackgroundSourceRect { get; protected set; }
 
         /// <summary>
-        /// List of actions manually included to this.
+        /// List of actions manually included in the <see cref="Group"/>.
         /// </summary>
         [JsonInclude, JsonOptIn]
         public List<string> IncludeActions { get; protected set; } = new();
 
         /// <summary>
-        /// Whether the bounding Rectangle of this will automatically be adjusted to match
+        /// Whether the bounding rectangle of this will automatically be adjusted to match
         /// the <see cref="UserInterface"/> viewport when resized.
         /// </summary>
         /// <remarks>
@@ -45,9 +44,9 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Creates a new UIGroup.
+        /// Creates a new <see cref="Window"/>.
         /// </summary>
-        /// <param name="IncludeActions">Extra actions to be made avaliable when this is Open.</param>
+        /// <param name="IncludeActions">Extra actions to be made avaliable when this is open.</param>
         /// <param name="BackgroundSourceRect">Source rectangle of the background sprite.</param>
         /// <param name="Components">Subcomponents (children) of this.</param>
         /// <inheritdoc cref="UIComponent.UIComponent(Size, Alignment, Alignment, int, int, int)"/>

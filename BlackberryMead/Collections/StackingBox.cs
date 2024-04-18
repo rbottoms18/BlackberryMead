@@ -48,7 +48,7 @@ namespace BlackberryMead.Collections
         /// <remarks>
         /// <paramref name="item"/> will be added to the first empty slot in the <see cref="IInstanceStackable{T}"/>.
         /// </remarks>
-        /// <param name="item"></param>
+        /// <param name="item"><see cref="IInstanceStackable{T}"/> to be added.</param>
         /// <returns><see langword="true"/> if <paramref name="item"/> is added to the <see cref="StackingBox{T}"/>;
         /// otherwise, <see langword="false"/>.</returns>
         public virtual bool DirectAdd(IInstanceStackable<T> item)
@@ -62,7 +62,7 @@ namespace BlackberryMead.Collections
         /// with equivalent <see cref="IInstanceStackable{T}"/> objects in the <see cref="StackingBox{T}"/>
         /// if possible.
         /// </remarks>
-        /// <inheritdoc cref="IInstanceStackable{T}.Stack(ref IInstanceStackable{T})"/>
+        /// <inheritdoc cref="IStackable{T}.Stack(IStackable{T}, out IStackable{T})"/>
         // Stack the StackingBox with another StackingBox -- NOT adding an IStackable to the StackingBox.
         public override bool Stack(IStackable<IInstanceStackable<T>> other)
         {

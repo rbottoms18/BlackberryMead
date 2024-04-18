@@ -27,11 +27,6 @@ namespace BlackberryMead.Collections
         private Dictionary<TKey, string> jsonDict = new Dictionary<TKey, string>();
 
         /// <summary>
-        /// Null Object implimentation of <typeparamref name="TValue"/>.
-        /// </summary>
-        private TValue Null = TValue.Null;
-
-        /// <summary>
         /// Options to use when deserializing.
         /// </summary>
         private JsonSerializerOptions serializerOptions;
@@ -40,7 +35,7 @@ namespace BlackberryMead.Collections
         /// <summary>
         /// Create a new DeserializeDictionary.
         /// </summary>
-        /// <param name="serializerOptions">SerializerOptions for deserialization</param>
+        /// <param name="serializerOptions">SerializerOptions for deserialization.</param>
         public DeserializeDictionary(JsonSerializerOptions serializerOptions)
         {
             this.serializerOptions = serializerOptions;
@@ -66,7 +61,7 @@ namespace BlackberryMead.Collections
                 }
                 catch
                 {
-                    return Null;
+                    return TValue.Null;
                 }
             }
         }
@@ -136,7 +131,7 @@ namespace BlackberryMead.Collections
                 value = this[key];
                 return true;
             }
-            value = Null;
+            value = TValue.Null;
             return false;
         }
     }

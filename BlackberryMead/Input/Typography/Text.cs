@@ -10,28 +10,28 @@ using System.Linq;
 namespace BlackberryMead.Input.Typography
 {
     /// <summary>
-    /// A string of Text that is drawn to the screen.
+    /// A string of text that is drawn to the screen.
     /// Applies effects.
     /// </summary>
     public class Text
     {
         /// <summary>
-        /// Font color of this.
+        /// Color of the <see cref="Text"/>.
         /// </summary>
         public Color Color { get; protected set; }
 
         /// <summary>
-        /// String displayed by this object.
+        /// String displayed by the <see cref="Text"/>.
         /// </summary>
         public string Value { get; protected set; }
 
         /// <summary>
-        /// Size of the bounding rectangle of this.
+        /// Size of the bounding rectangle of the <see cref="Text"/>.
         /// </summary>
         public Size Size { get; protected set; }
 
         /// <summary>
-        /// Maximum length of a line of text in pixels.
+        /// Maximum length of a line of the <see cref="Text"/> in pixels.
         /// </summary>
         protected int maxLineLength;
 
@@ -41,22 +41,22 @@ namespace BlackberryMead.Input.Typography
         protected int lineSpacing;
 
         /// <summary>
-        /// Font used to drawn the string.
+        /// <see cref="Font"/> used to drawn the string.
         /// </summary>
         protected readonly Font font;
 
         /// <summary>
-        /// Lines of positions for <see cref="Char"/>s.
+        /// Lines of positions for <see cref="Char"/> objects.
         /// </summary>
         protected List<List<Point>> positionLines = new List<List<Point>>();
 
         /// <summary>
-        /// Lines of text <see cref="Char"/>s.
+        /// Lines of <see cref="Char"/> objects that make up the body.
         /// </summary>
         protected List<List<Char>> charLines = new List<List<Char>>();
 
         /// <summary>
-        /// Positions that each corresponding <see cref="Char"/> in <see cref="chars"/> is drawn to.
+        /// Positions that each <see cref="Char"/> in <see cref="chars"/> is drawn to.
         /// </summary>
         protected Point[] charPositions;
 
@@ -66,7 +66,7 @@ namespace BlackberryMead.Input.Typography
         protected Char[] chars;
 
         /// <summary>
-        /// Dictionary of text commands and their associated actions.
+        /// Dictionary of <see cref="Text"/> commands and their associated actions.
         /// </summary>
         protected Dictionary<string, Action<List<Char>, string[]>> textCommands = new Dictionary<string, Action<List<Char>, string[]>>()
         {
@@ -123,16 +123,20 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Creates a new Text from a string.
+        /// Creates a new <see cref="Text"/> from a string.
         /// </summary>
         /// <param name="text">String value to be displayed.</param>
-        /// <param name="font">Default font to be used unless otherwise specified.</param>
-        /// <param name="horizontalAlign">Alignment of the straight-edge side of the text. If Left, the first letter of each
-        /// line will align. If Right, the last letter of each line will align.</param>
-        /// <param name="verticalAlign">Vertical alignment of the text. If Top, the text will print above the specificed location.
+        /// <param name="font">Default <see cref="Font"/> to be used unless otherwise 
+        /// specified by an effect.</param>
+        /// <param name="horizontalAlign">Alignment of the straight-edge side of the <see cref="Text"/>. 
+        /// If Left, the first letter of each line will align. 
+        /// If Right, the last letter of each line will align.</param>
+        /// <param name="verticalAlign">Vertical alignment of the <see cref="Text"/>. 
+        /// If Top, the <see cref="Text"/> will print above the specificed location.
         /// If Bottom, it will print below the specified location.</param>
-        /// <param name="lineSpacing">Spacing between consecutive lines. Default value 0</param>
-        /// <param name="maxLineLength">Maximum length of a line in pixels. If <paramref name="maxLineLength"/> is default value 0,
+        /// <param name="lineSpacing">Spacing between consecutive lines. Default value 0.</param>
+        /// <param name="maxLineLength">Maximum length of a line in pixels. 
+        /// If <paramref name="maxLineLength"/> is default value 0,
         /// there will be no maximum line length.</param>
         public Text(string text, Font font, Color color, int maxLineLength = 0,
             Alignment horizontalAlign = Alignment.Left, Alignment verticalAlign = Alignment.Bottom,
@@ -232,10 +236,10 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Create a list of <see cref="Char"/> based on the characters in a string word.
+        /// Create a list of <see cref="Char"/> based on the characters in a string.
         /// </summary>
-        /// <param name="word"></param>
-        /// <param name="font"></param>
+        /// <param name="word">String to get <see cref="Char"/> objects for.</param>
+        /// <param name="font"><see cref="Font"/> to get the <see cref="Char"/>s from.</param>
         /// <returns>Tuple of the positions of the chars and the chars themselves.</returns>
         private (List<Point> positions, List<Char> characters) ProcessWord(string word, Font font, Color color)
         {
@@ -309,11 +313,11 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Appends a "word" of Char rects to a line.
+        /// Appends a "word" of <see cref="Char"/> rectangles to a line.
         /// </summary>
         /// <param name="wordPositions">Word to add to <paramref name="linePositions"/>.</param>
         /// <param name="linePositions">Line to add <paramref name="wordPositions"/> to.</param>
-        /// <param name="font">Font of <paramref name="wordPositions"/>.</param>
+        /// <param name="font"><see cref="Font"/> of <paramref name="wordPositions"/>.</param>
         /// <returns>Updated list of <see cref="Char"/> in the current line.</returns>
         private (List<Point> linePositions, List<Char> lineChars) AppendWordToLine(string word, List<Point> wordPositions,
             List<Char> wordChars, List<Point> linePositions, List<Char> lineChars, Font font, bool forceLineBreak)
@@ -378,7 +382,7 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Updates the text.
+        /// Updates the <see cref="Text"/>.
         /// </summary>
         public void Update()
         {
@@ -390,7 +394,7 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Draw the entire Text to the screen.
+        /// Draw the entire <see cref="Text"/> to the screen.
         /// </summary>
         /// <param name="spriteBatch">SpriteBatch used for drawing.</param>
         /// <param name="position">Position of the top left corner of the first char in the Text.</param>
@@ -404,7 +408,7 @@ namespace BlackberryMead.Input.Typography
 
 
         /// <summary>
-        /// Prints each character in succession over multiple calls.
+        /// Prints each character of the <see cref="Text"/> in succession over multiple calls.
         /// </summary>
         /// <param name="spriteBatch">Spritebatch for drawing.</param>
         /// <param name="position">Position to draw the text at.</param>

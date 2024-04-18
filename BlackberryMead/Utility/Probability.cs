@@ -2,9 +2,13 @@
 
 namespace BlackberryMead.Utility
 {
+    /// <summary>
+    /// Utility class for various probablistic functions.
+    /// </summary>
     public static class Probability
     {
         public static readonly Random random = new Random();
+
 
         /// <summary>
         /// Returns the value of the Normal Distribution at x

@@ -5,7 +5,10 @@ using System.Text.Json.Serialization;
 
 namespace BlackberryMead.Utility.Serialization
 {
-    internal class JsonRectangleConverter : JsonConverter<Rectangle>
+    /// <summary>
+    /// Converter class for <see cref="Microsoft.Xna.Framework.Rectangle"/> to be serialized using Json.
+    /// </summary>
+    public class JsonRectangleConverter : JsonConverter<Rectangle>
     {
         public override Rectangle Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

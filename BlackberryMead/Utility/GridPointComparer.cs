@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace BlackberryMead.Utility
 {
     /// <summary>
-    /// Comparer class to compare two <see cref="GridPoint"/>.
+    /// Class to compare two <see cref="GridPoint"/>.
     /// </summary>
     public class GridPointComparer : IEqualityComparer<GridPoint>
     {

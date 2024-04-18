@@ -4,19 +4,17 @@ using System.Collections.Generic;
 namespace BlackberryMead.Collections
 {
     /// <summary>
-    /// Represents a pair of dictionaries.
-    /// Use bracket indexer to access either dictionary 0 or 1
+    /// A pair of two <see cref="Dictionary{TKey, TValue}"/>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="S"></typeparam>
     public class DoubleDictionary<T, S> where T : notnull
     {
         private Dictionary<T, S> dict1;
+
         private Dictionary<T, S> dict2;
 
 
         /// <summary>
-        /// Creates a new empty DoubleDictionary.
+        /// Creates a new empty <see cref="DoubleDictionary{T, S}"/>.
         /// </summary>
         public DoubleDictionary()
         {
@@ -26,10 +24,8 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Creates a new DoubleDictionary from two existing single dictionaries.
+        /// Creates a new <see cref="DoubleDictionary{T, S}"/> from two existing <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
-        /// <param name="dict1"></param>
-        /// <param name="dict2"></param>
         public DoubleDictionary(Dictionary<T, S> dict1, Dictionary<T, S> dict2)
         {
             this.dict1 = dict1;
@@ -62,9 +58,8 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Creates a new DoubleDictionary from an existing DoubleDictionary
+        /// Creates a new <see cref="DoubleDictionary{T, S}"/> from an existing <see cref="DoubleDictionary{T, S}"/>.
         /// </summary>
-        /// <param name="doubleDict"></param>
         public DoubleDictionary(DoubleDictionary<T, S> doubleDict)
         {
             dict1 = new Dictionary<T, S>(doubleDict[0]);
@@ -73,11 +68,12 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Gets a dictionary from the pair
+        /// Returns one of the two dictionaries in the <see cref="DoubleDictionary{T, S}"/>.
         /// </summary>
-        /// <param name="i">Possible values 0 or 1</param>
+        /// <param name="i">Possible values 0 or 1.</param>
         /// <returns></returns>
-        /// <exception cref="IndexOutOfRangeException"></exception>
+        /// <exception cref="IndexOutOfRangeException">Throws an exception if <paramref name="i"/> is not
+        /// 0 or 1.</exception>
         public Dictionary<T, S> this[int i]
         {
             get
@@ -103,9 +99,8 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Returns a new shallow copy of the Dictionary
+        /// Returns a new shallow copy of the <see cref="DoubleDictionary{T, S}"/>.
         /// </summary>
-        /// <returns></returns>
         public DoubleDictionary<T, S> ToNew()
         {
             Dictionary<T, S> newDict1 = new Dictionary<T, S>(dict1);

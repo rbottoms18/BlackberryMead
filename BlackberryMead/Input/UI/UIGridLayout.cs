@@ -35,12 +35,12 @@ namespace BlackberryMead.Input.UI
         /// <summary>
         /// Vertical offset from the Origin to which the first slot is drawn to.
         /// </summary>
-        public int GridVerticalOffset { get; set; }
+        public int VerticalOffset { get; set; }
 
         /// <summary>
         /// Horizontal offset from the Origin to which the first slot is drawn to.
         /// </summary>
-        public int GridHorizontalOffset { get; set; }
+        public int HorizontalOffset { get; set; }
 
         /// <summary>
         /// Create a new layout for a <see cref="ItemGrid"/>.
@@ -60,8 +60,8 @@ namespace BlackberryMead.Input.UI
             this.RowLength = RowLength;
             this.VerticalSpacing = VerticalSpacing;
             this.HorizontalSpacing = HorizontalSpacing;
-            this.GridVerticalOffset = GridVerticalOffset;
-            this.GridHorizontalOffset = GridHorizontalOffset;
+            this.VerticalOffset = GridVerticalOffset;
+            this.HorizontalOffset = GridHorizontalOffset;
         }
 
 
@@ -72,7 +72,7 @@ namespace BlackberryMead.Input.UI
         public UIGridLayout ToNew()
         {
             return new UIGridLayout(GridSize, NumSlots, RowLength,
-                VerticalSpacing, HorizontalSpacing, GridVerticalOffset, GridHorizontalOffset);
+                VerticalSpacing, HorizontalSpacing, VerticalOffset, HorizontalOffset);
         }
     }
 }

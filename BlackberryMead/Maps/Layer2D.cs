@@ -8,8 +8,7 @@ using System.Text.Json.Serialization;
 namespace BlackberryMead.Maps
 {
     /// <summary>
-    /// A 2d array of objects of type <typeparamref name="T"/> and corresponding <c>passability</c>
-    /// information.
+    /// A 2D array of objects of type <typeparamref name="T"/> and corresponding passability information.
     /// </summary>
     /// <typeparam name="T">Type of object to be contained in this.</typeparam>
     /// <remarks>
@@ -18,25 +17,25 @@ namespace BlackberryMead.Maps
     public class Layer2D<T> where T : IMapObject<T>
     {
         /// <summary>
-        /// Name of the layer.
+        /// Name of the <see cref="Layer2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public string Name { get; set; }
 
         /// <summary>
-        /// Number of rows in this.
+        /// Number of rows in the <see cref="Layer2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public int Rows { get; protected set; }
 
         /// <summary>
-        /// Number of columns in this.
+        /// Number of columns in the <see cref="Layer2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public int Columns { get; protected set; }
 
         /// <summary>
-        /// 2d array of objects of type <see cref="T"/> contained in this.
+        /// 2D array of <see cref="T"/> objects contained in the <see cref="Layer2D{T}"/>.
         /// </summary>
         [JsonInclude]
         public T[][] Values { get; protected set; }
@@ -73,18 +72,13 @@ namespace BlackberryMead.Maps
         // This does not need to be serialized because it will be reconstructed when pointers are set (also not serialized).
         protected GridPoint[,] pointers;
 
-        /// <summary>
-        /// <see cref="INullImplementable{T}"/> null object of type <see cref="T"/>.
-        /// </summary>
-        protected T Null = T.Null;
-
 
         /// <summary>
-        /// Create a new Layer.
+        /// Create a new <see cref="Layer2D{T}"/>.
         /// </summary>
-        /// <param name="Rows">Number of rows in the layer.</param>
-        /// <param name="Columns">Number of columns in the layer.</param>
-        /// <param name="tileDim">Dimensions of a tile in the layer.</param>
+        /// <param name="Rows">Number of rows in the <see cref="Layer2D{T}"/>.</param>
+        /// <param name="Columns">Number of columns in the <see cref="Layer2D{T}"/>.</param>
+        /// <param name="tileDim">Dimensions of a tile in the <see cref="Layer2D{T}"/>.</param>
         public Layer2D(int Rows, int Columns)
         {
             this.Rows = Rows;
@@ -99,7 +93,7 @@ namespace BlackberryMead.Maps
             pointers = new GridPoint[Rows, Columns];
 
             // Fill entities with the Null object.
-            ArrayHelper.FillArray(Values, Null);
+            ArrayHelper.FillArray(Values, T.Null);
 
             // Fill pointers with NullPointer reference
             ArrayHelper.FillArray(pointers, NullPointer);
@@ -107,13 +101,11 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Create a new Layer from file.
+        /// Create a new <see cref="Layer2D{T}"/> from file.
         /// </summary>
-        /// <param name="Rows"></param>
-        /// <param name="Columns"></param>
-        /// <param name="TileWidth"></param>
-        /// <param name="TileHeight"></param>
-        /// <param name="Values"></param>
+        /// <param name="Rows">Number of rows in the <see cref="Layer2D{T}"/>.</param>
+        /// <param name="Columns">Number of columns in the <see cref="Layer2D{T}"/></param>
+        /// <param name="Values">Value information.</param>
         [JsonConstructor]
         public Layer2D(int Rows, int Columns, T[][] Values)
         {
@@ -138,15 +130,16 @@ namespace BlackberryMead.Maps
         /// <summary>
         /// Get the <typeparamref name="T"/> at the specified index.
         /// </summary>
-        /// <param name="row">Row in the layer.</param>
-        /// <param name="col">Column in the layer.</param>
-        /// <returns><typeparamref name="T"/> at position (<paramref name="row"/>, <paramref name="col"/>) in this.</returns>
+        /// <param name="row">Row in the <see cref="Layer2D{T}"/>.</param>
+        /// <param name="col">Column in the <see cref="Layer2D{T}"/>.</param>
+        /// <returns><typeparamref name="T"/> at position (<paramref name="row"/>, <paramref name="col"/>) in 
+        /// the <see cref="Layer2D{T}"/>.</returns>
         public T this[int row, int col]
         {
             get
             {
                 if (row >= Rows || col >= Columns || row < 0 || col < 0)
-                    return Null;
+                    return T.Null;
 
                 return ObjectAt(row, col);
             }
@@ -156,14 +149,14 @@ namespace BlackberryMead.Maps
         /// <summary>
         /// Get the <typeparamref name="T"/> at the specified index.
         /// </summary>
-        /// <param name="p">GridPoint position to get the <typeparamref name="T"/> at.</param>
-        /// <returns><typeparamref name="T"/> at position <paramref name="p"/> in this.</returns>
+        /// <param name="p"><see cref="GridPoint"/> position to get the <typeparamref name="T"/> at.</param>
+        /// <returns><typeparamref name="T"/> at position <paramref name="p"/> in the <see cref="Layer2D{T}"/>.</returns>
         public T this[GridPoint p]
         {
             get
             {
                 if (p.Row >= Rows || p.Column >= Columns || p.Row < 0 || p.Column < 0)
-                    return Null;
+                    return T.Null;
 
                 return ObjectAt(p);
             }
@@ -180,13 +173,13 @@ namespace BlackberryMead.Maps
         /// equal to <paramref name="loc"/>.<br/>
         /// To remove pointers, set <paramref name="pointerValue"/> equal to <see cref="NullPointer"/></param>
         /// <returns>
-        /// List of GridPoints at which tile's <c>passability</c> was changed.
+        /// List of <see cref="GridPoint"/> at which tile's was changed.
         /// </returns>
         protected virtual List<GridPoint> SetPointers(T obj, GridPoint loc, GridPoint pointerValue)
         {
             List<GridPoint> _ = new List<GridPoint>();
 
-            List<GridPoint> span = obj.GetSpan();
+            List<GridPoint> span = obj.Span;
             // Set pointers on all tiles in the span.
             foreach (GridPoint p in span)
             {
@@ -205,12 +198,12 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Draws the Layer.
+        /// Draws the <see cref="Layer2D{T}"/>.
         /// </summary>
         /// <param name="spriteBatch"><see cref="SpriteBatch"/> used for drawing.</param>
         /// <param name="startDraw">Upper left corner of subsection to draw.</param>
         /// <param name="endDraw">Bottom right corner of subsection to draw.</param>
-        /// <param name="tileSet"><see cref="Texture2D"/> from which to pull sprites.</param>
+        /// <param name="animates"><see cref="IAnimate"/> objects to draw in the <see cref="Layer2D{T}"/>.</param>
         public void Draw(SpriteBatch spriteBatch, GridPoint startDraw, GridPoint endDraw, HashSet<IAnimate> animates = null)
         {
             if (startDraw.Equals(null))
@@ -249,7 +242,7 @@ namespace BlackberryMead.Maps
         /// <summary>
         /// Gets the <typeparamref name="T"/> at the <see cref="GridPoint"/> position.
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">Position to get the object at.</param>
         /// <returns><typeparamref name="T"/> at <paramref name="position"/>.</returns>
         public T ObjectAt(GridPoint position)
         {
@@ -258,7 +251,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Gets the <typeparamref name="T"/> at (<paramref name="row"/>, <paramref name="col"/>).
+        /// Gets the a <typeparamref name="T"/> object at a given index.
         /// </summary>
         /// <param name="row">Row of the position.</param>
         /// <param name="col">Column of the position.</param>
@@ -266,7 +259,7 @@ namespace BlackberryMead.Maps
         public T ObjectAt(int row, int col)
         {
             if (row > Rows || col > Columns)
-                return Null;
+                return T.Null;
 
             if (!Values[row][col].IsNull)
             {
@@ -276,16 +269,17 @@ namespace BlackberryMead.Maps
             {
                 return Values[pointers[row, col].Row][pointers[row, col].Column];
             }
-            return Null;
+            return T.Null;
         }
 
 
         /// <summary>
-        /// Returns whether a <typeparamref name="T"/> is at a position.
+        /// Returns whether a given <typeparamref name="T"/> object is at a position.
         /// </summary>
-        /// <param name="position">Position to check whether a <typeparamref name="T"/> is.</param>
-        /// <returns><see langword="true"/> if there is an <typeparamref name="T"/> at (<paramref name="row"/>, <paramref name="col"/>),
-        /// <see langword="false"/> if not.</returns>
+        /// <param name="row">Row index to check whether an object is at.</param>
+        /// <param name="col">Column index to check whether an object is at.</param>
+        /// <returns><see langword="true"/> if there is an <typeparamref name="T"/> at 
+        /// (<paramref name="row"/>, <paramref name="col"/>), <see langword="false"/> if not.</returns>
         public bool IsObjectAt(int row, int col)
         {
             if (col < Columns && row < Rows)
@@ -316,7 +310,7 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Determines whether a <typeparamref name="U"/> is of a given type.
+        /// Determines whether a <typeparamref name="U"/> object is of a given type.
         /// </summary>
         /// <typeparam name="U">Type of object to check for.</typeparam>
         /// <param name="position">Position of the <typeparamref name="U"/>.</param>
@@ -332,7 +326,7 @@ namespace BlackberryMead.Maps
         }
 
 
-        /// <inheritdoc path="EntityIs{U}(GridPoint)"/>
+        /// <inheritdoc cref="ObjectIs{U}(GridPoint)"/>
         /// <returns><see langword="true"/> if the <typeparamref name="T"/> at position 
         /// (<paramref name="row"/>, <paramref name="col"/>) is a <typeparamref name="U"/>, 
         /// <see langword="false"/> if not.</returns>
@@ -347,11 +341,11 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Sets an <typeparamref name="T"/> in this/>.
+        /// Sets an <typeparamref name="T"/> in this.
         /// </summary>
         /// <param name="obj"><typeparamref name="T"/> to set.</param>
         /// <param name="position">Position to set the <typeparamref name="T"/> at.</param>
-        /// <returns>A list of points where the <typeparamref name="T"/> was set.</returns>
+        /// <returns>A list of <see cref="GridPoint"/> where the <typeparamref name="T"/> was set.</returns>
         public List<GridPoint> Set(T obj, GridPoint position)
         {
             List<GridPoint> _ = new List<GridPoint>();
@@ -370,7 +364,7 @@ namespace BlackberryMead.Maps
         /// Removes the <typeparamref name="T"/> at the grid position.
         /// </summary>
         /// <param name="position">Position at which to remove the <typeparamref name="T"/>.</param>
-        /// <returns>A list of gridpoints where the <typeparamref name="T"/> was removed.
+        /// <returns>A list of <see cref="GridPoint"/> where the <typeparamref name="T"/> was removed.
         /// If no object was removed, returns an empty list.</returns>
         public List<GridPoint> Remove(GridPoint position)
         {
@@ -381,7 +375,7 @@ namespace BlackberryMead.Maps
                 return _;
 
             GridPoint pointer = pointers[position.Row, position.Column];
-            Values[pointer.Row][pointer.Column] = Null;
+            Values[pointer.Row][pointer.Column] = T.Null;
             _ = SetPointers(entity, pointer, NullPointer);
 
             return _;
@@ -392,8 +386,8 @@ namespace BlackberryMead.Maps
         /// Directly sets an <typeparamref name="T"/> to this without setting pointers.
         /// </summary>
         /// <param name="obj"><typeparamref name="T"/> to set to the grid.</param>
-        /// <param name="row">Row of the position to set the entity at.</param>
-        /// <param name="col">Column of the position to set the entity at.</param>
+        /// <param name="row">Row of the position to set the object at.</param>
+        /// <param name="col">Column of the position to set the object at.</param>
         public void DirectSet(T obj, int row, int col)
         {
             Values[row][col] = obj;
@@ -401,10 +395,12 @@ namespace BlackberryMead.Maps
 
 
         /// <summary>
-        /// Returns whether the GridPoint 'p' is within the GridPoint bounds of the layer.
+        /// Returns whether a given <see cref="GridPoint"/> is within the bounds of the layer.
         /// </summary>
         /// <param name="p">Point to check whether is in bounds.</param>
-        /// <returns></returns>
+        /// <returns><see langword="true"/> if the row of <paramref name="p"/> is between 0 and the number of rows 
+        /// in the <see cref="Layer2D{T}"/> /// and if the column of <paramref name="p"/> is between 0 and the number 
+        /// of columns in the <see cref="Layer2D{T}"/>.</returns>
         public virtual bool IsInBounds(GridPoint p)
         {
             return (p.Column >= 0 && p.Column < Columns && p.Row >= 0 && p.Row < Rows);

@@ -30,7 +30,7 @@ namespace BlackberryMead.Input.UI
         /// Default value "Select".
         /// </remarks>
         [JsonInclude]
-        public string ClickAction { get; protected set; } = "Select";
+        public virtual string ClickAction { get; protected set; } = "Select";
 
         /// <summary>
         /// Position of the mouse.
@@ -78,10 +78,10 @@ namespace BlackberryMead.Input.UI
         /// <inheritdoc cref="UIGridLayout.HorizontalSpacing"/>
         public int HorizontalSpacing { get; protected set; }
 
-        /// <inheritdoc cref="UIGridLayout.GridVerticalOffset"/>
+        /// <inheritdoc cref="UIGridLayout.VerticalOffset"/>
         public int GridVerticalOffset { get; protected set; }
 
-        /// <inheritdoc cref="UIGridLayout.GridHorizontalOffset"/>
+        /// <inheritdoc cref="UIGridLayout.HorizontalOffset"/>
         public int GridHorizontalOffset { get; protected set; }
 
 
@@ -101,8 +101,8 @@ namespace BlackberryMead.Input.UI
             GridSize = GridLayout.GridSize * Layout.Scale;
             VerticalSpacing = GridLayout.VerticalSpacing * Scale;
             HorizontalSpacing = GridLayout.HorizontalSpacing * Scale;
-            GridVerticalOffset = GridLayout.GridVerticalOffset * Scale;
-            GridHorizontalOffset = GridLayout.GridHorizontalOffset * Scale;
+            GridVerticalOffset = GridLayout.VerticalOffset * Scale;
+            GridHorizontalOffset = GridLayout.HorizontalOffset * Scale;
 
             NumSlots = GridLayout.NumSlots;
             RowLength = GridLayout.RowLength;
@@ -151,9 +151,42 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
+        /// Updates the <see cref="UIGrid{T}"/> using a referenced <typeparamref name="T"/> mouse object.
+        /// </summary>
+        /// <param name="input"><see cref="InputState"/> of the current update.</param>
+        /// <param name="mouseObj"><typeparamref name="T"/> contained in the mouse.</param>
+        public virtual void Update(InputState input, ref T mouseObject)
+        {
+            mousePosition = input.MousePosition;
+
+            // Set hover index to null pointer
+            prevHoverIndex = HoverIndex;
+            HoverIndex = -1;
+
+            for (int i = 0; i < NumSlots; i++)
+            {
+                if (!GridSlots[i].Contains(input.MousePosition)) continue;
+
+                HoverIndex = i;
+
+                UpdateSelectedSlot(input, i, ref mouseObject);
+            }
+        }
+
+
+        /// <summary>
         /// Updates the slot currently selected by the mouse.
         /// </summary>
         protected abstract void UpdateSelectedSlot(InputState input, int index);
+
+
+        /// <summary>
+        /// Updates the slot currently selected by the mouse.
+        /// </summary>
+        /// <param name="input"><see cref="InputState"/> of the current update.</param>
+        /// <param name="index">Index of the slot to update.</param>
+        /// <param name="mouseObj"><typeparamref name="T"/> contained in the mouse.</param>
+        protected virtual void UpdateSelectedSlot(InputState input, int index, ref T mouseObject) { }
 
 
         /// <summary>

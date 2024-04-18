@@ -13,7 +13,7 @@ namespace BlackberryMead.Input
     public struct Keybind
     {
         /// <summary>
-        /// Possible types of actions required to trigger a Keybind.
+        /// Possible types of actions required to trigger a <see cref="Keybind"/>.
         /// </summary>
         public enum ActionType
         {
@@ -22,7 +22,7 @@ namespace BlackberryMead.Input
         }
 
         /// <summary>
-        /// An Empty Keybind. The empty Keybind is never satisfied (cannot be pressed).
+        /// An empty <see cref="Keybind"/>. The empty <see cref="Keybind"/> is never satisfied (cannot be pressed).
         /// </summary>
         public static Keybind EmptyBind = new(Keys.None, new List<Keys>(), MouseButton.None, ActionType.Press);
 
@@ -44,20 +44,20 @@ namespace BlackberryMead.Input
         public List<Keys> AuxKeys { get; set; } = new List<Keys>();
 
         /// <summary>
-        /// Mouse button that must be clicked to trigger the action.
+        /// <see cref="MouseButton"/> that must be clicked to trigger the action.
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public MouseButton MouseButton { get; set; } = MouseButton.None;
 
         /// <summary>
-        /// The type of input the Keybind requires to trigger.
+        /// The type of input the <see cref="Keybind"/> requires to trigger.
         /// </summary>
         [JsonRequired, JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
         public ActionType Type { get; private set; }
 
 
         /// <summary>
-        /// Creates an empty Keybind.
+        /// Creates an empty <see cref="Keybind"/>.
         /// </summary>
         [JsonConstructor]
         public Keybind()
@@ -67,7 +67,7 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Creates a new Keybind with no auxiliary keys.
+        /// Creates a new <see cref="Keybind"/> with no auxiliary keys.
         /// </summary>
         /// <param name="key">Key that triggers the action.</param>
         /// <param name="type">Type of press that triggers the action.</param>
@@ -81,7 +81,7 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Creates a new Keybind.
+        /// Creates a new <see cref="Keybind"/>.
         /// </summary>
         /// <param name="key">Key that triggers the action.</param>
         /// <param name="auxKeys">Keys that must be held in addition to <paramref name="key"/> for the action to trigger.</param>
@@ -96,7 +96,7 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Creates a new Keybind that only checks for held auxiliary keys with no trigger.
+        /// Creates a new <see cref="Keybind"/> that only checks for held auxiliary keys with no trigger.
         /// </summary>
         /// <param name="auxKeys">Keys that must be held for the action to trigger.</param>
         /// <param name="type">Type of press that triggers the action.</param>
@@ -110,9 +110,9 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Create a new Keybind with a MouseButton press.
+        /// Create a new <see cref="Keybind"/> with a <see cref="MouseButton"/> press.
         /// </summary>
-        /// <param name="mouseButton">MouseButton that must be pressed to trigger the action.</param>
+        /// <param name="mouseButton"><see cref="MouseButton"/> that must be pressed to trigger the action.</param>
         /// <param name="type">Type of press that triggers the action.</param>
         public Keybind(MouseButton mouseButton, ActionType type)
         {
@@ -124,9 +124,9 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Create a new keybinding with a MouseButton press and auxiliary keys
+        /// Create a new keybinding with a <see cref="MouseButton"/> press and auxiliary keys
         /// </summary>
-        /// <param name="mouseButton">MouseButton that must be pressed to trigger the action.</param>
+        /// <param name="mouseButton"><see cref="MouseButton"/> that must be pressed to trigger the action.</param>
         /// <param name="auxKeys">Keys that must be held in addition to <paramref name="mouseButton"/> for the action to trigger.</param>
         /// <param name="type">Type of press that triggers the action.</param>
         public Keybind(MouseButton mouseButton, List<Keys> auxKeys, ActionType type)
@@ -139,12 +139,12 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Create a new Keybind with key presses and a mouse button press.
+        /// Create a new <see cref="Keybind"/> with key presses and a <see cref="MouseButton"/> press.
         /// </summary>
         /// <param name="key">Key that triggers the action.</param>
         /// <param name="auxKeys">Keys that must be held in addition to <paramref name="mouseButton"/> and 
         /// <paramref name="mouseButton"/> for the action to trigger.</param>
-        /// <param name="mouseButton">MouseButton that must be pressed to trigger the action.</param>
+        /// <param name="mouseButton"><see cref="MouseButton"/> that must be pressed to trigger the action.</param>
         /// <param name="type">Type of press that triggers the action.</param>
         public Keybind(Keys key, List<Keys> auxKeys, MouseButton mouseButton, ActionType type)
         {
@@ -156,14 +156,11 @@ namespace BlackberryMead.Input
 
 
         /// <summary>
-        /// Evaluates whether a keybind is satisfied.
+        /// Evaluates whether a <see cref="Keybind"/> is satisfied.
         /// </summary>
-        /// <param name="mouseState"></param>
-        /// <param name="keyboardState"></param>
-        /// <param name="gamePadState"></param>
-        /// <param name="prevMouseState"></param>
-        /// <param name="prevKeyboardState"></param>
-        /// <param name="prevGamePadState"></param>
+        /// <param name="mouseState">Pair of current and previous <see cref="MouseState"/> objects.</param>
+        /// <param name="keyboardState">Pair of current and previous <see cref="KeyboardState"/> objects.</param>
+        /// <param name="gamePadState">Pair of current and previous <see cref="GamePadState"/> objects.</param>
         /// <returns></returns>
         public static bool EvaluateKeybind(Keybind keybind, (MouseState currentState, MouseState prevState) mouseState,
             (KeyboardState currentState, KeyboardState prevState) keyboardState,

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace BlackberryMead.Collections
 {
     /// <summary>
-    /// An <see cref="IStackable{T}"/> that tracks quantities added to it.
+    /// An <see cref="IStackable{T}"/> that tracks the quantity of objects added to it.
     /// </summary>
     /// <remarks>
     /// <see cref="FlatStack{T}"/> does not keep or remember any <typeparamref name="T"/> added to it.
@@ -16,16 +16,22 @@ namespace BlackberryMead.Collections
     {
         public virtual bool IsNull => Count == 0;
 
+        /// <summary>
+        /// Maximum number of objects than can be stored in the <see cref="FlatStack{T}"/>.
+        /// </summary>
         public int MaxStackSize => maxStackSize;
 
         int IStackable<T>.MaxStackSize => maxStackSize;
 
+        /// <summary>
+        /// Number of (non-null) objects in the <see cref="FlatStack{T}"/>.
+        /// </summary>
         public virtual int Count { get { return count; } set { count = value; } }
 
         int IQuantifiable.Count => count;
 
         /// <summary>
-        /// Number of objects contained in this.
+        /// Number of objects contained in the <see cref="FlatStack{T}"/>.
         /// </summary>
         private int count;
 
@@ -35,6 +41,10 @@ namespace BlackberryMead.Collections
         protected virtual int maxStackSize => int.MaxValue;
 
 
+        /// <summary>
+        /// Create a new <see cref="FlatStack{T}"/>.
+        /// </summary>
+        /// <param name="count">Number of objects in the <see cref="FlatStack{T}"/>.</param>
         public FlatStack(int count)
         {
             this.count = count;

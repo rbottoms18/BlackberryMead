@@ -1,5 +1,4 @@
-﻿#nullable enable
-using BlackberryMead.Utility;
+﻿using BlackberryMead.Utility;
 using BlackberryMead.Utility.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,19 +15,19 @@ using Size = BlackberryMead.Framework.Size;
 namespace BlackberryMead.Input.UI
 {
     /// <summary>
-    /// A navigatable, interactable interface accessible by the player.
+    /// A navigatable, interactable interface accessible by the user.
     /// </summary>
     public class UserInterface
     {
         /// <summary>
-        /// An empty UIGroup.
+        /// An empty <see cref="Window"/>.
         /// </summary>
-        /// <remarks>Null-Object Pattern implimentation.</remarks>
+        /// <remarks>Null-Object Pattern implementation.</remarks>
         public static readonly Window EmptyWindow = new(new Dictionary<string, UIComponent>(),
             new List<string> { }, new Rectangle(0, 0, 0, 0), new UILayout());
 
         /// <summary>
-        /// Default deserialization options for deserializing UIComponents.
+        /// Default deserialization options for deserializing <see cref="UIComponent"/>.
         /// </summary>
         /// <remarks>
         /// Does not allow deserialization of custom <see cref="UIComponent"/>. To do so,
@@ -50,38 +49,43 @@ namespace BlackberryMead.Input.UI
         };
 
         /// <summary>
-        /// Default SpriteSheet of this UserInterface's graphical components.
-        /// If a UIComponent does not specify a SpriteSheet name, this will be used as it's
-        /// SpriteSheet.
+        /// Default SpriteSheet of the <see cref="UserInterface"/>'s graphical components.
         /// </summary>
+        /// <remarks>
+        /// If a <see cref="UIComponent"/> does not specify a SpriteSheet name, this will be used as it's
+        /// SpriteSheet.
+        /// </remarks>
         public Texture2D? Spritesheet { get; set; }
 
         /// <summary>
-        /// UIComponents that constitute this <see cref="UserInterface"/>. 
+        /// <see cref="UIComponent"/> that constitute this <see cref="UserInterface"/>. 
         /// </summary>
         /// <remarks>Keys are component/structure names, values are the components they represent.</remarks>
         public Dictionary<string, Window> Windows { get; set; }
 
         /// <summary>
-        /// Whether the UI is currently visible or not.
+        /// Whether the <see cref="UserInterface"/> is currently visible or not.
         /// </summary>
         public bool IsVisible { get; set; } = true;
 
         /// <summary>
-        /// Whether a non-default window is currently open.
+        /// Whether a non-default <see cref="Window"/> is currently open.
         /// </summary>
         public bool IsWindowOpen { get; protected set; }
 
         /// <summary>
-        /// Name of the Main Window of this.
+        /// Name of the main <see cref="Window"/> of this.
         /// </summary>
         public string MainWindowName { get; private set; }
 
         /// <summary>
-        /// Name of the default <see cref="Window"/> of this. The default window will be opened when any other
-        /// active window is closed. <br/>
-        /// If a window with the given name does not exist, an empty window will be used instead.
+        /// Name of the default <see cref="Window"/> of this.
         /// </summary>
+        /// <remarks>
+        /// The default <see cref = "Window" /> will be opened when any other
+        /// active window is closed.
+        /// If a window with the given name does not exist, an empty window will be used instead.
+        /// </remarks>
         public string DefaultWindowName
         {
             get { return defaultWindowName; }
@@ -96,7 +100,7 @@ namespace BlackberryMead.Input.UI
         }
 
         /// <summary>
-        /// Scale at which this is drawn.
+        /// Scale at which the <see cref="UserInterface"/> is drawn.
         /// </summary>
         public float RenderScale { get; protected set; }
 
@@ -111,7 +115,7 @@ namespace BlackberryMead.Input.UI
         public List<string> CurrentWindowActions { get { return mainWindow.Actions; } }
 
         /// <summary>
-        /// Whether the borders of all the UIElements are drawn.
+        /// Whether the borders of all the <see cref="UIComponent"/> are drawn.
         /// </summary>
         public bool ShowBorders
         {
@@ -124,7 +128,7 @@ namespace BlackberryMead.Input.UI
         }
 
         /// <summary>
-        /// Maximum level to which the UI can be zoomed out
+        /// Maximum level to which the <see cref="UserInterface"/> can be zoomed out.
         /// </summary>
         public float MaxZoomOutLevel { get; init; }
 
@@ -134,14 +138,14 @@ namespace BlackberryMead.Input.UI
         public event EventHandler? OnContentLoaded;
 
         /// <summary>
-        /// Camera of the UserInterface.
+        /// <see cref="OrthographicCamera"/> of the <see cref="UserInterface"/>.
         /// </summary>
         protected readonly OrthographicCamera camera;
 
         /// <summary>
-        /// Render Target this is drawn to.
+        /// <see cref="RenderTarget2D"/> this is drawn to.
         /// </summary>
-        /// <remarks>A <see cref="UserInterface"/> is first drawn to a RenderTarget and then to the screen.</remarks>
+        /// <remarks>A <see cref="UserInterface"/> is first drawn to a <see cref="RenderTarget2D"/> and then to the screen.</remarks>
         protected RenderTarget2D renderTarget;
 
         /// <summary>
@@ -150,12 +154,12 @@ namespace BlackberryMead.Input.UI
         protected readonly GraphicsDevice graphicsDevice;
 
         /// <summary>
-        /// UIGroup that is the currently displayed window the user is interacting with.
+        /// <see cref="Window"/> that is the currently displayed <see cref="Window"/> the user is interacting with.
         /// </summary>
         protected Window mainWindow;
 
         /// <summary>
-        /// Default window that opens when all others are closed.
+        /// Default <see cref="Window"/> that opens when all others are closed.
         /// </summary>
         /// <remarks>Default value is <see cref="EmptyWindow"/>.</remarks>
         protected Window defaultWindow;
@@ -190,11 +194,11 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Creates a new UserInterface from a list of UIComponents.
+        /// Creates a new <see cref="UserInterface"/> from a list of <see cref="UIComponent"/>.
         /// </summary>
         /// <param name="graphicsDevice">GraphicsDevice for drawing</param>
-        /// <param name="windows">Dictionary of UIWindows in this. Keys are window names, values UIWindows</param>
-        /// <param name="ScreenDim">Size of the screen. </param>
+        /// <param name="windows">Dictionary of <see cref="Window"/>s in this. Keys are window names, values windows</param>
+        /// <param name="ScreenDim">Size of the screen.</param>
         public UserInterface(GraphicsDevice graphicsDevice, ContentManager content, Dictionary<string, Window> windows,
             string SpritesheetName, Size ScreenDim, float maxZoomOutLevel)
         {
@@ -245,10 +249,11 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Updates this and all its components. <br/> <see cref="Render(SpriteBatch)"/> must be called independently after 
-        /// this and before <see cref="Draw(SpriteBatch)"/> for changes to be displayed. 
+        /// Updates the <see cref="UserInterface"/> and all its components.
         /// </summary>
         /// <remarks>
+        /// <see cref="Render(SpriteBatch)"/> must be called independently after 
+        /// this and before <see cref="Draw(SpriteBatch)"/> for changes to be displayed.
         /// To Update and Render in one call, use <see cref="UpdateAndRender(InputState, SpriteBatch)"/>.
         /// </remarks>
         public virtual void Update(InputState input)
@@ -258,7 +263,7 @@ namespace BlackberryMead.Input.UI
 
             // Create a copy of the gameInput and modify the mouse position to locate it inside the UI
             InputState uiInput = input;
-            uiInput.MousePosition = ScreenToUI(input.MousePosition);
+            uiInput.MousePositionApply(ScreenToUI);
 
             // Update components
             foreach (UIComponent component in mainWindow.Components.Values)
@@ -270,7 +275,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Updates and Renders this.
+        /// Updates and Renders the <see cref="UserInterface"/>.
         /// </summary>
         /// <param name="input">Input required for <see cref="Update(InputState)"/>.</param>
         /// <param name="spriteBatch">SpriteBatch required for <see cref="Render(SpriteBatch)"/>.</param>
@@ -282,12 +287,14 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Gets the Child element with the given name from in this.
+        /// Gets the child element with the given name from the <see cref="UserInterface"/>.
         /// </summary>
-        /// <typeparam name="T">Type of the child component where <typeparamref name="T"/> : <see cref="UIComponent"/>.</typeparam> 
+        /// <typeparam name="T">Type of the child component where <typeparamref name="T"/> : 
+        /// <see cref="UIComponent"/>.</typeparam> 
         /// <param name="name">Name of the child component.</param>
         /// <param name="child">The child component of type <typeparamref name="T"/>.</param>
-        /// <returns>True if a component of the given type with the given name exists inside this, false if not.</returns>
+        /// <returns>True if a component of the given type with the given name exists 
+        /// inside the <see cref="UserInterface"/>, false if not.</returns>
         public bool GetChild<T>(string name, out T? child) where T : UIComponent
         {
             if (Children.TryGetValue(name, out var element))
@@ -304,12 +311,12 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Draws all the components of this to the RenderTarget.
+        /// Draws all the components of the <see cref="UserInterface"/>.
         /// </summary>
         /// <remarks>
         /// Call this before calling <see cref="UserInterface.Draw(SpriteBatch)"/>.
         /// </remarks>
-        /// <param name="spriteBatch">SpriteBatch used to draw this.</param>
+        /// <param name="spriteBatch">SpriteBatch used to draw the <see cref="UserInterface"/>.</param>
         public void Render(SpriteBatch spriteBatch)
         {
             // Pre-render all renderable children.
@@ -335,9 +342,9 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Draws this to the screen.
+        /// Draws the <see cref="UserInterface"/> to the screen.
         /// </summary>
-        /// <param name="spriteBatch">SpriteBatch used to draw this.</param>
+        /// <param name="spriteBatch">SpriteBatch used to draw.</param>
         /// <remarks>
         /// <paramref name="spriteBatch"/> must not have had 
         /// <see cref="SpriteBatch.Begin(SpriteSortMode, BlendState, 
@@ -362,7 +369,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Closes the UserInterface and makes it no longer visible.
+        /// Closes the <see cref="UserInterface"/> and makes it no longer visible.
         /// </summary>
         public void Close()
         {
@@ -376,7 +383,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Rescale this to a new scale.
+        /// Rescale the <see cref="UserInterface"/> to a new scale.
         /// </summary>
         /// <param name="renderScale">Scale to be rescaled to.</param>
         public void Rescale(float renderScale)
@@ -436,7 +443,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Converts a coordinate on the screen into a position in the UserInterface
+        /// Converts a coordinate on the screen into a position in the <see cref="UserInterface"/>.
         /// </summary>
         /// <param name="screenCoordinate">Position in screen-space.</param>
         /// <returns></returns>
@@ -447,7 +454,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Converts a coordinate in the UserInterface space into a position on the screen.
+        /// Converts a coordinate in the <see cref="UserInterface"/> space into a position on the screen.
         /// </summary>
         /// <param name="uiCoordinate">Position in UI-space.</param>
         /// <returns></returns>
@@ -458,7 +465,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Realigns all components in this to the current zoom of the <see cref="renderTarget"/>.
+        /// Realigns all components in the <see cref="UserInterface"/> to the current zoom of the <see cref="renderTarget"/>.
         /// </summary>
         protected void RealignComponents()
         {
@@ -474,9 +481,10 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Returns a dictionary of all the children <see cref="UIComponent"/> contained in this.
+        /// Returns a dictionary of all the children <see cref="UIComponent"/> 
+        /// contained in the <see cref="UserInterface"/>.
         /// </summary>
-        /// <returns>A dictionary of child <see cref="UIComponent"/> of this.</returns>
+        /// <returns>A dictionary of child <see cref="UIComponent"/> of the <see cref="UserInterface"/>.</returns>
         protected Dictionary<string, UIComponent> GetChildren()
         {
             Dictionary<string, UIComponent> children = new();
@@ -490,10 +498,11 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Initializes this.
+        /// Initializes the <see cref="UserInterface"/>.
         /// </summary>
         /// <param name="graphicsDevice">GraphicsDevice used for initialization.</param>
-        /// <remarks>Must be called after instantiation and before <see cref="Render(SpriteBatch)"/> or <br/><see cref="Draw(SpriteBatch)"/>.</remarks>
+        /// <remarks>Must be called after instantiation and before <see cref="Render(SpriteBatch)"/> 
+        /// or <br/><see cref="Draw(SpriteBatch)"/>.</remarks>
         public void Initialize(GraphicsDevice graphicsDevice)
         {
             foreach (IRenderable renderable in renderableChildren)

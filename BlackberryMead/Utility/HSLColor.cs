@@ -4,45 +4,67 @@ namespace BlackberryMead.Utility
 {
     /// <summary>
     /// Represents a color in HSL values.
-    /// HSLColor class made by Rich Newman.
-    /// https://richnewman.wordpress.com/about/code-listings-and-diagrams/hslcolor-class/
     /// </summary>
+    /// <remarks>
+    /// Credit Rich Newman.
+    /// https://richnewman.wordpress.com/about/code-listings-and-diagrams/hslcolor-class/
+    /// </remarks>
     public class HSLColor
     {
         // Private data members below are on scale 0-1
         // They are scaled for use externally based on scale
+
         private double hue = 1.0;
+
         private double saturation = 1.0;
+
         private double luminosity = 1.0;
+
 
         /// <summary>
         /// Preset scale value (default was 240??)
         /// </summary>
         //private const double scale = 100.0;
+
         private const double hueScale = 360.0;
+
         private const double satValScale = 100.0;
 
+
+        /// <summary>
+        /// Hue field of the <see cref="HSLColor"/>.
+        /// </summary>
         public double Hue
         {
             get { return hue * hueScale; }
             set { hue = Clamp(value / hueScale); }
         }
+
+
+        /// <summary>
+        /// Saturation field of the <see cref="HSLColor"/>.
+        /// </summary>
         public double Saturation
         {
             get { return saturation * satValScale; }
             set { saturation = Clamp(value / satValScale); }
         }
+
+
+        /// <summary>
+        /// Luminosity field of the <see cref="HSLColor"/>.
+        /// </summary>
         public double Luminosity
         {
             get { return luminosity * satValScale; }
             set { luminosity = Clamp(value / satValScale); }
         }
 
+
         /// <summary>
-        /// Clamps the value between 0 and 1
+        /// Clamps the value between 0 and 1.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">Value to clamp.</param>
         private double Clamp(double value)
         {
             if (value < 0.0)
@@ -52,9 +74,74 @@ namespace BlackberryMead.Utility
             return value;
         }
 
-        #region Casts to/from System.Drawing.Color
+
+        public void SetRGB(int red, int green, int blue)
+        {
+            HSLColor hslColor = (HSLColor)Color.FromArgb(red, green, blue);
+            hue = hslColor.hue;
+            saturation = hslColor.saturation;
+            luminosity = hslColor.luminosity;
+        }
+
+
         /// <summary>
-        /// Operator that casts from HSLColor to System.Drawing.Color
+        /// Create an empty <see cref="HSLColor"/>.
+        /// </summary>
+        public HSLColor() { }
+
+
+        /// <summary>
+        /// Create a new <see cref="HSLColor"/> from an existing color.
+        /// </summary>
+        /// <param name="color"></param>
+        public HSLColor(Color color)
+        {
+            SetRGB(color.R, color.G, color.B);
+        }
+
+
+        /// <summary>
+        /// Create a new <see cref="HSLColor"/> from RGB.
+        /// </summary>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        public HSLColor(int red, int green, int blue)
+        {
+            SetRGB(red, green, blue);
+        }
+
+
+        /// <summary>
+        /// Create a new <see cref="HSLColor"/> from hue, saturation, and luminosity parameters.
+        /// </summary>
+        /// <param name="hue"></param>
+        /// <param name="saturation"></param>
+        /// <param name="luminosity"></param>
+        public HSLColor(double hue, double saturation, double luminosity)
+        {
+            Hue = hue;
+            Saturation = saturation;
+            Luminosity = luminosity;
+
+        }
+
+
+        /// <summary>
+        /// Create a new <see cref="HSLColor"/> from an RGB array.
+        /// </summary>
+        /// <param name="rgb"></param>
+        public HSLColor(int[] rgb)
+        {
+            if (rgb.Length >= 3)
+                SetRGB(rgb[0], rgb[1], rgb[2]);
+        }
+
+
+        #region Casts to/from System.Drawing.Color
+
+        /// <summary>
+        /// Operator that casts from HSLColor to System.Drawing.Color.
         /// </summary>
         /// <param name="hslColor"></param>
         public static implicit operator Color(HSLColor hslColor)
@@ -78,7 +165,7 @@ namespace BlackberryMead.Utility
         }
 
         /// <summary>
-        /// Operator that casts from HSLColor to Microsoft.Xna.Framework.Color
+        /// Operator that casts from <see cref="HSLColor"/> to <see cref="Microsoft.Xna.Framework.Color"/>.
         /// </summary>
         /// <param name="hslColor"></param>
         public static implicit operator Microsoft.Xna.Framework.Color(HSLColor hslColor)
@@ -100,6 +187,8 @@ namespace BlackberryMead.Utility
             else
                 return temp1;
         }
+
+
         private static double MoveIntoRange(double temp3)
         {
             if (temp3 < 0.0)
@@ -108,6 +197,8 @@ namespace BlackberryMead.Utility
                 temp3 -= 1.0;
             return temp3;
         }
+
+
         private static double GetTemp2(HSLColor hslColor)
         {
             double temp2;
@@ -118,6 +209,7 @@ namespace BlackberryMead.Utility
             return temp2;
         }
 
+
         public static implicit operator HSLColor(Color color)
         {
             HSLColor hslColor = new HSLColor();
@@ -126,68 +218,7 @@ namespace BlackberryMead.Utility
             hslColor.saturation = color.GetSaturation();
             return hslColor;
         }
+
         #endregion
-
-        public void SetRGB(int red, int green, int blue)
-        {
-            HSLColor hslColor = (HSLColor)Color.FromArgb(red, green, blue);
-            hue = hslColor.hue;
-            saturation = hslColor.saturation;
-            luminosity = hslColor.luminosity;
-        }
-
-
-        /// <summary>
-        /// Default empty constructor. Does not make a functional HSL color
-        /// </summary>
-        public HSLColor() { }
-
-
-        /// <summary>
-        /// Create a new HSL color from an existing color
-        /// </summary>
-        /// <param name="color"></param>
-        public HSLColor(Color color)
-        {
-            SetRGB(color.R, color.G, color.B);
-        }
-
-
-        /// <summary>
-        /// Create a new HSL color from red, green, and blue parameters
-        /// </summary>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
-        public HSLColor(int red, int green, int blue)
-        {
-            SetRGB(red, green, blue);
-        }
-
-
-        /// <summary>
-        /// Create a new HSL color from hue, saturation, and luminosity parameters
-        /// </summary>
-        /// <param name="hue"></param>
-        /// <param name="saturation"></param>
-        /// <param name="luminosity"></param>
-        public HSLColor(double hue, double saturation, double luminosity)
-        {
-            Hue = hue;
-            Saturation = saturation;
-            Luminosity = luminosity;
-
-        }
-
-
-        /// <summary>
-        /// Create a new HSL Color from an RGB Array
-        /// </summary>
-        /// <param name="rgb"></param>
-        public HSLColor(int[] rgb)
-        {
-            if (rgb.Length >= 3)
-                SetRGB(rgb[0], rgb[1], rgb[2]);
-        }
     }
 }

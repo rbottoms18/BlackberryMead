@@ -64,24 +64,25 @@ namespace BlackberryMead.Framework
         protected InputState input;
 
         /// <summary>
-        /// Actions of this state.
+        /// Actions of the <see cref="State"/>.
         /// </summary>
         protected Dictionary<string, Keybind> actions = new Dictionary<string, Keybind>();
 
         /// <summary>
-        /// SpriteBatch used for drawing to the state.
+        /// SpriteBatch used for drawing to the <see cref="State"/>.
         /// </summary>
         protected SpriteBatch spriteBatch;
 
+        /// <summary>
+        /// <see cref="InputManager"/> of the <see cref="State"/>.
+        /// </summary>
         private InputManager inputManager;
 
 
         /// <summary>
-        /// Create a new state
+        /// Create a new <see cref="State"/>.
         /// </summary>
-        /// <param name="game">The main game</param>
         /// <param name="graphicsDevice">Graphics device to draw content</param>
-        /// <param name="contentManager">Content manager to manage content</param>
         public State(GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
@@ -90,7 +91,7 @@ namespace BlackberryMead.Framework
         }
 
         /// <summary>
-        /// Update the state to preform per-tick logic
+        /// Update the <see cref="State"/> to preform per-tick logic.
         /// </summary>
         /// <param name="gameTime"></param>
         public virtual void Update(GameTime gameTime)
@@ -99,7 +100,7 @@ namespace BlackberryMead.Framework
         }
 
         /// <summary>
-        /// Draw the state.
+        /// Draw the <see cref="State"/>.
         /// </summary>
         /// <param name="gameTime"></param>
         public abstract void Draw(GameTime gameTime);
@@ -115,7 +116,7 @@ namespace BlackberryMead.Framework
 
 
         /// <summary>
-        /// Requests for the current state to be changed.
+        /// Sends a request to change the current <see cref="State"/>.
         /// </summary>
         protected void ChangeState(string newStateName)
         {

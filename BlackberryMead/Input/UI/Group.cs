@@ -17,20 +17,23 @@ namespace BlackberryMead.Input.UI
     public class Group : UIComponent
     {
         /// <summary>
-        /// Dictionary of components in the group. Keys are component
-        /// names/structures and values are UIComponents.
+        /// Dictionary of components in the <see cref="Group"/>.
         /// </summary>
+        /// <remarks>
+        /// Keys are component names/structures and values are UIComponents.
+        /// </remarks>
         [JsonOptIn, JsonInclude]
         public Dictionary<string, UIComponent> Components { get; set; } = new Dictionary<string, UIComponent>();
 
         /// <summary>
-        /// Changes the dimensions of this to exactly encompass <see cref="Components"/>.
+        /// Changes the dimensions of the <see cref="Group"/> to exactly encompass <see cref="Components"/>.
         /// </summary>
         [JsonOptIn]
         public bool AutoResize { get; protected set; } = false;
 
+
         /// <summary>
-        /// Create a new Group.
+        /// Create a new <see cref="Group"/>.
         /// </summary>
         /// <param name="Components">Subcomponents of this.</param>
         /// <inheritdoc cref="UIComponent(Size, Alignment, Alignment, int, int, int)"/>
@@ -62,7 +65,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Updates this. Updates all of its subcomponents.
+        /// Updates the <see cref="Group"/> and all of its subcomponents.
         /// </summary>
         /// <param name="input">Input of the current tick.</param>
         public override void Update(InputState input)
@@ -76,7 +79,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Draw this to the current rendertarget. Draws all of its subcomponents.
+        /// Draw the <see cref="Group"/> and all of its subcomponents.
         /// </summary>
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
@@ -97,12 +100,13 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Gets a dictionary of all UIElement children contained in this with element names as keys.
+        /// Gets a dictionary of all <see cref="UIComponent"/> children contained in 
+        /// the <see cref="Group"/> with element names as keys.
         /// </summary>
         /// <remarks>
         /// Does not include itself as a child.
         /// </remarks>
-        /// <returns>List of children UIElements contained in this UIGroup</returns>
+        /// <returns>List of children <see cref="UIComponent"/> contained in this <see cref="Group"/>.</returns>
         public override Dictionary<string, UIComponent> GetChildren()
         {
             Dictionary<string, UIComponent> children = new() { };
@@ -118,7 +122,7 @@ namespace BlackberryMead.Input.UI
 
 
         /// <summary>
-        /// Gets the Child element with the given name from in this.
+        /// Gets the child component with the given name in the <see cref="Group"/>.
         /// </summary>
         /// <typeparam name="T">Type of the child component where <typeparamref name="T"/> : <see cref="UIComponent"/>.</typeparam> 
         /// <param name="name">Name of the child component.</param>

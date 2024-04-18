@@ -9,11 +9,9 @@ namespace BlackberryMead.Collections
 {
     /// <summary>
     /// Represents a strongly typed, fixed-size collection of objects that implements a top-down
-    /// structure where objects are be added to the <see cref="Box{T}"/> at the lowest index possible
-    /// and drawn from the greatest index possible.
+    /// structure where objects are added to the the lowest index possible and drawn from the largest index possible.
     /// </summary>
     /// <typeparam name="T">Type of object to be stored.</typeparam>
-    /// <param name="size">Number of items able to be stored in the <see cref="Box{T}"/>.</param>
     public class Box<T> : IEnumerable<T>, INullImplementable<Box<T>>, IStackable<T>
         where T : INullImplementable<T>
     {
@@ -41,27 +39,32 @@ namespace BlackberryMead.Collections
         public virtual int MaxStackSize => maxStackSize;
 
         /// <summary>
-        /// <see langword="true"/> if the <see cref="Box{T}"/> contains no non-null items; otherwise,
+        /// Returns <see langword="true"/> if the <see cref="Box{T}"/> contains no non-null items; otherwise,
         /// <see langword="false"/>.
         /// </summary> 
         public virtual bool IsEmpty => count == 0;
 
         /// <summary>
-        /// Collection of <see cref="T"/> this holds.
+        /// Collection of <see cref="T"/> the <see cref="Box{T}"/> holds.
         /// </summary>
         protected virtual T[] collection { get; set; }
 
         /// <summary>
-        /// Number of objects in this.
+        /// Number of objects in the <see cref="Box{T}"/>.
         /// </summary>
         protected int count;
 
         /// <summary>
-        /// Maximum number of objects than can be stored in the <see cref="FlatStack{T}"/>.
+        /// Maximum number of objects than can be stored in the <see cref="Box{T}"/>.
         /// </summary>
         protected int maxStackSize;
 
 
+        /// <summary>
+        /// Create a new <see cref="Box{T}"/>
+        /// </summary>
+        /// <param name="items">List of items to be added to the <see cref="Box{T}"/>.</param>
+        /// <param name="size">Maximum number of objects that can be fit in the <see cref="Box{T}"/>.</param>
         public Box(List<T> items, int size = 0) : this(size == 0 ? items.Count : size)
         {
             maxStackSize = size;
@@ -77,9 +80,16 @@ namespace BlackberryMead.Collections
         }
 
 
+        /// <summary>
+        /// Create an empty <see cref="Box{T}"/>.
+        /// </summary>
         protected Box() { }
 
 
+        /// <summary>
+        /// Create an empty <see cref="Box{T}"/>.
+        /// </summary>
+        /// <param name="size">Maximum number of objects that can be fit in the <see cref="Box{T}"/>.</param>
         public Box(int size)
         {
             collection = ArrayHelper.FillArray(new T[size], T.Null);
@@ -201,11 +211,11 @@ namespace BlackberryMead.Collections
 
 
         /// <summary>
-        /// Returns the first non-<see cref="T.Null"/> <typeparamref name="T"/> in the <see cref="Box{T}"/>.
+        /// Returns the first non-null <typeparamref name="T"/> in the <see cref="Box{T}"/>.
         /// </summary>
-        /// <returns>The first non-<see cref="T.Null"/> <typeparamref name="T"/> in the <see cref="Box{T}"/>, taken from the
+        /// <returns>The first non-null <typeparamref name="T"/> in the <see cref="Box{T}"/>, taken from the
         /// top of the box (highest index).
-        /// If no non-<see cref="T.Null"/> <typeparamref name="T"/> is found, <see cref="T.Null"/> will
+        /// If no non-null <typeparamref name="T"/> is found, <see cref="T.Null"/> will
         /// be returned instead.</returns>
         public virtual T Take()
         {
@@ -215,7 +225,6 @@ namespace BlackberryMead.Collections
                 Count--;
                 T item = collection[i];
                 collection[i] = T.Null;
-                // Will this return Null? Don't think it should.
                 return item;
             }
             return T.Null;
@@ -239,7 +248,7 @@ namespace BlackberryMead.Collections
 
 
         /// <remarks>
-        /// Takes the first <paramref name="amount"/>  <typeparamref name="T"/> from the 
+        /// Takes the first <paramref name="amount"/> number of <typeparamref name="T"/> objects from the 
         /// <see cref="Box{T}"/> and places them in a new <see cref="Box{T}"/>.
         /// </remarks>
         /// <inheritdoc cref="IStackable{T}.Split(int)"/>
@@ -323,11 +332,6 @@ namespace BlackberryMead.Collections
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-
-        public bool Stack(IStackable<T> other, int amount)
-        {
-            throw new NotImplementedException();
         }
     }
 }

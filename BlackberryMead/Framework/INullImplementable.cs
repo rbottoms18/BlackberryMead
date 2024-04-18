@@ -3,7 +3,6 @@
     /// <summary>
     /// Defines a Null-Object Pattern implementation for objects of type <typeparamref name="T"/>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public interface INullImplementable<T>
     {
         /// <summary>
